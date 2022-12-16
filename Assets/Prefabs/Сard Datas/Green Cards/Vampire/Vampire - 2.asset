@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: Vampire - 2
+  m_EditorClassIdentifier: 
+  Id: f535bd0a-71a2-4d3a-be3e-d5998c9a4b5d
+  Name: Vampire
+  CardImage: {fileID: 21300000, guid: ae2affe9141344b1c96e150708d2d363, type: 3}
+  Cost:
+  - Name: Resource_1
+    Value: 26
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: bffff0cd31c2e4833a77422213c1c660, type: 2}
+  - {fileID: 11400000, guid: 6ef6295a7991645f8820b86dba8e4d60, type: 2}
+  - {fileID: 11400000, guid: 22257789f10bd47e9820751e423564c1, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 66
+  Rang: 1

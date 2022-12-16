@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: Tremors - 3
+  m_EditorClassIdentifier: 
+  Id: f450f810-3c5d-4b11-ba05-3c535ff94940
+  Name: Tremors
+  CardImage: {fileID: 21300000, guid: bb2c4e6d5d66d4d958d6fd8fd16f0de1, type: 3}
+  Cost:
+  - Name: Resource_3
+    Value: 17
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: e3ec734ace74c4c0b8968a2a2188577b, type: 2}
+  - {fileID: 11400000, guid: 9553e2dc31b354b01a676be7e08bdb39, type: 2}
+  SaveTurn: 1
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 101
+  Rang: 2

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: Imp - 5
+  m_EditorClassIdentifier: 
+  Id: 30334b76-a8a3-4650-b8c4-a2cd99c71c94
+  Name: Imp
+  CardImage: {fileID: 21300000, guid: e5de3dbc5e193484d8eb456f7f814524, type: 3}
+  Cost:
+  - Name: Resource_1
+    Value: 27
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: 13f4b0bcce49a4c2fb253f7cb5f4298e, type: 2}
+  - {fileID: 11400000, guid: 39163483ba788473b8bfe11f0afd8ac5, type: 2}
+  - {fileID: 11400000, guid: 87db1f8c9d7744793852538611b0feed, type: 2}
+  - {fileID: 11400000, guid: 3a0b73df7e5e5466c92a4ac66487d7c9, type: 2}
+  - {fileID: 11400000, guid: b1543f2c836934e0584638bedcfe10e9, type: 2}
+  - {fileID: 11400000, guid: c3a548d0e8d1848b7a2c93b3e956576f, type: 2}
+  - {fileID: 11400000, guid: e22f1154c39384ede811882324633a4f, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 46
+  Rang: 4

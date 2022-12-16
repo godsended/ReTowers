@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: PhaseJewel - 4
+  m_EditorClassIdentifier: 
+  Id: c248b74b-b028-45a0-b020-22984b67b88d
+  Name: PhaseJewel
+  CardImage: {fileID: 21300000, guid: a4dc739dc080247769845fb7b1573f8e, type: 3}
+  Cost:
+  - Name: Resource_2
+    Value: 62
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: 8dce088577947410594ae229f678b74b, type: 2}
+  - {fileID: 11400000, guid: 9da709768219a4b8fa7fc4479d7b9a6d, type: 2}
+  - {fileID: 11400000, guid: b7c6394f5abc34adc9ff4971e7ae695d, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 2
+  Type: 22
+  Rang: 3

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: Rainbow - 4
+  m_EditorClassIdentifier: 
+  Id: 46a03d14-439c-4a25-841c-09e5b5a3affe
+  Name: Rainbow
+  CardImage: {fileID: 21300000, guid: 17eac0d1f9fc4417891a551601224a2f, type: 3}
+  Cost:
+  - Name: Resource_2
+    Value: 0
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: 430b941659276495290e055d86108f69, type: 2}
+  - {fileID: 11400000, guid: 642a03dc1dcf7435c939244947ef747d, type: 2}
+  - {fileID: 11400000, guid: 96ef8b19c4bd54569a7a2edbb9e79646, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 1
+  Type: 27
+  Rang: 3

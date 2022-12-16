@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: RockStompers - 4
+  m_EditorClassIdentifier: 
+  Id: c5c897c5-5116-4ff8-bda5-297f62d4068b
+  Name: RockStompers
+  CardImage: {fileID: 21300000, guid: 91687167d677d4bafb0b715d2203336e, type: 3}
+  Cost:
+  - Name: Resource_1
+    Value: 39
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: 2144b596d67c54d7caf39b1155ec2c45, type: 2}
+  - {fileID: 11400000, guid: 676e1fa3b4ada48c7ab56dfc10734ef0, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 55
+  Rang: 3

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: Gnome - 2
+  m_EditorClassIdentifier: 
+  Id: 84dfe9a7-6df1-4d5b-96bc-85d4bb874b8c
+  Name: Gnome
+  CardImage: {fileID: 21300000, guid: 3a59f58697e7d43c2a70cf0767f9b88e, type: 3}
+  Cost:
+  - Name: Resource_1
+    Value: 3
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: f571c69f752e44bd2b53b36701ff902c, type: 2}
+  - {fileID: 11400000, guid: b8aebeb0a69154bab9a567d8c01ad68a, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 43
+  Rang: 1

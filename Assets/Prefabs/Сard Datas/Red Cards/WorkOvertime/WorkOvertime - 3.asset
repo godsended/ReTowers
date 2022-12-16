@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: WorkOvertime - 3
+  m_EditorClassIdentifier: 
+  Id: ecd71f77-11ef-4ed2-9acb-4298366fb884
+  Name: WorkOvertime
+  CardImage: {fileID: 21300000, guid: 031922b40e9014ec88c2e4e5b4ae0bbf, type: 3}
+  Cost:
+  - Name: Resource_3
+    Value: 5
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: 1b9dfba18d93f46f081a6d1d3c1adc51, type: 2}
+  - {fileID: 11400000, guid: ec9f996325fa349d386cb753e37219ce, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 102
+  Rang: 2

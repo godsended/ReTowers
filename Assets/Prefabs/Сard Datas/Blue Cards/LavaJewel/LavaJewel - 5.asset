@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: LavaJewel - 5
+  m_EditorClassIdentifier: 
+  Id: 071e454a-4353-4c12-a7ef-e54324efe5ee
+  Name: LavaJewel
+  CardImage: {fileID: 21300000, guid: cae3081be4ffa48c995ea3093db832b8, type: 3}
+  Cost:
+  - Name: Resource_2
+    Value: 89
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: 33d3499413370494ab8483dca0d889ba, type: 2}
+  - {fileID: 11400000, guid: bf6f9b264ca5b4db292e20725a0432a5, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 17
+  Rang: 4

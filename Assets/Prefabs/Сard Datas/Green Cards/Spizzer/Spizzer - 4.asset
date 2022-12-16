@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: Spizzer - 4
+  m_EditorClassIdentifier: 
+  Id: 596dc8a4-e8cf-4c65-9538-f5a8f69a851f
+  Name: Spizzer
+  CardImage: {fileID: 21300000, guid: 313babff3a10c418ea1e5246fbf3c76f, type: 3}
+  Cost:
+  - Name: Resource_1
+    Value: 27
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: 74c6e8f80523641548f70caa6c51e7aa, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 59
+  Rang: 3

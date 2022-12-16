@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6caf31d8b045bc4394f49080bb2eece, type: 3}
+  m_Name: FloodWaterMain 4
+  m_EditorClassIdentifier: 
+  trueEffects:
+  - {fileID: 11400000, guid: be5507e944d9c4b4abbfb96f9fa6f43a, type: 2}
+  - {fileID: 11400000, guid: 27a60ad00d04e4ddd82ad2dc2ab527fd, type: 2}
+  falseEffects:
+  - {fileID: 11400000, guid: 2f223b1f88e3f4d9ba5cf3fc6d7d4072, type: 2}
+  - {fileID: 11400000, guid: 29bb9ef9cf6cb4f4c82313bfd85773b1, type: 2}

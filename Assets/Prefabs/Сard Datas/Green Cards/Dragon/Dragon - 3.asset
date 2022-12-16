@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: Dragon - 3
+  m_EditorClassIdentifier: 
+  Id: 3ba2f540-f35f-4a3a-b60f-b7aa10573d14
+  Name: Dragon
+  CardImage: {fileID: 21300000, guid: ab02a83300806493786221239f7cc1b7, type: 3}
+  Cost:
+  - Name: Resource_1
+    Value: 57
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: eb4116ae48cb64d639b89afb7c103add, type: 2}
+  - {fileID: 11400000, guid: 232341ce265fa48af885879493787f65, type: 2}
+  - {fileID: 11400000, guid: 0e89306c8e414454daedcb0b69057357, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 37
+  Rang: 2

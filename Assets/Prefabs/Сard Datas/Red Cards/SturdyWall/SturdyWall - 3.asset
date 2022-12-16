@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: SturdyWall - 3
+  m_EditorClassIdentifier: 
+  Id: 8fb69a91-705f-44ab-8a61-de6126b2a011
+  Name: SturdyWall
+  CardImage: {fileID: 21300000, guid: 3416e6644d1484845a4174096f810a6a, type: 3}
+  Cost:
+  - Name: Resource_3
+    Value: 8
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: 42992f29aa9db42faab9ec6050564429, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 100
+  Rang: 2

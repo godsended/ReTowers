@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: Berserker - 3
+  m_EditorClassIdentifier: 
+  Id: 954b879d-c6a8-45ca-88b4-6176e016200e
+  Name: Berserker
+  CardImage: {fileID: 21300000, guid: 8080ac366bdf84e94bb2f7dd4ad788ad, type: 3}
+  Cost:
+  - Name: Resource_1
+    Value: 9
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: 499896938e99c47be9ffbc4eb6649a3a, type: 2}
+  - {fileID: 11400000, guid: a37a2b6b9222646b4868cb910f501c11, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 35
+  Rang: 2

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 007edd7c114026442be27d892cd4f448, type: 3}
+  m_Name: LightningShardMain 1
+  m_EditorClassIdentifier: 
+  trueEffects:
+  - {fileID: 11400000, guid: fc1e3955a566848cca35eb1989caa98a, type: 2}
+  falseEffects:
+  - {fileID: 11400000, guid: de21e08ee6726470a920f0827755096b, type: 2}

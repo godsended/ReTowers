@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: MondoWall - 3
+  m_EditorClassIdentifier: 
+  Id: 34a3ef88-7240-4353-8705-c752e88f06bc
+  Name: MondoWall
+  CardImage: {fileID: 21300000, guid: 9cceeeb85cced48dfb83f1cd4098a482, type: 3}
+  Cost:
+  - Name: Resource_3
+    Value: 30
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: 17c58ff3cca8744028178ff0ef1394bb, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 90
+  Rang: 2

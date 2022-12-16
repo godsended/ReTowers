@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6e274fa314ccbc469577bb8200629e9, type: 3}
+  m_Name: SpizzerMain 2
+  m_EditorClassIdentifier: 
+  trueEffects:
+  - {fileID: 11400000, guid: f7e2abc3495e44ed3a36f996d63fdfa2, type: 2}
+  falseEffects:
+  - {fileID: 11400000, guid: 2da2a5ea3e7ba4e0aaab4625fd6e8009, type: 2}

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d726a6166b384dfd840fd633dd0ae42f, type: 3}
+  m_Name: UnicornMain 1
+  m_EditorClassIdentifier: 
+  nameResource: Resource_2
+  trueEffects:
+  - {fileID: 11400000, guid: e636060671a224d7aabe636680196ef3, type: 2}
+  falseEffects:
+  - {fileID: 11400000, guid: 1be7d163a44b048e2a16c3f3ef08944d, type: 2}

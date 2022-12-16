@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: BigWall - 3
+  m_EditorClassIdentifier: 
+  Id: 30598adc-91ec-4c43-a987-eb8a1aca1433
+  Name: BigWall
+  CardImage: {fileID: 21300000, guid: 35527f282c5304525b82b8d8632cb84e, type: 3}
+  Cost:
+  - Name: Resource_3
+    Value: 12
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: a708a52f00f0448ab991efeca1decf57, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 4532451
+  Rang: 2

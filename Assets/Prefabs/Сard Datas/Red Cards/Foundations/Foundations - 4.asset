@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: Foundations - 4
+  m_EditorClassIdentifier: 
+  Id: deed39fd-9460-4293-97ee-4922bfd63f80
+  Name: Foundations
+  CardImage: {fileID: 21300000, guid: f7b3a4572b4fb4484a0bbbdf1ef5007e, type: 3}
+  Cost:
+  - Name: Resource_3
+    Value: 12
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: 07e66c64f1c534e4e913e184c6f453bf, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 83
+  Rang: 3

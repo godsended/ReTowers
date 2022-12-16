@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: ElvenArcher - 3
+  m_EditorClassIdentifier: 
+  Id: e338c266-4c7c-4eb7-8140-06122f881b77
+  Name: ElvenArcher
+  CardImage: {fileID: 21300000, guid: 0dce623b90a7c4420a78d5510fb0348e, type: 3}
+  Cost:
+  - Name: Resource_1
+    Value: 23
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: 64e4addd3284241ea9a4f55a0e950507, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 39
+  Rang: 2

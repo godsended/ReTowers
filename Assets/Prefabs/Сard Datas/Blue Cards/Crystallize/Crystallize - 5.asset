@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: Crystallize - 5
+  m_EditorClassIdentifier: 
+  Id: 290f826f-4e03-48a2-aaa1-539cc5aacd33
+  Name: Crystallize
+  CardImage: {fileID: 21300000, guid: cdf5ebdbc68224c2e93fb11302919176, type: 3}
+  Cost:
+  - Name: Resource_2
+    Value: 41
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: c88747dd2edac4e73a05ea463dba8eca, type: 2}
+  - {fileID: 11400000, guid: 625bb9dc9af5b4c1a8c37a19330753a7, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 6
+  Rang: 4

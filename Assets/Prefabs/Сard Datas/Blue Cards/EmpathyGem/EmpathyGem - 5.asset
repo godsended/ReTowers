@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: EmpathyGem - 5
+  m_EditorClassIdentifier: 
+  Id: 50b48a0b-f279-450f-a862-b088f6355fd3
+  Name: EmpathyGem
+  CardImage: {fileID: 21300000, guid: 22b4decaa4483473baaa0bdabd8dc64a, type: 3}
+  Cost:
+  - Name: Resource_2
+    Value: 72
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: 82ff26a50914d4f91b7db0a58f09787d, type: 2}
+  - {fileID: 11400000, guid: 3b8f170f35e5b4d339170450eecb617a, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 12
+  Rang: 4

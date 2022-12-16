@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: Thief - 2
+  m_EditorClassIdentifier: 
+  Id: b242843f-0159-4723-bf0b-c1c735e267d2
+  Name: Thief
+  CardImage: {fileID: 21300000, guid: 4feb3f326572641a6a21926128942f07, type: 3}
+  Cost:
+  - Name: Resource_1
+    Value: 18
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: b56e2bddf33b3474986f44e948c8dc3e, type: 2}
+  - {fileID: 11400000, guid: 4798162e530b34bb5a2f69a3146a9b36, type: 2}
+  - {fileID: 11400000, guid: 0de2a234ddfe443a2a4ab66a5934bb1e, type: 2}
+  - {fileID: 11400000, guid: d4e41615a7f1a4ceb9c99722de84d239, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 62
+  Rang: 1

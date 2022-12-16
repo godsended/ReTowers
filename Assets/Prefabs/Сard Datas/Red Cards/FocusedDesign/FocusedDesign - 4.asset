@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: FocusedDesign - 4
+  m_EditorClassIdentifier: 
+  Id: 3f889549-6708-47ae-960c-27ff17788402
+  Name: FocusedDesign
+  CardImage: {fileID: 21300000, guid: b099dedb14ef14db19379e2abee0e93c, type: 3}
+  Cost:
+  - Name: Resource_3
+    Value: 53
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: 7bbd97c5fc2a7465fab776826fc41ad2, type: 2}
+  - {fileID: 11400000, guid: eae0f5de7bf9348398b9fe16bbe18e52, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 81
+  Rang: 3

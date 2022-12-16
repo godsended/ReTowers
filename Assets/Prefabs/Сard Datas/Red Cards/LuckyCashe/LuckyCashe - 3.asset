@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: LuckyCashe - 3
+  m_EditorClassIdentifier: 
+  Id: 922cc611-68c2-46e6-a790-a6a4a6793ddb
+  Name: LuckyCashe
+  CardImage: {fileID: 21300000, guid: e5b6185fa49094ea1b9071c3b8f6abb0, type: 3}
+  Cost:
+  - Name: Resource_3
+    Value: 0
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: 3b5ae9e037dc1423391eadb89894a002, type: 2}
+  - {fileID: 11400000, guid: 0daaca1ed571a4d6ab1e1f900d732640, type: 2}
+  SaveTurn: 1
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 88
+  Rang: 2

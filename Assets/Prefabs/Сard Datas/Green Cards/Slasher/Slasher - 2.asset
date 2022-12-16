@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: Slasher - 2
+  m_EditorClassIdentifier: 
+  Id: eb5bb051-c004-45a6-b74b-56c95e367b2a
+  Name: Slasher
+  CardImage: {fileID: 21300000, guid: fda88d00011874729a316949da963c34, type: 3}
+  Cost:
+  - Name: Resource_1
+    Value: 8
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: 4e977fba385894e7ca6543a091c2bb01, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 57
+  Rang: 1

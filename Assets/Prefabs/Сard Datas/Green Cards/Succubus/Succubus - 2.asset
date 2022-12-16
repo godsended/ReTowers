@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: Succubus - 2
+  m_EditorClassIdentifier: 
+  Id: 9c98114e-7581-4787-b44f-273de6bb18ce
+  Name: Succubus
+  CardImage: {fileID: 21300000, guid: 1ab1551696b1e4a5ba191e9263cbae12, type: 3}
+  Cost:
+  - Name: Resource_1
+    Value: 21
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: 10e6d4bcc2fb44f4fb271d4147ecc973, type: 2}
+  - {fileID: 11400000, guid: b387dbcaa546a45a6abc7db4824efb55, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 61
+  Rang: 1

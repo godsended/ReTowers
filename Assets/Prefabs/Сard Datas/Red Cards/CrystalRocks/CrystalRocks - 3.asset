@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: CrystalRocks - 3
+  m_EditorClassIdentifier: 
+  Id: 3881b6da-5fc8-4216-8702-7cec4c4f4fb7
+  Name: CrystalRocks
+  CardImage: {fileID: 21300000, guid: e7c3bb443836b485589c8b5c73fd6c03, type: 3}
+  Cost:
+  - Name: Resource_3
+    Value: 21
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: 4fbe531b77a0449cbbd2901a0688f9f0, type: 2}
+  - {fileID: 11400000, guid: e45c0ccd167b94442af2fb43c2b101d2, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 76
+  Rang: 2

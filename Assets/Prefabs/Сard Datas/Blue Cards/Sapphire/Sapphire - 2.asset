@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: Sapphire - 2
+  m_EditorClassIdentifier: 
+  Id: afb23411-2774-47db-b8b9-50b92d691ec4
+  Name: Sapphire
+  CardImage: {fileID: 21300000, guid: a7c2c39e8034949de9d4ce4d8b203175, type: 3}
+  Cost:
+  - Name: Resource_2
+    Value: 15
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: 8dbd1f188b0aa4dde86b36cb97024d3e, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 1
+  Type: 30
+  Rang: 1

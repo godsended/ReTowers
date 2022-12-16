@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: SpellWeavers - 3
+  m_EditorClassIdentifier: 
+  Id: d9c5129b-fe39-4de0-966e-689dd2036a0f
+  Name: SpellWeavers
+  CardImage: {fileID: 21300000, guid: 237e82cd206e248dbbccfe7c4a56c331, type: 3}
+  Cost:
+  - Name: Resource_2
+    Value: 8
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: 1baeccf7af8104227a33cf75cec74732, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 34
+  Rang: 2

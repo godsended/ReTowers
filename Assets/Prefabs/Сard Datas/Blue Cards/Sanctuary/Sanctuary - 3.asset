@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: Sanctuary - 3
+  m_EditorClassIdentifier: 
+  Id: 32326d01-f3a6-48b1-8428-1499417c4908
+  Name: Sanctuary
+  CardImage: {fileID: 21300000, guid: a8472500044c74ad5abb466d4e95c9fb, type: 3}
+  Cost:
+  - Name: Resource_2
+    Value: 15
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: b5cb7538bbd8a46d9997ddaf3b68291d, type: 2}
+  - {fileID: 11400000, guid: fe00c60c95b4f4ed982b553079fd7af3, type: 2}
+  - {fileID: 11400000, guid: 16fc1df6285b94d2e9e74d1194f7e69a, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 29
+  Rang: 2

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: GoblinArchers - 3
+  m_EditorClassIdentifier: 
+  Id: 44bc9e5b-af92-4df5-910b-01c2e38added
+  Name: GoblinArchers
+  CardImage: {fileID: 21300000, guid: db362e62bb7ed49e6adc2a0e275df4c7, type: 3}
+  Cost:
+  - Name: Resource_1
+    Value: 9
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: cf7d1b1d08ad84f1cb07153fdb44d4be, type: 2}
+  - {fileID: 11400000, guid: 32ec8d96c54cf43428133ca8e60496ff, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 44
+  Rang: 2

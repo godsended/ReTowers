@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: SmokyCards - 5
+  m_EditorClassIdentifier: 
+  Id: 326994fc-a83f-4903-84e6-f7ffd6031222
+  Name: SmokyCards
+  CardImage: {fileID: 21300000, guid: 36ee63cc4d81843349c4c958b4454edb, type: 3}
+  Cost:
+  - Name: Resource_2
+    Value: 12
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: 82e428a7485a14adbacdef5e6c44107b, type: 2}
+  SaveTurn: 1
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 32
+  Rang: 4

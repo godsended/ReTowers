@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: QuarrysHeal - 2
+  m_EditorClassIdentifier: 
+  Id: 1a3f56b4-3ab9-447c-83b7-8c30df0aae12
+  Name: QuarrysHeal
+  CardImage: {fileID: 21300000, guid: de0a254c4b3704ddf87fa066381bc4cd, type: 3}
+  Cost:
+  - Name: Resource_2
+    Value: 6
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: e6f92cde3017449f892a47acdb0d40b5, type: 2}
+  - {fileID: 11400000, guid: 697d45da1c6db4890a4f9eeb81a30f53, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 25
+  Rang: 1

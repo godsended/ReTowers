@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: Unicorn - 4
+  m_EditorClassIdentifier: 
+  Id: f9235c76-764b-4425-abe5-e5e3469160ac
+  Name: Unicorn
+  CardImage: {fileID: 21300000, guid: fa98c1fb59a904feea79bb1a9b593f4b, type: 3}
+  Cost:
+  - Name: Resource_1
+    Value: 32
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: 29a1a4de4e1694e75be1eca2053a53c5, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 65
+  Rang: 3

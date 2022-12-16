@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: StoneGiant - 3
+  m_EditorClassIdentifier: 
+  Id: 37fdc38b-8d14-4727-a044-8a3a35383ecf
+  Name: StoneGiant
+  CardImage: {fileID: 21300000, guid: 082857005dbce42458a1bbae8de1d23b, type: 3}
+  Cost:
+  - Name: Resource_1
+    Value: 15
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: 5eeccdfe0b38e4dea865be162ffc84e0, type: 2}
+  - {fileID: 11400000, guid: 081568a10af2543d1b0d406412233dbf, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 60
+  Rang: 2

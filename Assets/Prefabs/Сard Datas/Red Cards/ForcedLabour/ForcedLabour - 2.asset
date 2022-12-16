@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: ForcedLabour - 2
+  m_EditorClassIdentifier: 
+  Id: afba4c83-6118-4138-b130-9c8391310bb1
+  Name: ForcedLabour
+  CardImage: {fileID: 21300000, guid: 7b10d124fd1e9432fbc9d32e4a97ed32, type: 3}
+  Cost:
+  - Name: Resource_3
+    Value: 11
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: 00ce881d76df8483d9181ff5c099e36d, type: 2}
+  - {fileID: 11400000, guid: d01bf4213e4354f3395691e8d75b39d1, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 82
+  Rang: 1

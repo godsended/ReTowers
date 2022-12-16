@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: FireRuby - 5
+  m_EditorClassIdentifier: 
+  Id: 41228531-a34d-4eee-87b4-51069e2efe26
+  Name: FireRuby
+  CardImage: {fileID: 21300000, guid: 46714d2a53e904dd08e1de9896ae9df3, type: 3}
+  Cost:
+  - Name: Resource_2
+    Value: 68
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: bd9c16e454a55488895586bb586d68b9, type: 2}
+  - {fileID: 11400000, guid: d6de83844209249be8be4f21f903c6bd, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 1
+  Type: 13
+  Rang: 4

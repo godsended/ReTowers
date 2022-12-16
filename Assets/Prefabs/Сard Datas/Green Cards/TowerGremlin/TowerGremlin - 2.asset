@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: TowerGremlin - 2
+  m_EditorClassIdentifier: 
+  Id: 3984c715-1aaf-4aab-9a75-658f3772f144
+  Name: TowerGremlin
+  CardImage: {fileID: 21300000, guid: d5898a79cffe54096b314dc6724ad156, type: 3}
+  Cost:
+  - Name: Resource_1
+    Value: 12
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: 47df2aa85d88f4b15939c0b3f683a897, type: 2}
+  - {fileID: 11400000, guid: e68a48bc059744bbd9e4d59f28463ecb, type: 2}
+  - {fileID: 11400000, guid: f4456d16f3a724de8a310608a12815bd, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 63
+  Rang: 1

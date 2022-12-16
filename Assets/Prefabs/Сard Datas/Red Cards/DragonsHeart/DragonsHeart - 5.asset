@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: DragonsHeart - 5
+  m_EditorClassIdentifier: 
+  Id: b343238e-1cae-4477-bba6-4fa1785f0f1d
+  Name: DragonsHeart
+  CardImage: {fileID: 21300000, guid: 8ab59f81006194ed4a782f3f66781d4a, type: 3}
+  Cost:
+  - Name: Resource_3
+    Value: 122
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: dbbcadc689c7149fb90dbf5652b8c608, type: 2}
+  - {fileID: 11400000, guid: c31e64653b82c4448b04225aedd5ae65, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 77
+  Rang: 4

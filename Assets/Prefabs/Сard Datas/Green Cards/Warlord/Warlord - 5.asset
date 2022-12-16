@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: Warlord - 5
+  m_EditorClassIdentifier: 
+  Id: f5a08f91-299a-4f55-81dc-fba08118bec0
+  Name: Warlord
+  CardImage: {fileID: 21300000, guid: c99ef667e14f24e12b2a59548008ee8b, type: 3}
+  Cost:
+  - Name: Resource_1
+    Value: 68
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: ee9600baf2dac421f8535d6b2d31468c, type: 2}
+  - {fileID: 11400000, guid: 3e79a07fe907f4c6abb56462e6e0914f, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 906
+  Rang: 4

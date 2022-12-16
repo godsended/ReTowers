@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ddadfd123340f9b42bf9859e22cf4e, type: 3}
+  m_Name: Innovations - 4
+  m_EditorClassIdentifier: 
+  Id: fe8e45d3-a54f-45d3-88ef-954cc8baf251
+  Name: Innovations
+  CardImage: {fileID: 21300000, guid: 50a6c64a6248347659a2da86ec4b54f3, type: 3}
+  Cost:
+  - Name: Resource_3
+    Value: 8
+    Income: 0
+  Effects:
+  - {fileID: 11400000, guid: e11d0a7bad17944469a3274e10a197de, type: 2}
+  - {fileID: 11400000, guid: 2389a061a27254b20902080e53ae9ec8, type: 2}
+  - {fileID: 11400000, guid: f9e38419f39a5464f8af4ce7d828e417, type: 2}
+  SaveTurn: 0
+  NonDiscard: 0
+  Description: 
+  InDeck: 0
+  Count: 0
+  Type: 87
+  Rang: 3
