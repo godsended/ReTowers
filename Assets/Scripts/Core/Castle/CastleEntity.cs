@@ -21,6 +21,18 @@ namespace Core.Castle
             };
         }
 
+        public CastleEntity(Tower tower, Wall wall)
+        {
+            this.Tower = tower;
+            this.Wall = wall;
+            Resources = new List<Resource>()
+            {
+                new Resource("Resource_1"),
+                new Resource("Resource_2"),
+                new Resource("Resource_3")
+            };
+        }
+
         public Resource GetResource(string name)
         {
             return Resources.FirstOrDefault(r => r.Name == name);

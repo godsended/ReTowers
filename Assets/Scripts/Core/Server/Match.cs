@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Core.Utils;
 using UnityEngine;
 
 namespace Core.Server
@@ -21,6 +22,8 @@ namespace Core.Server
         public PlayerData CurrentPlayerTurn { get; private set; }
         public int TurnTime { get; private set; }
         public int PrepareTime { get; private set; }
+        
+        public int MatchDivision { get; set; }
 
         private Coroutine turnCoroutine;
         private int _numberTurn;
@@ -92,16 +95,24 @@ namespace Core.Server
                 }
             }
             bot = new PlayerData();
-            bot.Castle = new CastleEntity();
+            bot.Castle = new BlankCastleCreator().CreateCastle();
 
             _gameLogger.Log($"Create match {Id}!", LogTypeMessage.Info);
         }
 
-        public Match(List<PlayerData> player, IGameLogger gameLogger)
+        public Match(List<PlayerData> players, IGameLogger gameLogger)
         {
             Init(gameLogger);
 
-            player.ForEach(InitPlayer);
+            players.ForEach(InitPlayer);
+            
+            MatchDivision = players.First().Division;
+
+            foreach (var player in players)
+            {
+                if (player.Division < MatchDivision)
+                    MatchDivision = player.Division;
+            }
 
             CurrentPlayerTurn = Players.FirstOrDefault().Key;
 
@@ -120,7 +131,7 @@ namespace Core.Server
         private void InitPlayer(PlayerData player)
         {
             player.CurrentMatch = this;
-            player.Castle = new CastleEntity();
+            player.Castle = new DivisionCastleCreator(MatchDivision).CreateCastle();
             player.Cards = new PlayerCards(player.Cards.CardsIdDeck, player.Connection);
 
             Players.Add(player, false);
@@ -286,12 +297,15 @@ namespace Core.Server
             PlayerData targetPlayer = Players.Keys.FirstOrDefault(p => p.Id != requestCardDto.AccountId);
             CardData card = LibraryCards.GetCard(requestCardDto.CardId);
 
-            if (card != null)
+            if (card)
             {
                 if(Players.Count == 1) 
                 {
                     if (targetPlayer == null)
                     {
+                        if (!CurrentPlayerTurn.Cards.CardsIdHand.Contains(requestCardDto.CardId))
+                            return;
+                        
                         CurrentPlayerTurn.Cards.RemoveCardFromHand(requestCardDto.CardId);
                         CurrentPlayerTurn.Cards.ShuffleCard(requestCardDto.CardId);
                         CurrentPlayerTurn.Cards.GetAndTakeNearestCard();
@@ -307,14 +321,19 @@ namespace Core.Server
                         }
                     }
                 }
-                else 
+                else if (sendPlayer != null)
                 {
+                    if (!TurnValidator.ValidateCardTurn(sendPlayer, requestCardDto.CardId))
+                        return;
+
                     sendPlayer.Cards.RemoveCardFromHand(requestCardDto.CardId);
                     sendPlayer.Cards.ShuffleCard(requestCardDto.CardId);
                     sendPlayer.Cards.GetAndTakeNearestCard();
                     card.Effects.ForEach(e => e.Execute(sendPlayer, targetPlayer));
                 }
+                else return;
 
+                //ТУТ У НАС БУДЕТ ОТПРАВКА ТЕКУЩЕЙ МОДЕЛИ ВСЕМ БОЙЦАМ
                 foreach (PlayerData player in Players.Keys)
                 {
 
@@ -329,8 +348,6 @@ namespace Core.Server
                 }
 
                 CheckEndMatch();
-                    
-
             }
             else
             {
@@ -344,15 +361,14 @@ namespace Core.Server
             PlayerData sendPlayer = Players.Keys.FirstOrDefault(p => p.Id == requestCardDto.AccountId);
             CardData card = LibraryCards.GetCard(requestCardDto.CardId);
 
-            if (sendPlayer != null && card != null)
-            {
-                if (sendPlayer.Cards.CardsIdHand.Contains(requestCardDto.CardId))
-                {
-                    sendPlayer.Cards.RemoveCardFromHand(requestCardDto.CardId);
-                    sendPlayer.Cards.ShuffleCard(requestCardDto.CardId);
-                    sendPlayer.Cards.GetAndTakeNearestCard();
-                }
-            }
+            if (sendPlayer == null || card == null || !TurnValidator.ValidateCardTurn(sendPlayer, requestCardDto.CardId)) 
+                return;
+
+            if (!sendPlayer.Cards.CardsIdHand.Contains(requestCardDto.CardId)) return;
+            
+            sendPlayer.Cards.RemoveCardFromHand(requestCardDto.CardId);
+            sendPlayer.Cards.ShuffleCard(requestCardDto.CardId);
+            sendPlayer.Cards.GetAndTakeNearestCard();
         }
 
         public void CheckEndMatch()

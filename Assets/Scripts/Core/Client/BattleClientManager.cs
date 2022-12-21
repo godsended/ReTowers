@@ -5,6 +5,7 @@ using Core.Castle;
 using Core.Cards;
 using System.Linq;
 using System;
+using Core.Utils;
 using Effects;
 using MainMenu.Registration;
 using UnityEngine.SceneManagement;
@@ -41,13 +42,13 @@ namespace Core.Client
             instance._myPlayerData = new PlayerData
             {
                 Name = "Unknow",
-                Castle = new CastleEntity()
+                Castle = new BlankCastleCreator().CreateCastle()
             };
 
             instance._enemyPlayerData = new PlayerData
             {
                 Name = "Unknow",
-                Castle = new CastleEntity()
+                Castle = new BlankCastleCreator().CreateCastle()
             };
 
             instance._isMyTurn = false;
@@ -223,17 +224,19 @@ namespace Core.Client
             NetworkClient.RegisterHandler<RequestBattleInfo>(requestBattleInfo =>
             {
                 ResetBattleClient();
+                
+                Debug.Log("RequestBattleInfo updated!");
 
                 PlayerData myData = new PlayerData
                 {
                     Name = requestBattleInfo.YourName,
-                    Castle = new CastleEntity()
+                    Castle = new BlankCastleCreator().CreateCastle()
                 };
 
                 PlayerData enemyData = new PlayerData
                 {
                     Name = requestBattleInfo.EnemyName,
-                    Castle = new CastleEntity()
+                    Castle = new BlankCastleCreator().CreateCastle()
                 };
 
                 SetPlayerDatas(myData, enemyData);
