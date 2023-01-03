@@ -28,14 +28,17 @@ namespace Core.Server
         private Coroutine turnCoroutine;
         private int _numberTurn;
         private int _numberTurnForFatigue;
-        private int _damageFatigue;
         private IGameLogger _gameLogger;
 
         private List<Guid> _botDecks;
         private PlayerData bot;
+        
+        private Fatigue _fatigue { get; set; }
 
         public Match(PlayerData player, IGameLogger gameLogger)
         {
+            MatchDivision = player.Division;
+            
             Init(gameLogger);
 
             InitPlayer(player);
@@ -46,7 +49,7 @@ namespace Core.Server
 
             int[] lvl = new int[5];
 
-            Debug.Log(_botDecks.Count);
+            Debug.Log($"Created match with division {MatchDivision}");
 
             for (int i = 0; i < _botDecks.Count; i++)
             {
@@ -95,7 +98,7 @@ namespace Core.Server
                 }
             }
             bot = new PlayerData();
-            bot.Castle = new BlankCastleCreator().CreateCastle();
+            bot.Castle = new DivisionCastleCreator(MatchDivision).CreateCastle();
 
             _gameLogger.Log($"Create match {Id}!", LogTypeMessage.Info);
         }
@@ -152,13 +155,12 @@ namespace Core.Server
                     foreach (PlayerData player in Players.Keys)
                     {
                         if (player.Castle.Wall.Health > 0)
-                            player.Castle.Wall.Damage(_damageFatigue);
+                            player.Castle.Wall.Damage(_fatigue.Damage);
                         else
-                            player.Castle.Tower.Damage(_damageFatigue);
+                            player.Castle.Tower.Damage(_fatigue.Damage);
                     }
-                
-                    if (_damageFatigue < int.Parse(Configurator.data["BattleConfiguration"]["fatigueLimit"]))
-                        _damageFatigue++;
+
+                    _fatigue++;
                 }
 
                 PlayerData playerWin = CheckPlayerWin();
@@ -303,9 +305,30 @@ namespace Core.Server
                 {
                     if (targetPlayer == null)
                     {
-                        if (!CurrentPlayerTurn.Cards.CardsIdHand.Contains(requestCardDto.CardId))
+                        bool a1 = !CurrentPlayerTurn.Cards.CardsIdHand.Contains(requestCardDto.CardId);
+                        bool a2 = !TurnValidator.ValidateResourcesAvailability(CurrentPlayerTurn, card);
+                        if (!CurrentPlayerTurn.Cards.CardsIdHand.Contains(requestCardDto.CardId) ||
+                            !TurnValidator.ValidateResourcesAvailability(CurrentPlayerTurn, card))
+                        {
+                            if(!CurrentPlayerTurn.Cards.CardsIdHand.Contains(requestCardDto.CardId))
+                               Debug.Log("OPA31");
+
+                            if (!TurnValidator.ValidateResourcesAvailability(CurrentPlayerTurn, card))
+                            {
+                                foreach (var res in card.Cost)
+                                {
+                                    Debug.Log($"Cost: {res.Name} {res.Value}");
+                                }
+                                
+                                foreach (var res in CurrentPlayerTurn.Castle.Resources)
+                                {
+                                    Debug.Log($"Res: {res.Name} {res.Value} {res.Income}");
+                                }
+                            }
+                            
                             return;
-                        
+                        }
+
                         CurrentPlayerTurn.Cards.RemoveCardFromHand(requestCardDto.CardId);
                         CurrentPlayerTurn.Cards.ShuffleCard(requestCardDto.CardId);
                         CurrentPlayerTurn.Cards.GetAndTakeNearestCard();
@@ -323,15 +346,22 @@ namespace Core.Server
                 }
                 else if (sendPlayer != null)
                 {
-                    if (!TurnValidator.ValidateCardTurn(sendPlayer, requestCardDto.CardId))
+                    Debug.Log("Iam here!");
+                    if (!TurnValidator.ValidateCardTurn(sendPlayer, requestCardDto.CardId, card))
+                    {
+                        Debug.Log($"OPAAAAAAA2\n{sendPlayer}\n{requestCardDto.CardId}");
                         return;
+                    }
 
                     sendPlayer.Cards.RemoveCardFromHand(requestCardDto.CardId);
                     sendPlayer.Cards.ShuffleCard(requestCardDto.CardId);
                     sendPlayer.Cards.GetAndTakeNearestCard();
                     card.Effects.ForEach(e => e.Execute(sendPlayer, targetPlayer));
                 }
-                else return;
+                else                       
+                {
+                    return;
+                };
 
                 //ТУТ У НАС БУДЕТ ОТПРАВКА ТЕКУЩЕЙ МОДЕЛИ ВСЕМ БОЙЦАМ
                 foreach (PlayerData player in Players.Keys)
@@ -361,11 +391,13 @@ namespace Core.Server
             PlayerData sendPlayer = Players.Keys.FirstOrDefault(p => p.Id == requestCardDto.AccountId);
             CardData card = LibraryCards.GetCard(requestCardDto.CardId);
 
-            if (sendPlayer == null || card == null || !TurnValidator.ValidateCardTurn(sendPlayer, requestCardDto.CardId)) 
+            if (sendPlayer == null || card == null ||
+                !TurnValidator.ValidateCardInHand(sendPlayer, requestCardDto.CardId))
+            {
+                Debug.Log("OPAAAAAA1");
                 return;
+            }
 
-            if (!sendPlayer.Cards.CardsIdHand.Contains(requestCardDto.CardId)) return;
-            
             sendPlayer.Cards.RemoveCardFromHand(requestCardDto.CardId);
             sendPlayer.Cards.ShuffleCard(requestCardDto.CardId);
             sendPlayer.Cards.GetAndTakeNearestCard();
@@ -434,12 +466,16 @@ namespace Core.Server
         /// </summary>
         public void Start()
         {
-            _numberTurn = 0;
+            _numberTurn = -1;
             _numberTurnForFatigue = int.Parse(Configurator.data["BattleConfiguration"]["fatigueTurnStart"]);
-            _damageFatigue = int.Parse(Configurator.data["BattleConfiguration"]["fatigueDamageStart"]);
+            _fatigue = new Fatigue(MatchDivision);
+            
+            Debug.Log($"Match fatigue initialized with division {MatchDivision}");
 
             foreach (PlayerData playerData in Players.Keys)
                 MatchServerController.instance.StartCoroutine(playerData.Cards.FillHand());
+            
+            NextTurn();
 
             turnCoroutine = MatchServerController.instance.StartCoroutine(TurnTimer());
 
@@ -505,7 +541,7 @@ namespace Core.Server
             DebugManager.AddLineDebugText("T2: " + Players.Keys.Last().Castle.Tower.Health.ToString(), "t2");
             DebugManager.AddLineDebugText("W2: " + Players.Keys.Last().Castle.Wall.Health.ToString(), "w2");
             DebugManager.AddLineDebugText("Turn: " + _numberTurn, "t");
-            DebugManager.AddLineDebugText("FatigueDamage: " + _damageFatigue, "fd");
+            DebugManager.AddLineDebugText("FatigueDamage: " + _fatigue.Damage, "fd");
         }
 
         private void CheckForStartMatch()

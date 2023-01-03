@@ -25,10 +25,11 @@ namespace Core.Client
         private float _timer;
         private float _elapsedTime;
         private int _numberTurnForFatigue;
-        private int _damageFatigue;
+        private Fatigue _fatigue;
         private int _numberTurn;
-        private int _fatigueLimit;
         private int _winCount;
+
+        private int division;
 
         public static PlayerData GetMyData() => instance._myPlayerData;
         public static PlayerData GetEnemyData() => instance._enemyPlayerData;
@@ -57,9 +58,9 @@ namespace Core.Client
             instance._timer = 0;
             instance._elapsedTime = 0;
             instance._numberTurnForFatigue = 0;
-            instance._damageFatigue = 0;
+            //instance._damageFatigue = 0;
             instance._numberTurn = 0;
-            instance._fatigueLimit = 0;
+            //instance._fatigueLimit = 0;
         }
 
         public static void ResetTimer()
@@ -97,23 +98,22 @@ namespace Core.Client
                     if (instance._numberTurn >= instance._numberTurnForFatigue)
                     {
                         if (GetMyData().Castle.Wall.Health > 0)
-                            BattleUI.DamageMyWall(instance._damageFatigue);
+                            BattleUI.DamageMyWall(instance._fatigue.Damage);
                         else
-                            BattleUI.DamageMyTower(instance._damageFatigue);
+                            BattleUI.DamageMyTower(instance._fatigue.Damage);
 
                         if (GetEnemyData().Castle.Wall.Health > 0)
-                            BattleUI.DamageEnemyWall(instance._damageFatigue);
+                            BattleUI.DamageEnemyWall(instance._fatigue.Damage);
                         else
-                            BattleUI.DamageEnemyTower(instance._damageFatigue);
+                            BattleUI.DamageEnemyTower(instance._fatigue.Damage);
 
                         EffectSpawner.ApplyFatigueEffect();
 
-                        if (instance._damageFatigue < instance._fatigueLimit)
-                            instance._damageFatigue++;
+                        instance._fatigue++;
                     }
                 }
 
-                BattleUI.SetTextFatigueDamage(instance._damageFatigue);
+                BattleUI.SetTextFatigueDamage(instance._fatigue.Damage);
             }
 
             if (instance._matchEnded || SceneManager.GetActiveScene().name != "Battle")
@@ -225,18 +225,22 @@ namespace Core.Client
             {
                 ResetBattleClient();
                 
-                Debug.Log("RequestBattleInfo updated!");
+                Debug.Log($"RequestBattleInfo updated with division {requestBattleInfo.Division}!");
+
+                division = requestBattleInfo.Division;
+
+                ICastleCreator castleCreator = new DivisionCastleCreator(requestBattleInfo.Division);
 
                 PlayerData myData = new PlayerData
                 {
                     Name = requestBattleInfo.YourName,
-                    Castle = new BlankCastleCreator().CreateCastle()
+                    Castle = castleCreator.CreateCastle()
                 };
 
                 PlayerData enemyData = new PlayerData
                 {
                     Name = requestBattleInfo.EnemyName,
-                    Castle = new BlankCastleCreator().CreateCastle()
+                    Castle = castleCreator.CreateCastle()
                 };
 
                 SetPlayerDatas(myData, enemyData);
@@ -263,8 +267,7 @@ namespace Core.Client
 
                 _timer = requestBattleInfo.Timer;
                 _numberTurnForFatigue = requestBattleInfo.TurnFatigue;
-                _damageFatigue = requestBattleInfo.StartDamageFatigue;
-                _fatigueLimit = requestBattleInfo.FatigueLimit;
+                _fatigue = new Fatigue(division);
 
                 _numberTurn = 0;
                 _matchEnded = false;

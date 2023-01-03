@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Core.Castle;
 
 namespace Core.Utils
@@ -68,8 +69,76 @@ namespace Core.Utils
                     wall = new Wall(250, 48);
                     break;
             }
+
+            CastleEntity castleEntity = new CastleEntity(tower, wall, CreateResourcesList());
+            return castleEntity;
+        }
+
+        private List<Resource> CreateResourcesList()
+        {
+            int income, value;
+            switch (division)
+            {
+                case 1:
+                    income = 2;
+                    value = 7;
+                    break;
+                
+                case 2:
+                    income = 2;
+                    value = 8;
+                    break;
+                
+                case 3:
+                    income = 3;
+                    value = 9;
+                    break;
+                
+                case 4:
+                    income = 3;
+                    value = 10;
+                    break;
+
+                case 5:
+                    income = 4;
+                    value = 12;
+                    break;
+                
+                case 6:
+                    income = 4;
+                    value = 14;
+                    break;
+                
+                case 7:
+                    income = 5;
+                    value = 16;
+                    break;
+                
+                case 8:
+                    income = 5;
+                    value = 19;
+                    break;
+                
+                case 9:
+                    income = 6;
+                    value = 22;
+                    break;
+                
+                case 10:
+                default:
+                    income = 7;
+                    value = 26;
+                    break;
+            }
+
+            value -= income;
             
-            return new CastleEntity(tower, wall);
+            return new List<Resource>()
+            {
+                new Resource("Resource_1", value, income),
+                new Resource("Resource_2", value, income),
+                new Resource("Resource_3", value, income)
+            };
         }
     }
 }

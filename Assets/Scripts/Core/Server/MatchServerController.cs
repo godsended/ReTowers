@@ -8,6 +8,8 @@ using System.Linq;
 using UnityEngine;
 using System.IO;
 using System.Timers;
+using Core.Utils;
+using System.Linq;
 
 namespace Core.Server
 {
@@ -29,7 +31,7 @@ namespace Core.Server
         public int MatchSize { get; set; } = 2;
 
         private List<PlayerData> _playersLookingForMatches;
-        private List<Match> _matches;
+        private List<Match> _matches { get; set; }
         private IGameLogger _gameLogger;
         private Timer _timer;
 
@@ -136,9 +138,19 @@ namespace Core.Server
                 {
                     var yourData = match.Players.FirstOrDefault(p => p.Key.Id == requestBattleDto.AccountId).Key;
                     var enemyData = match.Players.FirstOrDefault(p => p.Key.Id != requestBattleDto.AccountId).Key;
+                    
+                    match.MatchDivision = yourData.Division;
+                    if (enemyData != null)
+                        match.MatchDivision = Math.Min(match.MatchDivision, enemyData.Division);
+
+                    DivisionCastleCreator castleCreator = new DivisionCastleCreator(match.MatchDivision);
+                    MatchPlayerDataInitializer<DivisionCastleCreator> playerDataInitializer = new(castleCreator);
+                    playerDataInitializer.Initialize(yourData);
 
                     if (enemyData != null)
                     {
+                        playerDataInitializer.Initialize(enemyData);
+                        Debug.Log($"Sending ReqBattleInfo with division {match.MatchDivision}");
                         connection.Send(new RequestBattleInfo
                         {
                             AccountId = requestBattleDto.AccountId,
@@ -153,7 +165,8 @@ namespace Core.Server
                             EnemyWinCount = enemyData.PlayerStatistics.WinCount,
                             StartDamageFatigue = int.Parse(Configurator.data["BattleConfiguration"]["fatigueDamageStart"]),
                             TurnFatigue = int.Parse(Configurator.data["BattleConfiguration"]["fatigueTurnStart"]),
-                            FatigueLimit = int.Parse(Configurator.data["BattleConfiguration"]["fatigueLimit"])
+                            FatigueLimit = int.Parse(Configurator.data["BattleConfiguration"]["fatigueLimit"]),
+                            Division = match.MatchDivision
                         });
 
                         match.PlayerReady(requestBattleDto.AccountId);
@@ -178,7 +191,8 @@ namespace Core.Server
                             EnemyWinCount = UnityEngine.Random.Range(yourData.PlayerStatistics.WinCount, yourData.PlayerStatistics.WinCount + 5),
                             StartDamageFatigue = int.Parse(Configurator.data["BattleConfiguration"]["fatigueDamageStart"]),
                             TurnFatigue = int.Parse(Configurator.data["BattleConfiguration"]["fatigueTurnStart"]),
-                            FatigueLimit = int.Parse(Configurator.data["BattleConfiguration"]["fatigueLimit"])
+                            FatigueLimit = int.Parse(Configurator.data["BattleConfiguration"]["fatigueLimit"]),
+                            Division = match.MatchDivision
                         });
                         match.PlayerReady(requestBattleDto.AccountId);
                     }
@@ -278,6 +292,7 @@ namespace Core.Server
                 if (_times[i] <= 0)
                 {
                     StopTimer(i);
+                    Debug.Log($"TimerOnEllapsed player division {_playersLookingForMatches[i].Division}");
                     StartToBot(_playersLookingForMatches[i]);
                 }
             }
@@ -287,7 +302,9 @@ namespace Core.Server
         {
             _times.Add(TimeToStartBot);
             
+            Debug.Log("Here we start");
             _timer.Start();
+            Debug.Log("Here we end");
         }
         
         private void StopTimer(int i)

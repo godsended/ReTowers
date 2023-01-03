@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 5abef95e-2cb1-4171-81b0-9fc1c29857a2
   Name: Discord
-  CardImage: {fileID: 21300000, guid: ac638bc1e2bc60847bec71aa859553d1, type: 3}
+  CardImage: {fileID: 21300000, guid: 76a7ebaa8ea534ff6a0185b81e358dde, type: 3}
   Cost:
   - Name: Resource_2
     Value: 5
@@ -27,7 +27,7 @@ MonoBehaviour:
   SaveTurn: 0
   NonDiscard: 0
   Description: 
-  InDeck: 0
-  Count: 0
+  InDeck: 1
+  Count: 1
   Type: 9
   Rang: 0

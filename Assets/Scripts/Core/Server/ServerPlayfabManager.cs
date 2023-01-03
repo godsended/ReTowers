@@ -128,31 +128,30 @@ namespace Core.Server
         {
             foreach (var player in players)
             {
-                if (player.PlayFabId == result.PlayFabId)
-                {
-                    if (result.Data != null && result.Data.ContainsKey("PlayerCards"))
-                    {
-                        List<CardJson> cards = JsonConvert.DeserializeObject<List<CardJson>>(result.Data["PlayerCards"].Value);
-                        List<CardData> cardDatas = LibraryCards.GetPlayerCards();
-                        List<CardData> DeckDatas = new List<CardData>();
-                        foreach (var card in cards)
-                        {
-                            for (int i = 0; i < cardDatas.Count; i++)
-                            {
-                                if (cardDatas[i].Id == card.Id && card.InDeck)
-                                {
-                                    DeckDatas.Add(cardDatas[i]);
-                                    break;
-                                }
-                            }
-                        }
-                        player.Cards = new PlayerCards(DeckDatas.Select(c => Guid.Parse(c.Id)).ToList());
+                if (player.PlayFabId != result.PlayFabId) continue;
 
-                        MatchServerController.instance.StartToBot(player);
-                        players.Remove(player);
-                        return;
+                if (result.Data == null || !result.Data.ContainsKey("PlayerCards")) continue;
+                
+                List<CardJson> cards = JsonConvert.DeserializeObject<List<CardJson>>(result.Data["PlayerCards"].Value);
+                List<CardData> cardDatas = LibraryCards.GetPlayerCards();
+                List<CardData> DeckDatas = new List<CardData>();
+                foreach (var card in cards)
+                {
+                    for (int i = 0; i < cardDatas.Count; i++)
+                    {
+                        if (cardDatas[i].Id == card.Id && cardDatas[i].Rang == 0)
+                        {
+                            DeckDatas.Add(cardDatas[i]);
+                            break;
+                        }
                     }
                 }
+                player.Division = DivisionCalculator.CalculateDivision(DeckDatas.ToArray());
+                player.Cards = new PlayerCards(DeckDatas.Select(c => Guid.Parse(c.Id)).ToList());
+                Debug.Log($"WhenPlayerDataRecievedInBotMatch player division {player.Division}");
+                MatchServerController.instance.StartToBot(player);
+                players.Remove(player);
+                return;
             }
         }
     }

@@ -24,5 +24,7 @@ namespace Core.Contracts
         public int EnemyWallHealth { get; set; }
 
         public bool IsYourTurn { get; set; }
+        
+        public int Division { get; set; }
     }
 }

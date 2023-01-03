@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace Core.Castle
 {
@@ -9,23 +10,12 @@ namespace Core.Castle
         public Wall Wall { get; private set; }
         public List<Resource> Resources { get; private set; }
 
-        public CastleEntity()
+        public CastleEntity([CanBeNull] Tower tower = null, [CanBeNull] Wall wall = null, 
+            [CanBeNull] List<Resource> resources = null)
         {
-            Tower = new Tower();
-            Wall = new Wall();
-            Resources = new List<Resource>()
-            {
-                new Resource("Resource_1"),
-                new Resource("Resource_2"),
-                new Resource("Resource_3")
-            };
-        }
-
-        public CastleEntity(Tower tower, Wall wall)
-        {
-            this.Tower = tower;
-            this.Wall = wall;
-            Resources = new List<Resource>()
+            this.Tower = tower ?? new Tower();
+            this.Wall = wall ?? new Wall();
+            Resources = resources ?? new List<Resource>()
             {
                 new Resource("Resource_1"),
                 new Resource("Resource_2"),

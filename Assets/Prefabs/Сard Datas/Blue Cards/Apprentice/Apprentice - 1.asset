@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: f95db37d-878c-40bb-a663-042320340af9
   Name: Apprentice
-  CardImage: {fileID: 21300000, guid: 12482fd4d3c0a7d4997798f8e02983f5, type: 3}
+  CardImage: {fileID: 21300000, guid: 840cc6a365d634ff5b426b2de4f5aa7e, type: 3}
   Cost:
   - Name: Resource_2
     Value: 5
@@ -27,6 +27,6 @@ MonoBehaviour:
   NonDiscard: 0
   Description: 
   InDeck: 1
-  Count: 0
+  Count: 1
   Type: 2
   Rang: 0

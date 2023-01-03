@@ -89,6 +89,7 @@ namespace Mirror.Extensions
             writer.WriteInt(requestBattleInfo.StartDamageFatigue);
             writer.WriteInt(requestBattleInfo.FatigueLimit);
             writer.WriteInt(requestBattleInfo.EnemyWinCount);
+            writer.WriteInt(requestBattleInfo.Division);
         }
 
         public static RequestBattleInfo ReadRequestBattleInfo(this NetworkReader reader)
@@ -107,7 +108,8 @@ namespace Mirror.Extensions
                 TurnFatigue = reader.ReadInt(),
                 StartDamageFatigue = reader.ReadInt(),
                 FatigueLimit = reader.ReadInt(),
-                EnemyWinCount = reader.ReadInt()
+                EnemyWinCount = reader.ReadInt(),
+                Division = reader.ReadInt(),
             };
         }
 
