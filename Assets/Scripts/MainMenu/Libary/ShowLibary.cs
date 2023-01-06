@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using Core;
 
-namespace MainMenu.Libary
+namespace MainMenu.Library
 {
     public class ShowLibary : MonoBehaviour
     {

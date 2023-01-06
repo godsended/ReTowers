@@ -85,49 +85,49 @@ namespace Core.Utils
                     break;
                 
                 case 2:
-                    income = 2;
-                    value = 8;
-                    break;
-                
-                case 3:
                     income = 3;
                     value = 9;
                     break;
                 
-                case 4:
+                case 3:
                     income = 3;
                     value = 10;
+                    break;
+                
+                case 4:
+                    income = 4;
+                    value = 12;
                     break;
 
                 case 5:
                     income = 4;
-                    value = 12;
-                    break;
-                
-                case 6:
-                    income = 4;
                     value = 14;
                     break;
                 
-                case 7:
+                case 6:
                     income = 5;
                     value = 16;
                     break;
                 
-                case 8:
+                case 7:
                     income = 5;
                     value = 19;
                     break;
                 
-                case 9:
+                case 8:
                     income = 6;
                     value = 22;
                     break;
                 
-                case 10:
-                default:
+                case 9:
                     income = 7;
                     value = 26;
+                    break;
+                
+                case 10:
+                default:
+                    income = 8;
+                    value = 30;
                     break;
             }
 

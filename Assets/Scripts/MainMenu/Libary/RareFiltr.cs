@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace MainMenu.Libary {
+namespace MainMenu.Library {
     public class RareFiltr : MonoBehaviour
     {
         [SerializeField] ShowLibary showLibary;

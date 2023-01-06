@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/MHLab/Patch/Launcher/Scenes/PreGame.unity
     guid: 98697cd740c1eb148b123f3c1128479b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Server.unity
     guid: d055f3f62f367a246ae3665740f6769e
   - enabled: 1

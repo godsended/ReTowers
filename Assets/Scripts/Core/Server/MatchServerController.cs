@@ -337,19 +337,11 @@ namespace Core.Server
             int playerindex = -1;
             int playersCount = instance._playersLookingForMatches.Count;
 
+            Debug.Log($"Weee {instance._playersLookingForMatches[playersCount - 1].Division}");
             for (int i = 0; i < playersCount - 1; i++)
             {
-                if (instance._playersLookingForMatches[i].Division == instance._playersLookingForMatches[playersCount - 1].Division)
-                {
-                    playerindex = i;
-                    break;
-                }
-                if (instance._playersLookingForMatches[i].Division + 1 == instance._playersLookingForMatches[playersCount - 1].Division)
-                {
-                    playerindex = i;
-                    break;
-                }
-                if (instance._playersLookingForMatches[i].Division - 1 == instance._playersLookingForMatches[playersCount - 1].Division)
+                Debug.Log($"Hewww {instance._playersLookingForMatches[i].Division}");
+                if (Mathf.Abs(instance._playersLookingForMatches[i].Division - instance._playersLookingForMatches[playersCount - 1].Division) < 2)
                 {
                     playerindex = i;
                     break;

@@ -2,7 +2,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using Core.Cards;
 
-namespace MainMenu.Libary
+namespace MainMenu.Library
 {
     public class CardUI : MonoBehaviour
     {
@@ -51,6 +51,9 @@ namespace MainMenu.Libary
 
         public void UpCardLevel()
         {
+            if (_curCardData.Rang >= 4)
+                return;
+            
             _curCardData.UpLevel();
             ShowLibary.RemvoeAtWeight(_curCardData);
             _curCardData.InDeck = false;

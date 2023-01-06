@@ -2,7 +2,7 @@ using Core.Cards;
 
 namespace Core
 {
-    public class DivisionCalculator
+    public static class DivisionCalculator
     {
         public static int CalculateDivision(CardData[] cards) 
         {

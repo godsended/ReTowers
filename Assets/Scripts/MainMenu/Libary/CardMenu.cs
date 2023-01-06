@@ -3,7 +3,7 @@ using Core.Cards;
 using UnityEngine.UI;
 using TMPro;
 
-namespace MainMenu.Libary {
+namespace MainMenu.Library {
     public class CardMenu : MonoBehaviour
     {
         [SerializeField] private Image bigCardImage;
