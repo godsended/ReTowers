@@ -65,10 +65,10 @@ namespace Core.Client
 
         private void WinOnPoint() 
         {
-            if(ScensVar.PointIndex != -1) 
+            if(ScensVar.LevelId != -1) 
             {
                 char[] data = PlayerPrefs.GetString("Points").ToCharArray();
-                data[ScensVar.PointIndex] = '1';
+                data[ScensVar.LevelId] = '1';
                 PlayerPrefs.SetString("Points", new string(data));
                 PlayerPrefs.Save();
             }

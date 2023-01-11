@@ -19708,6 +19708,7 @@ MonoBehaviour:
   - {fileID: 1373954272}
   - {fileID: 1350761152}
   - {fileID: 2134850995}
+  _activetedPoints: 
 --- !u!1 &550993202
 GameObject:
   m_ObjectHideFlags: 0
@@ -54196,7 +54197,7 @@ MonoBehaviour:
   offlineScene: 
   onlineScene: 
   transport: {fileID: 1473344965}
-  networkAddress: 91.211.251.242
+  networkAddress: localhost
   maxConnections: 1000
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 0}
