@@ -9,8 +9,8 @@ namespace Core.Map
 
         public int Progress { get; set; } = 0;
 
-        public int MaxProgress { get; set; } = 5; //Never changed
+        public int MaxProgress { get; set; } = 6; //Never changed
 
-        public bool IsCompleted() => Progress >= MaxProgress;
+        public bool IsCompleted() => Progress > MaxProgress;
     }
 }
