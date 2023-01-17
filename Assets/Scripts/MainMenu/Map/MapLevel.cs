@@ -1,5 +1,8 @@
 using System;
+using Core.Map;
+using Settings;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace MainMenu.Map
@@ -8,23 +11,21 @@ namespace MainMenu.Map
     {
         private bool isAvailable;
 
-        [SerializeField] private int progress;
+        [HideInInspector] public SettingsManager settingsManager;
 
-        [SerializeField] private int biomeId;
-
-        [SerializeField] private int levelId;
+        [SerializeField] private LevelInfo levelInfo;
 
         [SerializeField] private Animator animator;
 
         [SerializeField] private Button button;
 
-        [SerializeField] private MapController mapController;
+        [FormerlySerializedAs("mapController")] [SerializeField] private MapUIController mapUIController;
 
-        public int BiomeId => biomeId;
+        public int BiomeId => levelInfo.BiomeId;
 
-        public int Progress => progress;
+        public int Progress => levelInfo.Progress;
 
-        public int LevelId => levelId;
+        public int LevelId => levelInfo.LevelId;
 
         public event EventHandler OnAvailabilityChanged;
 
@@ -48,7 +49,12 @@ namespace MainMenu.Map
 
         public void ChangePointIndex()
         {
-            mapController.SetLevelId(levelId);
+            mapUIController.SetLevelId(levelInfo.LevelId);
+        }
+
+        public void StartBotGame()
+        {
+            settingsManager.SearchBotMatch(LevelId);
         }
     }
 }

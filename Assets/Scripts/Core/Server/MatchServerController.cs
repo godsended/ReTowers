@@ -10,6 +10,7 @@ using System.IO;
 using System.Timers;
 using Core.Utils;
 using System.Linq;
+using Core.Map;
 
 namespace Core.Server
 {
@@ -203,44 +204,7 @@ namespace Core.Server
                 }
             }, false);
 
-            NetworkServer.RegisterHandler<RequestMatchDto>((connection, requestMatchDto) =>
-            {
-                PlayerData playerData = MainServer.GetPlayerData(requestMatchDto.AccountId);
-
-                if (playerData != null)
-                {
-                    switch (requestMatchDto.RequestType)
-                    {
-                        case MatchRequestType.FindingMatch:
-                            ServerPlayfabManager.instance.GetUserData(playerData, false);
-                            break;
-                        case MatchRequestType.FindingBotMatch:
-                            ServerPlayfabManager.instance.GetUserData(playerData, true);
-                            break;
-                        case MatchRequestType.CancelFindingMatch:
-                            for (int i = 0; i < instance._playersLookingForMatches.Count; i++)
-                            {
-                                if(playerData.Id == instance._playersLookingForMatches[i].Id) 
-                                {
-                                    StopTimer(i);
-                                    break;
-                                }
-                            }
-                            RemovePlayerLookingMatch(playerData);
-                            break;
-                        case MatchRequestType.ExitMatch:
-                            LeaveMatch(playerData);
-                            break;
-                        case MatchRequestType.EndTurn:
-                            RequestEndTurn(playerData);
-                            break;
-                    }
-                }
-                else
-                {
-                    _gameLogger.Log($"Player data is not found!", LogTypeMessage.Low);
-                }
-            }, false);
+            NetworkServer.RegisterHandler<RequestMatchDto>(HandleSearchMatchRequest, false);
         }
 
         private void RequestEndTurn(PlayerData player)
@@ -293,7 +257,7 @@ namespace Core.Server
                 {
                     StopTimer(i);
                     Debug.Log($"TimerOnEllapsed player division {_playersLookingForMatches[i].Division}");
-                    StartToBot(_playersLookingForMatches[i]);
+                    StartToBot(null, null, _playersLookingForMatches[i]);
                 }
             }
         }
@@ -317,14 +281,14 @@ namespace Core.Server
             }
         }
 
-        public void StartToBot(PlayerData player = null)
+        public void StartToBot(LevelInfo levelInfo, MapProgress mapProgress, PlayerData player = null)
         {
             if (player == null)
             {
                 player = instance._playersLookingForMatches.First();
             }
 
-            _matches.Add(new Match(player, _gameLogger));
+            _matches.Add(new Match(player, _gameLogger, levelInfo, mapProgress));
 
             StartMatch(player);
         }
@@ -382,6 +346,45 @@ namespace Core.Server
         public void StartBotTurn(Match match) 
         {
             StartCoroutine(match.BotTurn());
+        }
+
+        private void HandleSearchMatchRequest(NetworkConnectionToClient connection, RequestMatchDto requestMatchDto)
+        {
+            PlayerData playerData = MainServer.GetPlayerData(requestMatchDto.AccountId);
+
+            if (playerData != null)
+            {
+                switch (requestMatchDto.RequestType)
+                {
+                    case MatchRequestType.FindingMatch:
+                        ServerPlayfabManager.instance.GetUserData(playerData, false);
+                        break;
+                    case MatchRequestType.FindingBotMatch:
+                        ServerPlayfabManager.instance.GetUserData(playerData, true, requestMatchDto.LevelId);
+                        break;
+                    case MatchRequestType.CancelFindingMatch:
+                        for (int i = 0; i < instance._playersLookingForMatches.Count; i++)
+                        {
+                            if(playerData.Id == instance._playersLookingForMatches[i].Id) 
+                            {
+                                StopTimer(i);
+                                break;
+                            }
+                        }
+                        RemovePlayerLookingMatch(playerData);
+                        break;
+                    case MatchRequestType.ExitMatch:
+                        LeaveMatch(playerData);
+                        break;
+                    case MatchRequestType.EndTurn:
+                        RequestEndTurn(playerData);
+                        break;
+                }
+            }
+            else
+            {
+                _gameLogger.Log($"Player data is not found!", LogTypeMessage.Low);
+            }
         }
     }
 }

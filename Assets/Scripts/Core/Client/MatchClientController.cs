@@ -95,27 +95,28 @@ namespace Core.Client
                 instance._searchingLag = instance.StartCoroutine(instance.SearhicngLag());
             }
         }
-        public static void SearchingBotMatch(int bossType)
+        public static void SearchingBotMatch(int levelId)
         {
-            if (MainClient.GetEnergyCount() > 0 && bossType == 0)
+            //CORRECT ENERGY SPENDING
+            if (MainClient.GetEnergyCount() > 0 /*&& bossType == 0*/)
             {
-                DebugManager.AddLineDebugText("Searching match...", nameof(SearhicngLagBot));
+                DebugManager.AddLineDebugText("Searching match...", nameof(SearchingLagBot));
 
                 if (instance._searchingLag != null)
                     instance.StopCoroutine(instance._searchingLag);
 
-                instance._searchingLag = instance.StartCoroutine(instance.SearhicngLagBot(bossType));
+                instance._searchingLag = instance.StartCoroutine(instance.SearchingLagBot(levelId));
             }
-            else if(MainClient.GetEnergyCount() >= 5 && bossType != 0) 
-            {
-                DebugManager.AddLineDebugText("Searching match...", nameof(SearhicngLagBot));
-
-                if (instance._searchingLag != null)
-                    instance.StopCoroutine(instance._searchingLag);
-
-                instance._searchingLag = instance.StartCoroutine(instance.SearhicngLagBot(bossType));
-                PlayfabManager.TakeAwayEnergy(4);
-            }
+            // else if(MainClient.GetEnergyCount() >= 0 && bossType != 0) 
+            // {
+            //     DebugManager.AddLineDebugText("Searching match...", nameof(SearchingLagBot));
+            //
+            //     if (instance._searchingLag != null)
+            //         instance.StopCoroutine(instance._searchingLag);
+            //
+            //     instance._searchingLag = instance.StartCoroutine(instance.SearchingLagBot(bossType));
+            //     //PlayfabManager.TakeAwayEnergy(4);
+            // }
         }
 
         public static void CancelSearchingMatch()
@@ -135,21 +136,25 @@ namespace Core.Client
         private IEnumerator SearhicngLag()
         {
             yield return new WaitForSeconds(timeSearchingLag);
-            ScensVar.BossType = 0;
+            ScensVar.BossType = -1;
+            ScensVar.LevelId = -1;
             NetworkClient.Send(new RequestMatchDto
             {
                 AccountId = MainClient.GetClientId(),
-                RequestType = MatchRequestType.FindingMatch
+                RequestType = MatchRequestType.FindingMatch,
+                LevelId = -1
             });
         }
 
-        private IEnumerator SearhicngLagBot(int bossType)
+        private IEnumerator SearchingLagBot(int levelId)
         {
-            ScensVar.BossType = bossType;
+            ScensVar.BossType = levelId;
+            ScensVar.LevelId = levelId;
             NetworkClient.Send(new RequestMatchDto
             {
                 AccountId = MainClient.GetClientId(),
-                RequestType = MatchRequestType.FindingBotMatch
+                RequestType = MatchRequestType.FindingBotMatch,
+                LevelId = levelId
             });
 
             yield break;

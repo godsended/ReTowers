@@ -16,6 +16,14 @@ namespace MainMenu.Map
         {
             if(relatedLevel != null)
                 relatedLevel.OnAvailabilityChanged += HandleAvailabilityChanges;
+
+            if (image == null)
+            {
+                TryGetComponent(out image);
+            }
+
+            if (animator == null)
+                TryGetComponent(out animator);
         }
 
         private void HandleAvailabilityChanges(object sender, EventArgs e)

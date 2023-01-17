@@ -6,6 +6,8 @@ using System;
 using Core.Cards;
 using Newtonsoft.Json;
 using System.Linq;
+using Core.Map;
+using Core.Map.Server;
 
 namespace Core.Server
 {
@@ -77,7 +79,7 @@ namespace Core.Server
             }
         }
 
-        public void GetUserData(PlayerData player, bool isBotMatch)
+        public void GetUserData(PlayerData player, bool isBotMatch, int levelId = -1)
         {
             players.Add(player);
             var request = new GetUserDataRequest
@@ -87,7 +89,9 @@ namespace Core.Server
             if(!isBotMatch)
                 PlayFabServerAPI.GetUserData(request, OnPlayerDataRecieved, null);
             else
-                PlayFabServerAPI.GetUserData(request, OnPlayerDataRecievedInBotMatch, null);
+            {
+                PlayFabServerAPI.GetUserData(request, OnPlayerDataRecievedInBotMatch, null, levelId);
+            }
         }
 
         private void OnPlayerDataRecieved(GetUserDataResult result)
@@ -132,26 +136,39 @@ namespace Core.Server
 
                 if (result.Data == null || !result.Data.ContainsKey("PlayerCards")) continue;
                 
-                List<CardJson> cards = JsonConvert.DeserializeObject<List<CardJson>>(result.Data["PlayerCards"].Value);
-                List<CardData> cardDatas = LibraryCards.GetPlayerCards();
-                List<CardData> DeckDatas = new List<CardData>();
-                foreach (var card in cards)
+                ServerMapController.Instance.LoadMapProgress(result.PlayFabId, progress =>
                 {
-                    for (int i = 0; i < cardDatas.Count; i++)
+                    LevelInfo level =
+                        ServerMapController.Instance.LevelsConfiguration.Levels.FirstOrDefault(l =>
+                            l.LevelId == (int) result.CustomData);
+
+                    if (level == null)
+                        return;
+
+                    if (level.Progress > progress.Biomes[level.BiomeId].Progress)
+                        return;
+                    
+                    List<CardJson> cards = JsonConvert.DeserializeObject<List<CardJson>>(result.Data["PlayerCards"].Value);
+                    List<CardData> cardDatas = LibraryCards.GetPlayerCards();
+                    List<CardData> DeckDatas = new List<CardData>();
+                    foreach (var card in cards)
                     {
-                        if (cardDatas[i].Id == card.Id && cardDatas[i].Rang == 0)
+                        for (int i = 0; i < cardDatas.Count; i++)
                         {
-                            DeckDatas.Add(cardDatas[i]);
-                            break;
+                            if (cardDatas[i].Id == card.Id && cardDatas[i].Rang == 0)
+                            {
+                                DeckDatas.Add(cardDatas[i]);
+                                break;
+                            }
                         }
                     }
-                }
-                player.Division = DivisionCalculator.CalculateDivision(DeckDatas.ToArray());
-                player.Cards = new PlayerCards(DeckDatas.Select(c => Guid.Parse(c.Id)).ToList());
-                Debug.Log($"WhenPlayerDataRecievedInBotMatch player division {player.Division}");
-                MatchServerController.instance.StartToBot(player);
-                players.Remove(player);
-                return;
+                    player.Division = DivisionCalculator.CalculateDivision(DeckDatas.ToArray());
+                    player.Cards = new PlayerCards(DeckDatas.Select(c => Guid.Parse(c.Id)).ToList());
+                    Debug.Log($"WhenPlayerDataRecievedInBotMatch player division {player.Division}");
+                    MatchServerController.instance.StartToBot(level, progress, player);
+                    players.Remove(player);
+                    return;
+                });
             }
         }
     }

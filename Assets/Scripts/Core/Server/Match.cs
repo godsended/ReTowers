@@ -6,6 +6,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Core.Map;
+using Core.Map.Server;
 using Core.Utils;
 using UnityEngine;
 
@@ -22,7 +24,7 @@ namespace Core.Server
         public PlayerData CurrentPlayerTurn { get; private set; }
         public int TurnTime { get; private set; }
         public int PrepareTime { get; private set; }
-        
+
         public int MatchDivision { get; set; }
 
         private Coroutine turnCoroutine;
@@ -32,13 +34,20 @@ namespace Core.Server
 
         private List<Guid> _botDecks;
         private PlayerData bot;
-        
+
         private Fatigue _fatigue { get; set; }
 
-        public Match(PlayerData player, IGameLogger gameLogger)
+        public LevelInfo LevelInfo { get; set; }
+
+        public MapProgress MapProgress { get; set; }
+
+        public Match(PlayerData player, IGameLogger gameLogger, LevelInfo levelInfo, MapProgress mapProgress)
         {
             MatchDivision = player.Division;
-            
+
+            LevelInfo = levelInfo;
+            MapProgress = mapProgress;
+
             Init(gameLogger);
 
             InitPlayer(player);
@@ -54,7 +63,7 @@ namespace Core.Server
             for (int i = 0; i < _botDecks.Count; i++)
             {
                 CardData card = LibraryCards.GetCard(_botDecks[i]);
-            
+
                 if (card.Rang != 0)
                 {
                     foreach (var cardData in LibraryCards.GetPlayerCards())
@@ -68,8 +77,6 @@ namespace Core.Server
                     }
                 }
             }
-
-
 
             for (int i = 0; i < lvl.Length; i++)
             {
@@ -97,6 +104,7 @@ namespace Core.Server
                     }
                 }
             }
+
             bot = new PlayerData();
             bot.Castle = new DivisionCastleCreator(MatchDivision).CreateCastle();
 
@@ -108,7 +116,7 @@ namespace Core.Server
             Init(gameLogger);
 
             players.ForEach(InitPlayer);
-            
+
             MatchDivision = players.First().Division;
 
             foreach (var player in players)
@@ -160,10 +168,22 @@ namespace Core.Server
                             player.Castle.Tower.Damage(_fatigue.Damage);
                     }
 
+                    if (bot != null)
+                    {
+                        if (bot.Castle.Wall.Health > 0)
+                            bot.Castle.Wall.Damage(_fatigue.Damage);
+                        else
+                            bot.Castle.Tower.Damage(_fatigue.Damage);
+                    }
+
                     _fatigue++;
                 }
 
                 PlayerData playerWin = CheckPlayerWin();
+
+                Debug.Log("NextTurnMethod: " + Players.Keys.First().Castle.Tower.Health + " " +
+                          Players.Keys.First().Castle.Wall.Health + "\n" +
+                          (bot?.Castle.Tower.Health.ToString() ?? " ") + " " + (bot?.Castle.Wall.Health.ToString() ?? ""));
 
                 if (playerWin == null)
                 {
@@ -173,8 +193,8 @@ namespace Core.Server
                     if (_numberTurn % 2 == 0)
                     {
                         foreach (PlayerData player in Players.Keys)
-                            foreach (Resource resource in player.Castle.Resources)
-                                resource.AddResource(resource.Income);
+                        foreach (Resource resource in player.Castle.Resources)
+                            resource.AddResource(resource.Income);
                     }
 
                     turnCoroutine = MatchServerController.instance.StartCoroutine(TurnTimer());
@@ -195,7 +215,7 @@ namespace Core.Server
                             RequestType = MatchRequestType.DrawMatch
                         });
 
-                        Players.Keys.FirstOrDefault(p => p != playerWin).Connection.Send(new RequestMatchDto
+                        Players.Keys.FirstOrDefault(p => p != playerWin)?.Connection.Send(new RequestMatchDto
                         {
                             RequestType = MatchRequestType.DrawMatch
                         });
@@ -204,12 +224,18 @@ namespace Core.Server
                     {
                         _gameLogger.Log($"Match [{Id}] stop: Player win - [{playerWin.Id}]", LogTypeMessage.Info);
 
-                        playerWin.Connection.Send(new RequestMatchDto
+                        if (playerWin != bot)
                         {
-                            RequestType = MatchRequestType.WinMatch
-                        });
+                            playerWin.Connection.Send(new RequestMatchDto
+                            {
+                                RequestType = MatchRequestType.WinMatch
+                            });
+                        }
 
-                        Players.Keys.FirstOrDefault(p => p != playerWin).Connection.Send(new RequestMatchDto
+                        if (bot != null && playerWin != bot)
+                            ServerMapController.Instance.UpdateMapProgress(MapProgress, LevelInfo, playerWin.PlayFabId);
+
+                        Players.Keys.FirstOrDefault(p => p != playerWin)?.Connection.Send(new RequestMatchDto
                         {
                             RequestType = MatchRequestType.LoseMatch
                         });
@@ -226,7 +252,7 @@ namespace Core.Server
             }
         }
 
-        public IEnumerator BotTurn() 
+        public IEnumerator BotTurn()
         {
             yield return new WaitForSeconds(2f);
 
@@ -245,6 +271,7 @@ namespace Core.Server
                             cardGuid = randomCardGuid;
                             bot.Castle.Resources[0].RemoveResource(card.Cost[0].Value);
                         }
+
                         break;
                     case "Resource_2":
                         if (bot.Castle.Resources[1].Value >= card.Cost[0].Value)
@@ -252,6 +279,7 @@ namespace Core.Server
                             cardGuid = randomCardGuid;
                             bot.Castle.Resources[1].RemoveResource(card.Cost[0].Value);
                         }
+
                         break;
                     case "Resource_3":
                         if (bot.Castle.Resources[2].Value >= card.Cost[0].Value)
@@ -259,9 +287,14 @@ namespace Core.Server
                             cardGuid = randomCardGuid;
                             bot.Castle.Resources[2].RemoveResource(card.Cost[0].Value);
                         }
+
                         break;
                 }
-                if (cardGuid != Guid.Empty) { break; }
+
+                if (cardGuid != Guid.Empty)
+                {
+                    break;
+                }
             }
 
             CardData playedCard = null;
@@ -281,16 +314,18 @@ namespace Core.Server
             foreach (Resource resource in bot.Castle.Resources)
                 resource.AddResource(resource.Income);
 
-            if(cardGuid == Guid.Empty) 
+            if (cardGuid == Guid.Empty)
             {
                 yield return new WaitForSeconds(1.5f);
                 NextTurn();
             }
-            else if(!playedCard.SaveTurn) 
+            else if (!playedCard.SaveTurn)
             {
                 yield return new WaitForSeconds(1.5f);
                 NextTurn();
             }
+            
+            CheckEndMatch();
         }
 
         public virtual void PlayCard(RequestCardDto requestCardDto)
@@ -301,7 +336,7 @@ namespace Core.Server
 
             if (card)
             {
-                if(Players.Count == 1) 
+                if (Players.Count == 1)
                 {
                     if (targetPlayer == null)
                     {
@@ -310,8 +345,8 @@ namespace Core.Server
                         if (!CurrentPlayerTurn.Cards.CardsIdHand.Contains(requestCardDto.CardId) ||
                             !TurnValidator.ValidateResourcesAvailability(CurrentPlayerTurn, card))
                         {
-                            if(!CurrentPlayerTurn.Cards.CardsIdHand.Contains(requestCardDto.CardId))
-                               Debug.Log("OPA31");
+                            if (!CurrentPlayerTurn.Cards.CardsIdHand.Contains(requestCardDto.CardId))
+                                Debug.Log("OPA31");
 
                             if (!TurnValidator.ValidateResourcesAvailability(CurrentPlayerTurn, card))
                             {
@@ -319,13 +354,14 @@ namespace Core.Server
                                 {
                                     Debug.Log($"Cost: {res.Name} {res.Value}");
                                 }
-                                
+
                                 foreach (var res in CurrentPlayerTurn.Castle.Resources)
                                 {
                                     Debug.Log($"Res: {res.Name} {res.Value} {res.Income}");
                                 }
                             }
-                            
+
+                            CheckPlayerWin();
                             return;
                         }
 
@@ -338,7 +374,7 @@ namespace Core.Server
                     else
                     {
                         card.Effects.ForEach(e => e.Execute(bot, CurrentPlayerTurn));
-                        if (card.SaveTurn) 
+                        if (card.SaveTurn)
                         {
                             MatchServerController.instance.StartBotTurn(this);
                         }
@@ -358,15 +394,15 @@ namespace Core.Server
                     sendPlayer.Cards.GetAndTakeNearestCard();
                     card.Effects.ForEach(e => e.Execute(sendPlayer, targetPlayer));
                 }
-                else                       
+                else
                 {
+                    CheckEndMatch();
                     return;
-                };
+                }
 
                 //ТУТ У НАС БУДЕТ ОТПРАВКА ТЕКУЩЕЙ МОДЕЛИ ВСЕМ БОЙЦАМ
                 foreach (PlayerData player in Players.Keys)
                 {
-
                     player.Connection.Send(new RequestCardDto
                     {
                         AccountId = requestCardDto.AccountId,
@@ -382,7 +418,7 @@ namespace Core.Server
             else
             {
                 _gameLogger.Log($"Match [{Id}] error play card: card - [{card}]" +
-                    $", target Player - [{targetPlayer}]", LogTypeMessage.Warning);
+                                $", target Player - [{targetPlayer}]", LogTypeMessage.Warning);
             }
         }
 
@@ -401,11 +437,17 @@ namespace Core.Server
             sendPlayer.Cards.RemoveCardFromHand(requestCardDto.CardId);
             sendPlayer.Cards.ShuffleCard(requestCardDto.CardId);
             sendPlayer.Cards.GetAndTakeNearestCard();
+            
+            CheckEndMatch();
         }
 
         public void CheckEndMatch()
         {
             PlayerData playerWin = CheckPlayerWin();
+            
+            Debug.Log("NextTurnMethod: " + Players.Keys.First().Castle.Tower.Health + " " +
+                      Players.Keys.First().Castle.Wall.Health + "\n" +
+                      bot.Castle.Tower.Health + " " + bot.Castle.Wall.Health);
 
             if (playerWin != null)
             {
@@ -418,7 +460,7 @@ namespace Core.Server
                         RequestType = MatchRequestType.EndTurn
                     });
 
-                    Players.Keys.FirstOrDefault(p => p != playerWin).Connection.Send(new RequestMatchDto
+                    Players.Keys.FirstOrDefault(p => p != playerWin)?.Connection.Send(new RequestMatchDto
                     {
                         RequestType = MatchRequestType.EndTurn
                     });
@@ -432,7 +474,7 @@ namespace Core.Server
                             RequestType = MatchRequestType.DrawMatch
                         });
 
-                        Players.Keys.FirstOrDefault(p => p != playerWin).Connection.Send(new RequestMatchDto
+                        Players.Keys.FirstOrDefault(p => p != playerWin)?.Connection.Send(new RequestMatchDto
                         {
                             RequestType = MatchRequestType.DrawMatch
                         });
@@ -444,7 +486,10 @@ namespace Core.Server
                             RequestType = MatchRequestType.WinMatch
                         });
 
-                        Players.Keys.FirstOrDefault(p => p != playerWin).Connection.Send(new RequestMatchDto
+                        if (bot != null && playerWin != bot)
+                            ServerMapController.Instance.UpdateMapProgress(MapProgress, LevelInfo, playerWin.PlayFabId);
+
+                        Players.Keys.FirstOrDefault(p => p != playerWin)?.Connection.Send(new RequestMatchDto
                         {
                             RequestType = MatchRequestType.LoseMatch
                         });
@@ -469,12 +514,12 @@ namespace Core.Server
             _numberTurn = -1;
             _numberTurnForFatigue = int.Parse(Configurator.data["BattleConfiguration"]["fatigueTurnStart"]);
             _fatigue = new Fatigue(MatchDivision);
-            
+
             Debug.Log($"Match fatigue initialized with division {MatchDivision}");
 
             foreach (PlayerData playerData in Players.Keys)
                 MatchServerController.instance.StartCoroutine(playerData.Cards.FillHand());
-            
+
             NextTurn();
 
             turnCoroutine = MatchServerController.instance.StartCoroutine(TurnTimer());
@@ -530,7 +575,8 @@ namespace Core.Server
             }
             else
             {
-                _gameLogger.Log($"{readyPlayer.Name} [{readyPlayer.Id}] not found in match [{Id}]!", LogTypeMessage.Warning);
+                _gameLogger.Log($"{readyPlayer.Name} [{readyPlayer.Id}] not found in match [{Id}]!",
+                    LogTypeMessage.Warning);
             }
         }
 
@@ -555,6 +601,18 @@ namespace Core.Server
 
         private PlayerData CheckPlayerWin()
         {
+            if (bot != null)
+            {
+                PlayerData player = Players.Keys.First();
+                if (bot.Castle.Tower.Health == 0 || player.Castle.Tower.Health >= player.Castle.Tower.MaxHealth)
+                    return player;
+                
+                if (player.Castle.Tower.Health == 0 || bot.Castle.Tower.Health >= bot.Castle.Tower.MaxHealth)
+                    return bot;
+
+                return null;
+            }
+            
             foreach (var player in Players.Keys)
                 if (player.Castle.Tower.Health <= 0)
                     return Players.Keys.FirstOrDefault(p => p != player);
@@ -589,6 +647,7 @@ namespace Core.Server
 
             yield break;
         }
+
         private void CheckBotMatch()
         {
             if (Players.Count == 2)

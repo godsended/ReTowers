@@ -239,7 +239,6 @@ namespace MainMenu.Registration
             messageText.text = "Logged in successfully";
             authWindow.SetActive(false);
             
-            if (result.InfoResultPayload.PlayerProfile == null) return;
             playerId = result.PlayFabId;
             MainClient.SetUsername(result.InfoResultPayload.PlayerProfile.DisplayName);
 

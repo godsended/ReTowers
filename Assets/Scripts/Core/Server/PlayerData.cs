@@ -2,6 +2,7 @@ using Core.Cards;
 using Core.Castle;
 using Mirror;
 using System;
+using Core.Map;
 
 namespace Core.Server
 {
@@ -26,5 +27,7 @@ namespace Core.Server
         public CastleEntity Castle { get; set; }
         public PlayerStatistics PlayerStatistics { get; set; }
         public int Division { get; set; }
+        
+        public MapProgress MapProgress { get; set; }
     }
 }

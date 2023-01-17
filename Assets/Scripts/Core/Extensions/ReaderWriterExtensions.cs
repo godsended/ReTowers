@@ -1,4 +1,6 @@
 using Core.Contracts;
+using Core.Map;
+using Newtonsoft.Json;
 
 namespace Mirror.Extensions
 {
@@ -46,6 +48,7 @@ namespace Mirror.Extensions
         {
             writer.WriteGuid(requestMatchDto.AccountId);
             writer.WriteInt((int)requestMatchDto.RequestType);
+            writer.WriteInt(requestMatchDto.LevelId);
         }
 
         public static RequestMatchDto ReadRequestMatchDto(this NetworkReader reader)
@@ -53,7 +56,8 @@ namespace Mirror.Extensions
             return new RequestMatchDto
             {
                 AccountId = reader.ReadGuid(),
-                RequestType = (MatchRequestType)reader.ReadInt()
+                RequestType = (MatchRequestType)reader.ReadInt(),
+                LevelId = reader.ReadInt()
             };
         }
 
@@ -123,6 +127,23 @@ namespace Mirror.Extensions
             return new Pinger
             {
                 AccountId = reader.ReadGuid()
+            };
+        }
+
+        public static void WriteMapProgressDto(this NetworkWriter writer, MapProgressDto mapProgressDto)
+        {
+            writer.WriteString(mapProgressDto.PlayFabId);
+            writer.WriteString(JsonConvert.SerializeObject(mapProgressDto.Progress));
+            writer.WriteBool(mapProgressDto.IsError);
+        }
+
+        public static MapProgressDto ReadMapProgressDto(this NetworkReader reader)
+        {
+            return new MapProgressDto()
+            {
+                PlayFabId = reader.ReadString(),
+                Progress = JsonConvert.DeserializeObject<MapProgress>(reader.ReadString()),
+                IsError = reader.ReadBool()
             };
         }
     }
