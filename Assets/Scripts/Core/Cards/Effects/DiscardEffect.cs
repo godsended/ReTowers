@@ -1,6 +1,7 @@
 using Core.Client;
 using Core.Server;
 using System.Collections;
+using Core.Match;
 using UnityEngine;
 
 namespace Core.Cards.Effects
@@ -8,7 +9,7 @@ namespace Core.Cards.Effects
     [CreateAssetMenu(fileName = "New Effect", menuName = "Effects/Create new Discard Effect", order = 51)]
     public class DiscardEffect : Effect
     {
-        public override void Execute(PlayerData usedPlayer, PlayerData enemyPlayer)
+        public override void Execute(MatchPlayer usedPlayer, MatchPlayer enemyPlayer)
         {
         }
 

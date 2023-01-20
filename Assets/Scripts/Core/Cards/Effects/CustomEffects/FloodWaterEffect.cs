@@ -3,6 +3,7 @@ using Core.Server;
 using System.Collections;
 using System.Collections.Generic;
 using Core.Castle;
+using Core.Match;
 using UnityEngine;
 
 namespace Core.Cards.Effects.CustomEffects
@@ -15,7 +16,7 @@ namespace Core.Cards.Effects.CustomEffects
         [Header("Effect if condition false")]
         public List<Effect> falseEffects;
 
-        public override void Execute(PlayerData usedPlayer, PlayerData enemyPlayer)
+        public override void Execute(MatchPlayer usedPlayer, MatchPlayer enemyPlayer)
         {
             if (usedPlayer.Castle.Wall.Health < enemyPlayer.Castle.Wall.Health)
                 trueEffects.ForEach(e => e.Execute(usedPlayer, enemyPlayer));

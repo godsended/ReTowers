@@ -281,12 +281,12 @@ namespace Core.Server
             }
         }
 
-        public void StartToBot(LevelInfo levelInfo, MapProgress mapProgress, PlayerData player = null)
+        public void StartToBot(LevelInfo levelInfo, MapProgress mapProgress, PlayerData player)
         {
-            if (player == null)
-            {
-                player = instance._playersLookingForMatches.First();
-            }
+            // if (player == null)
+            // {
+            //     player = instance._playersLookingForMatches.First();
+            // }
 
             _matches.Add(new Match(player, _gameLogger, levelInfo, mapProgress));
 

@@ -1,3 +1,5 @@
+using Core;
+using Core.Castle;
 using Core.Contracts;
 using Core.Map;
 using Newtonsoft.Json;
@@ -144,6 +146,84 @@ namespace Mirror.Extensions
                 PlayFabId = reader.ReadString(),
                 Progress = JsonConvert.DeserializeObject<MapProgress>(reader.ReadString()),
                 IsError = reader.ReadBool()
+            };
+        }
+
+        public static void WriteMatchDetailsDto(this NetworkWriter writer, MatchDetailsDto details)
+        {
+            writer.WriteGuid(details.PlayerId);
+            writer.WriteArray(details.Players);
+            writer.WriteString(JsonConvert.SerializeObject(details.Fatigue));
+            writer.WriteArray(details.CardsInHandIds);
+            writer.WriteBool(details.IsYourTurn);
+        }
+
+        public static MatchDetailsDto ReadMatchDetailsDto(this NetworkReader reader)
+        {
+            return new()
+            {
+                PlayerId = reader.ReadGuid(),
+                Players = reader.ReadArray<MatchPlayerDto>(),
+                Fatigue = JsonConvert.DeserializeObject<Fatigue>(reader.ReadString()),
+                CardsInHandIds = reader.ReadArray<string>(),
+                IsYourTurn = reader.ReadBool()
+            };
+        }
+        
+        
+        public static void WritePveMatchDetailsDto(this NetworkWriter writer, PveMatchDetailsDto details)
+        {
+            writer.WriteGuid(details.PlayerId);
+            writer.WriteArray(details.Players);
+            writer.WriteString(JsonConvert.SerializeObject(details.Fatigue));
+            writer.WriteArray(details.CardsInHandIds);
+            writer.WriteString(JsonConvert.SerializeObject(details.LevelInfo));
+            writer.WriteBool(details.IsYourTurn);
+        }
+
+        public static PveMatchDetailsDto ReadPveMatchDetailsDto(this NetworkReader reader)
+        {
+            return new()
+            {
+                PlayerId = reader.ReadGuid(),
+                Players = reader.ReadArray<MatchPlayerDto>(),
+                Fatigue = JsonConvert.DeserializeObject<Fatigue>(reader.ReadString()),
+                CardsInHandIds = reader.ReadArray<string>(),
+                LevelInfo = JsonConvert.DeserializeObject<LevelInfo>(reader.ReadString()),
+                IsYourTurn = reader.ReadBool()
+            };
+        }
+        
+        
+        public static void WriteMatchPlayerDto(this NetworkWriter writer, MatchPlayerDto player)
+        {
+            writer.WriteGuid(player.PlayerId);
+            writer.WriteString(player.Name);
+            writer.WriteString(JsonConvert.SerializeObject(player.Castle));
+        }
+
+        public static MatchPlayerDto ReadMatchPlayerDto(this NetworkReader reader)
+        {
+            return new()
+            {
+                PlayerId = reader.ReadGuid(),
+                Name = reader.ReadString(),
+                Castle = JsonConvert.DeserializeObject<CastleEntity>(reader.ReadString())
+            };
+        }
+
+        public static void WriteFatigueDto(this NetworkWriter writer, FatigueDto dto)
+        {
+            writer.WriteGuid(dto.PlayerId);
+            writer.WriteInt(dto.Damage);
+        }
+
+        public static FatigueDto ReadFatigueDto(this NetworkReader reader)
+        {
+            return new()
+            {
+                PlayerId = reader.ReadGuid(),
+                Damage = reader.ReadInt()
             };
         }
     }

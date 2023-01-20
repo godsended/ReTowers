@@ -2,6 +2,7 @@ using Core.Castle;
 using Core.Client;
 using Core.Server;
 using System.Collections;
+using Core.Match;
 using UnityEngine;
 
 namespace Core.Cards.Effects
@@ -11,7 +12,7 @@ namespace Core.Cards.Effects
     {
         public string nameResource;
 
-        public override void Execute(PlayerData usedPlayer, PlayerData enemyPlayer)
+        public override void Execute(MatchPlayer usedPlayer, MatchPlayer enemyPlayer)
         {
             Resource usedPlayerResource = usedPlayer.Castle.GetResource(nameResource);
             Resource enemyPlayerResource = enemyPlayer.Castle.GetResource(nameResource);

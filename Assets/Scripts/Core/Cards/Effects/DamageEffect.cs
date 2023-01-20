@@ -2,6 +2,7 @@
 using Core.Client;
 using Core.Server;
 using System.Collections;
+using Core.Match;
 using UnityEngine;
 using Effects;
 
@@ -15,7 +16,7 @@ namespace Core.Cards.Effects
         public bool isEnemyDamage;
         public GameObject EffectAnimation;
         
-        public override void Execute(PlayerData usedPlayer, PlayerData enemyPlayer)
+        public override void Execute(MatchPlayer usedPlayer, MatchPlayer enemyPlayer)
         {
             CastleEntity castle = isEnemyDamage ? enemyPlayer.Castle : usedPlayer.Castle;
             int damageCount = damage;

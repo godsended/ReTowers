@@ -6,18 +6,22 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace Core.Cards
 {
     public class PlayerCards
     {
+        public static readonly int CardsInHandLimit = 6;
         public List<Guid> CardsIdDeck { get; private set; }
+        
         public List<Guid> CardsIdHand { get; private set; }
-
-        private int _maxCardsInHand;
+        
         private NetworkConnectionToClient _connection;
         private IGameLogger _gameLogger;
 
+        public bool IsHandFilled => CardsIdHand.Count >= CardsInHandLimit;
+        
         public PlayerCards(List<Guid> cards)
         {
             CardsIdDeck = cards;
@@ -30,7 +34,6 @@ namespace Core.Cards
             CardsIdHand = new List<Guid>();
 
             _connection = connection;
-            _maxCardsInHand = 6;
 
             _gameLogger = new ConsoleLogger(new List<LogTypeMessage>
             {
@@ -44,19 +47,18 @@ namespace Core.Cards
         public void RemoveCardFromHand(Guid cardId)
         {
             CardsIdHand.Remove(cardId);
+            ShuffleCard(cardId);
         }
 
-        public IEnumerator FillHand()
+        public void FillHand()
         {
-            for (int i = 0; i < _maxCardsInHand; i++)
+            for (int i = 0; i < CardsInHandLimit; i++)
             {
-                CardsIdHand.Add(GetAndTakeNearestCard());
-
-                yield return new WaitForSeconds(0.6f);
+                GetAndTakeNearestCard();
             }      
         }
 
-        public Guid GetAndTakeNearestCard() 
+        public void GetAndTakeNearestCard() 
         {
             Guid id = CardsIdDeck.LastOrDefault();
 
@@ -65,13 +67,13 @@ namespace Core.Cards
 
             CardsIdDeck.Remove(CardsIdDeck.LastOrDefault());
             CardsIdHand.Add(id);
-            _connection.Send(new RequestCardDto
-            {
-                ActionType = CardActionType.Draft,
-                CardId = id
-            });
+            // _connection.Send(new RequestCardDto
+            // {
+            //     ActionType = CardActionType.Draft,
+            //     CardId = id
+            // });
 
-            return id;
+            return;
         }
 
         public void ShuffleCard(Guid cardId, int maxIndex = 0)

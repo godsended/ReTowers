@@ -20,13 +20,14 @@ namespace Core.Server
             instance = this;
         }
 
-        public void SetNewPlayer(PlayerData player) 
+        public void SetNewPlayer(PlayerData player)
         {
             CheckGetDailyEnergy(player);
         }
-        private void CheckGetDailyEnergy(PlayerData player) 
+
+        private void CheckGetDailyEnergy(PlayerData player)
         {
-            if (player.LastLoginTime.Date.AddHours(3) != DateTime.UtcNow.Date.AddHours(3)) 
+            if (player.LastLoginTime.Date.AddHours(3) != DateTime.UtcNow.Date.AddHours(3))
             {
                 SetEnergy(player, 20);
             }
@@ -49,30 +50,32 @@ namespace Core.Server
             };
             PlayFabServerAPI.UpdatePlayerStatistics(request, null, null);
         }
+
         private List<PlayerData> players = new List<PlayerData>();
 
         public void GetPlayerStatistic(PlayerData player)
         {
             players.Add(player);
-            List<string> statNames = new List<string>() { "WinsCount" };
+            List<string> statNames = new List<string>() {"WinsCount"};
             var request = new GetPlayerStatisticsRequest
             {
                 StatisticNames = statNames,
                 PlayFabId = player.PlayFabId
             };
             PlayFabServerAPI.GetPlayerStatistics(request, OnPlayerStatisticRecieved, null);
-
         }
+
         private void OnPlayerStatisticRecieved(GetPlayerStatisticsResult result)
         {
             foreach (var player in players)
             {
                 if (player.PlayFabId == result.PlayFabId)
                 {
-                    if(result.Statistics.Count > 0) 
+                    if (result.Statistics.Count > 0)
                     {
                         player.PlayerStatistics.WinCount = result.Statistics[0].Value;
                     }
+
                     players.Remove(player);
                     break;
                 }
@@ -86,7 +89,7 @@ namespace Core.Server
             {
                 PlayFabId = player.PlayFabId
             };
-            if(!isBotMatch)
+            if (!isBotMatch)
                 PlayFabServerAPI.GetUserData(request, OnPlayerDataRecieved, null);
             else
             {
@@ -98,11 +101,12 @@ namespace Core.Server
         {
             foreach (var player in players)
             {
-                if(player.PlayFabId == result.PlayFabId) 
+                if (player.PlayFabId == result.PlayFabId)
                 {
                     if (result.Data != null && result.Data.ContainsKey("PlayerCards"))
                     {
-                        List<CardJson> cards = JsonConvert.DeserializeObject<List<CardJson>>(result.Data["PlayerCards"].Value);
+                        List<CardJson> cards =
+                            JsonConvert.DeserializeObject<List<CardJson>>(result.Data["PlayerCards"].Value);
                         List<CardData> cardDatas = LibraryCards.GetPlayerCards();
                         List<CardData> DeckDatas = new List<CardData>();
                         foreach (var card in cards)
@@ -117,6 +121,7 @@ namespace Core.Server
                                 }
                             }
                         }
+
                         player.Cards = new PlayerCards(DeckDatas.Select(c => Guid.Parse(c.Id)).ToList());
 
                         player.Division = DivisionCalculator.CalculateDivision(DeckDatas.ToArray());
@@ -128,6 +133,7 @@ namespace Core.Server
                 }
             }
         }
+
         private void OnPlayerDataRecievedInBotMatch(GetUserDataResult result)
         {
             foreach (var player in players)
@@ -135,7 +141,7 @@ namespace Core.Server
                 if (player.PlayFabId != result.PlayFabId) continue;
 
                 if (result.Data == null || !result.Data.ContainsKey("PlayerCards")) continue;
-                
+
                 ServerMapController.Instance.LoadMapProgress(result.PlayFabId, progress =>
                 {
                     LevelInfo level =
@@ -147,21 +153,20 @@ namespace Core.Server
 
                     if (level.Progress > progress.Biomes[level.BiomeId].Progress)
                         return;
-                    
-                    List<CardJson> cards = JsonConvert.DeserializeObject<List<CardJson>>(result.Data["PlayerCards"].Value);
+
+                    List<CardJson> cards =
+                        JsonConvert.DeserializeObject<List<CardJson>>(result.Data["PlayerCards"].Value);
                     List<CardData> cardDatas = LibraryCards.GetPlayerCards();
                     List<CardData> DeckDatas = new List<CardData>();
-                    foreach (var card in cards)
+                    for (int i = 0; i < cardDatas.Count; i++)
                     {
-                        for (int i = 0; i < cardDatas.Count; i++)
+                        if (cardDatas[i].Rang == 0)
                         {
-                            if (cardDatas[i].Id == card.Id && cardDatas[i].Rang == 0)
-                            {
-                                DeckDatas.Add(cardDatas[i]);
-                                break;
-                            }
+                            DeckDatas.Add(cardDatas[i]);
+                            break;
                         }
                     }
+
                     player.Division = DivisionCalculator.CalculateDivision(DeckDatas.ToArray());
                     player.Cards = new PlayerCards(DeckDatas.Select(c => Guid.Parse(c.Id)).ToList());
                     Debug.Log($"WhenPlayerDataRecievedInBotMatch player division {player.Division}");

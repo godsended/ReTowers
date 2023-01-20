@@ -2,6 +2,7 @@ using Core.Castle;
 using Core.Client;
 using Core.Server;
 using System.Collections;
+using Core.Match;
 using UnityEngine;
 
 namespace Core.Cards.Effects
@@ -15,7 +16,7 @@ namespace Core.Cards.Effects
         public bool isSelfRemove;
         public GameObject EffectAnimation;
 
-        public override void Execute(PlayerData usedPlayer, PlayerData enemyPlayer)
+        public override void Execute(MatchPlayer usedPlayer, MatchPlayer enemyPlayer)
         {
             CastleEntity castle = isSelfRemove ? usedPlayer.Castle : enemyPlayer.Castle;
 

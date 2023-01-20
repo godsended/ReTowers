@@ -3,6 +3,7 @@ using Core.Client;
 using Core.Server;
 using System.Collections;
 using System.Collections.Generic;
+using Core.Match;
 using UnityEngine;
 
 namespace Core.Cards.Effects
@@ -17,7 +18,7 @@ namespace Core.Cards.Effects
         [Header("Effect if condition false")]
         public List<Effect> falseEffects;
 
-        public override void Execute(PlayerData usedPlayer, PlayerData enemyPlayer)
+        public override void Execute(MatchPlayer usedPlayer, MatchPlayer enemyPlayer)
         {
             Resource usedPlayerResource = usedPlayer.Castle.GetResource(nameResource);
             Resource enemyPlayerResource = enemyPlayer.Castle.GetResource(nameResource);

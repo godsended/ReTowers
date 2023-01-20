@@ -141,7 +141,7 @@ namespace Core.Server
 
         private void InitPlayer(PlayerData player)
         {
-            player.CurrentMatch = this;
+            player.CMatch = this;
             player.Castle = new DivisionCastleCreator(MatchDivision).CreateCastle();
             player.Cards = new PlayerCards(player.Cards.CardsIdDeck, player.Connection);
 
@@ -340,40 +340,37 @@ namespace Core.Server
                 {
                     if (targetPlayer == null)
                     {
-                        bool a1 = !CurrentPlayerTurn.Cards.CardsIdHand.Contains(requestCardDto.CardId);
-                        bool a2 = !TurnValidator.ValidateResourcesAvailability(CurrentPlayerTurn, card);
-                        if (!CurrentPlayerTurn.Cards.CardsIdHand.Contains(requestCardDto.CardId) ||
-                            !TurnValidator.ValidateResourcesAvailability(CurrentPlayerTurn, card))
-                        {
-                            if (!CurrentPlayerTurn.Cards.CardsIdHand.Contains(requestCardDto.CardId))
-                                Debug.Log("OPA31");
-
-                            if (!TurnValidator.ValidateResourcesAvailability(CurrentPlayerTurn, card))
-                            {
-                                foreach (var res in card.Cost)
-                                {
-                                    Debug.Log($"Cost: {res.Name} {res.Value}");
-                                }
-
-                                foreach (var res in CurrentPlayerTurn.Castle.Resources)
-                                {
-                                    Debug.Log($"Res: {res.Name} {res.Value} {res.Income}");
-                                }
-                            }
-
-                            CheckPlayerWin();
-                            return;
-                        }
+                        // if (false)
+                        // {
+                        //     if (!CurrentPlayerTurn.Cards.CardsIdHand.Contains(requestCardDto.CardId))
+                        //         Debug.Log("OPA31");
+                        //
+                        //     if (!TurnValidator.ValidateResourcesAvailability(CurrentPlayerTurn, card))
+                        //     {
+                        //         foreach (var res in card.Cost)
+                        //         {
+                        //             Debug.Log($"Cost: {res.Name} {res.Value}");
+                        //         }
+                        //
+                        //         foreach (var res in CurrentPlayerTurn.Castle.Resources)
+                        //         {
+                        //             Debug.Log($"Res: {res.Name} {res.Value} {res.Income}");
+                        //         }
+                        //     }
+                        //
+                        //     CheckPlayerWin();
+                        //     return;
+                        // }
 
                         CurrentPlayerTurn.Cards.RemoveCardFromHand(requestCardDto.CardId);
                         CurrentPlayerTurn.Cards.ShuffleCard(requestCardDto.CardId);
                         CurrentPlayerTurn.Cards.GetAndTakeNearestCard();
 
-                        card.Effects.ForEach(e => e.Execute(CurrentPlayerTurn, bot));
+                        //card.Effects.ForEach(e => e.Execute(CurrentPlayerTurn, bot));
                     }
                     else
                     {
-                        card.Effects.ForEach(e => e.Execute(bot, CurrentPlayerTurn));
+                        //card.Effects.ForEach(e => e.Execute(bot, CurrentPlayerTurn));
                         if (card.SaveTurn)
                         {
                             MatchServerController.instance.StartBotTurn(this);
@@ -382,17 +379,10 @@ namespace Core.Server
                 }
                 else if (sendPlayer != null)
                 {
-                    Debug.Log("Iam here!");
-                    if (!TurnValidator.ValidateCardTurn(sendPlayer, requestCardDto.CardId, card))
-                    {
-                        Debug.Log($"OPAAAAAAA2\n{sendPlayer}\n{requestCardDto.CardId}");
-                        return;
-                    }
-
                     sendPlayer.Cards.RemoveCardFromHand(requestCardDto.CardId);
                     sendPlayer.Cards.ShuffleCard(requestCardDto.CardId);
                     sendPlayer.Cards.GetAndTakeNearestCard();
-                    card.Effects.ForEach(e => e.Execute(sendPlayer, targetPlayer));
+                    //card.Effects.ForEach(e => e.Execute(sendPlayer, targetPlayer));
                 }
                 else
                 {
@@ -426,13 +416,6 @@ namespace Core.Server
         {
             PlayerData sendPlayer = Players.Keys.FirstOrDefault(p => p.Id == requestCardDto.AccountId);
             CardData card = LibraryCards.GetCard(requestCardDto.CardId);
-
-            if (sendPlayer == null || card == null ||
-                !TurnValidator.ValidateCardInHand(sendPlayer, requestCardDto.CardId))
-            {
-                Debug.Log("OPAAAAAA1");
-                return;
-            }
 
             sendPlayer.Cards.RemoveCardFromHand(requestCardDto.CardId);
             sendPlayer.Cards.ShuffleCard(requestCardDto.CardId);
@@ -518,7 +501,7 @@ namespace Core.Server
             Debug.Log($"Match fatigue initialized with division {MatchDivision}");
 
             foreach (PlayerData playerData in Players.Keys)
-                MatchServerController.instance.StartCoroutine(playerData.Cards.FillHand());
+                playerData.Cards.FillHand();
 
             NextTurn();
 
@@ -543,7 +526,7 @@ namespace Core.Server
                     });
                 }
 
-                playerData.CurrentMatch = null;
+                playerData.CMatch = null;
             }
 
             Players.Clear();

@@ -2,6 +2,7 @@ using Core.Castle;
 using Core.Client;
 using Core.Server;
 using System.Collections;
+using Core.Match;
 using UnityEngine;
 using Effects;
 
@@ -17,7 +18,7 @@ namespace Core.Cards.Effects
         
         private readonly Vector3 fireballTowerOffset = new Vector3(0f, 3f, 0f);
         
-        public override void Execute(PlayerData usedPlayer, PlayerData enemyPlayer)
+        public override void Execute(MatchPlayer usedPlayer, MatchPlayer enemyPlayer)
         {
             CastleEntity castle = isEnemyDamage ? enemyPlayer.Castle : usedPlayer.Castle;
 
