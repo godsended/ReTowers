@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 
 namespace Core.Castle
 {
@@ -13,6 +14,7 @@ namespace Core.Castle
         {
         }
         
+        [JsonConstructor]
         public Resource(string name, int value, int income)
         {
             Name = name;

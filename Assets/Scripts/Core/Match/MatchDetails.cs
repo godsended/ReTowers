@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using Core.Map;
 using Core.Match;
 using Core.Utils;
+using JetBrains.Annotations;
 using Mirror;
 
 namespace Core.Match
@@ -28,6 +30,10 @@ namespace Core.Match
         public int TurnPlayer => Turn % Players.Count;
 
         public int NextTurnPlayer => (TurnPlayer + 1) % Players.Count;
+        
+        [CanBeNull] public LevelInfo LevelInfo { get; set; }
+        
+        [CanBeNull] public MapProgress MapProgress { get; set; }
 
         public MatchDetails()
         {

@@ -6,7 +6,7 @@ namespace Core.Contracts
 {
     public struct MatchPlayerDto : NetworkMessage
     {
-        public Guid PlayerId { get; set; }
+        public string PlayerId { get; set; }
         
         public string Name { get; set; }
         

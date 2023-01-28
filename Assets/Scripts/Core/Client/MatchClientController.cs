@@ -1,10 +1,16 @@
+using System;
 using Core.Contracts;
 using Mirror;
 using System.Collections;
+using System.Linq;
+using Core.Cards;
+using Core.Match;
+using Core.Match.Client;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using MainMenu.Registration;
+using Newtonsoft.Json;
 
 namespace Core.Client
 {
@@ -31,7 +37,11 @@ namespace Core.Client
             matchWin = new UnityEvent();
             matchLose = new UnityEvent();
             matchDraw = new UnityEvent();
-
+            
+            NetworkClient.RegisterHandler<MatchDetailsDto>(HandleMatchDetailsUpdate);
+            NetworkClient.RegisterHandler<FatigueDto>(HandleFatigueUpdate);
+            NetworkClient.RegisterHandler<LoadBattleSceneDto>(HandleLoadBattleScene);
+            
             NetworkClient.RegisterHandler<RequestMatchDto>((requestMatchDto) => 
             {
                 switch (requestMatchDto.RequestType)
@@ -158,6 +168,49 @@ namespace Core.Client
             });
 
             yield break;
+        }
+
+        private void HandleMatchDetailsUpdate(MatchDetailsDto dto)
+        {
+            Debug.Log(JsonConvert.SerializeObject(dto));
+            ClientMatchState matchState = BattleClientManager.instance.MatchState;
+
+            if (matchState.CardsInHandIds != null)
+            {
+                foreach (var id in dto.CardsInHandIds)
+                {
+                    var guid = Guid.Parse(id);
+                    if (!matchState.CardsInHandIds.Contains(guid))
+                        matchState.CardsToDraftGuids.Add(guid);
+                }
+            }
+
+            MatchPlayerDto myDto = dto.Players.FirstOrDefault(p => p.PlayerId != "");
+            MatchPlayerDto enemyDto = dto.Players.FirstOrDefault(p => p.PlayerId == "");
+            MatchPlayer myState = matchState.MyState;
+            MatchPlayer enemyState = matchState.EnemyState;
+            myState.Castle = myDto.Castle;
+            myState.Name = myDto.Name;
+            myState.PlayFabId = myDto.PlayerId.ToString();
+            enemyState.Castle = enemyDto.Castle;
+            enemyState.Name = enemyDto.Name;
+            Guid[] cardsInHandIds = Array.Empty<Guid>();
+            if (dto.CardsInHandIds != null)
+                cardsInHandIds = dto.CardsInHandIds?.Select(Guid.Parse)?.ToArray();
+            enemyState.PlayFabId = enemyDto.PlayerId.ToString();
+            
+            matchState.ApplyChanges(myState, enemyState, dto.IsYourTurn, cardsInHandIds
+            , dto.Fatigue, dto.LevelInfo);
+        }
+
+        private void HandleFatigueUpdate(FatigueDto dto)
+        {
+            BattleClientManager.instance.ApplyFatigue(dto.Damage);
+        }
+
+        private void HandleLoadBattleScene(LoadBattleSceneDto dto)
+        {
+            SceneManager.LoadScene(battleScene);
         }
     }
 }

@@ -222,7 +222,7 @@ namespace Core.Client
         {
             if (BattleClientManager.IsCanPlay())
             {
-                BattleClientManager.instance.CheckEndMatch();
+                //BattleClientManager.instance.CheckEndMatch();
                 BattleClientManager.SetCanPlay(false);
                 MatchClientController.EndTurn();
             }
@@ -352,10 +352,10 @@ namespace Core.Client
             _startTipsPosition = tipsWindow.transform.localPosition;
             _endTipsPosition = tipsWindow.transform.localPosition + new Vector3(0, 70f, 0);
 
-            NetworkClient.Send(new RequestBattleInfo
-            {
-                AccountId = MainClient.GetClientId()
-            });
+            // NetworkClient.Send(new RequestBattleInfo
+            // {
+            //     AccountId = MainClient.GetClientId()
+            // });
 
             MatchClientController.matchWin.AddListener(() => Invoke(nameof(ShowWinWindow), 5f));
             MatchClientController.matchLose.AddListener(() => Invoke(nameof(ShowLoseWindow), 5f));

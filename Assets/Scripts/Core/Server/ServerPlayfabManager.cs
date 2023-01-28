@@ -172,7 +172,6 @@ namespace Core.Server
                     Debug.Log($"WhenPlayerDataRecievedInBotMatch player division {player.Division}");
                     MatchServerController.instance.StartToBot(level, progress, player);
                     players.Remove(player);
-                    return;
                 });
             }
         }

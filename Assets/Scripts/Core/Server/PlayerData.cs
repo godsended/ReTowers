@@ -22,8 +22,7 @@ namespace Core.Server
         public DateTime LastLoginTime { get; set; }
         public bool IsGuest { get; set; }
         public string Name { get; set; }       
-        public NetworkConnectionToClient Connection { get; set; }       
-        public Match CMatch { get; set; }     
+        public NetworkConnectionToClient Connection { get; set; }
         public MatchServer CurrentMatch { get; set; }
         public PlayerCards Cards { get; set; }        
         public CastleEntity Castle { get; set; }

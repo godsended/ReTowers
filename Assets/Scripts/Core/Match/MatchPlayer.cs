@@ -1,5 +1,6 @@
 using Core.Cards;
 using Core.Castle;
+using JetBrains.Annotations;
 using Mirror;
 
 namespace Core.Match
@@ -12,8 +13,12 @@ namespace Core.Match
         
         public CastleEntity Castle { get; set; }
         
-        public PlayerCards PlayerCards { get; set; }
+        public int Division { get; set; }
+
+        public bool IsReady { get; set; } = false;
         
-        public NetworkConnectionToClient Connection { get; set; }
+        [CanBeNull] public PlayerCards PlayerCards { get; set; }
+        
+        [CanBeNull] public NetworkConnectionToClient Connection { get; set; }
     }
 }

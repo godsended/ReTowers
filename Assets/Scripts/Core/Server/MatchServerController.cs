@@ -10,7 +10,11 @@ using System.IO;
 using System.Timers;
 using Core.Utils;
 using System.Linq;
+using Core.Cards;
 using Core.Map;
+using Core.Match;
+using Core.Match.Server;
+using Core.Utils.NameGenerator;
 
 namespace Core.Server
 {
@@ -21,6 +25,8 @@ namespace Core.Server
     [DisallowMultipleComponent]
     public class MatchServerController : MonoBehaviour
     {
+        private static INameGenerator nameGenerator = new MarkNameGenerator();
+        
         public int TimeToStartBot = 45;
         
         public static MatchServerController instance;
@@ -32,7 +38,7 @@ namespace Core.Server
         public int MatchSize { get; set; } = 2;
 
         private List<PlayerData> _playersLookingForMatches;
-        private List<Match> _matches { get; set; }
+        private List<MatchServer> _matches { get; set; }
         private IGameLogger _gameLogger;
         private Timer _timer;
 
@@ -44,7 +50,7 @@ namespace Core.Server
         /// <param name="player">Looking player</param>
         public static void RemoveMatch(Guid matchId)
         {
-            Match match = instance._matches.FirstOrDefault(m => m.Id == matchId);
+            MatchServer match = instance._matches.FirstOrDefault(m => m.MatchId == matchId);
 
             instance._matches.Remove(match);
         }
@@ -58,12 +64,12 @@ namespace Core.Server
             if (!instance._playersLookingForMatches.Contains(player))
             {
                 var match = instance._matches
-                  .Where(m => m.Players
-                      .FirstOrDefault(p => p.Key.Id == player.Id).Key != null)
-                  .FirstOrDefault();
+                    .FirstOrDefault(m => m.MatchDetails.Players
+                        .FirstOrDefault(p => p.PlayFabId == player.Id.ToString()) != null);
 
                 if (match != null)
-                    match.Players.Remove(player);
+                    match.MatchDetails.Players.Remove(match.MatchDetails.Players.FirstOrDefault(p 
+                        => p.PlayFabId == player.PlayFabId));
 
                 instance._playersLookingForMatches.Add(player);
                 instance.StartCoroutine(instance.CheckMatching());
@@ -90,7 +96,7 @@ namespace Core.Server
             instance = this;
 
             _playersLookingForMatches = new List<PlayerData>();
-            _matches = new List<Match>();
+            _matches = new List<MatchServer>();
             _gameLogger = new ConsoleLogger(new List<LogTypeMessage>
             {
                 LogTypeMessage.Info,
@@ -107,21 +113,18 @@ namespace Core.Server
             TowerSmashNetwork.ServerOnDisconnectEvent.AddListener((serverConnect) =>
             {
                 var match = _matches
-                    .Where(m => m.Players
-                        .FirstOrDefault(p => p.Key.Connection == serverConnect).Key != null)
-                    .FirstOrDefault();
+                    .FirstOrDefault(m => m.MatchDetails.Players
+                        .FirstOrDefault(p => p.Connection == serverConnect) != null);
 
+                //Здесь будет вызов плейфаба
                 if (match != null)
                 {
-                    foreach (PlayerData player in match.Players.Keys)
+                    foreach (MatchPlayer player in match.MatchDetails.Players)
                     {
-                        if (player != null && player.Connection != null)
+                        player?.Connection?.Send(new RequestMatchDto
                         {
-                            player.Connection.Send(new RequestMatchDto
-                            {
-                                RequestType = MatchRequestType.WinMatch
-                            });
-                        }
+                            RequestType = MatchRequestType.WinMatch
+                        });
                     }
 
                     match.Stop();
@@ -131,27 +134,24 @@ namespace Core.Server
             NetworkServer.RegisterHandler<RequestBattleInfo>((connection, requestBattleDto) =>
             {
                 var match = _matches
-                    .Where(m => m.Players
-                        .FirstOrDefault(p => p.Key.Id == requestBattleDto.AccountId).Key != null)
-                    .FirstOrDefault();
+                    .FirstOrDefault(m => m.MatchDetails.Players
+                        .FirstOrDefault(p => p.PlayFabId == requestBattleDto.AccountId.ToString()) != null);
 
                 if (match != null)
                 {
-                    var yourData = match.Players.FirstOrDefault(p => p.Key.Id == requestBattleDto.AccountId).Key;
-                    var enemyData = match.Players.FirstOrDefault(p => p.Key.Id != requestBattleDto.AccountId).Key;
-                    
-                    match.MatchDivision = yourData.Division;
-                    if (enemyData != null)
-                        match.MatchDivision = Math.Min(match.MatchDivision, enemyData.Division);
+                    var yourData = match.MatchDetails.Players.FirstOrDefault(p => p.PlayFabId 
+                        == requestBattleDto.AccountId.ToString());
+                    var enemyData = match.MatchDetails.Players.FirstOrDefault(p => p.PlayFabId 
+                        != requestBattleDto.AccountId.ToString());
 
-                    DivisionCastleCreator castleCreator = new DivisionCastleCreator(match.MatchDivision);
+                    DivisionCastleCreator castleCreator = new DivisionCastleCreator(match.MatchDetails.Division);
                     MatchPlayerDataInitializer<DivisionCastleCreator> playerDataInitializer = new(castleCreator);
                     playerDataInitializer.Initialize(yourData);
-
+                    PlayerData enemyPlayerData = MainServer.GetPlayerData(Guid.Parse(enemyData.PlayFabId));
                     if (enemyData != null)
                     {
                         playerDataInitializer.Initialize(enemyData);
-                        Debug.Log($"Sending ReqBattleInfo with division {match.MatchDivision}");
+                        Debug.Log($"Sending ReqBattleInfo with division {match.MatchDetails.Division}");
                         connection.Send(new RequestBattleInfo
                         {
                             AccountId = requestBattleDto.AccountId,
@@ -161,23 +161,23 @@ namespace Core.Server
                             EnemyTowerHealth = enemyData.Castle.Tower.Health,
                             YourWallHealth = yourData.Castle.Wall.Health,
                             EnemyWallHealth = enemyData.Castle.Wall.Health,
-                            IsYourTurn = match.CurrentPlayerTurn.Id == requestBattleDto.AccountId,
-                            Timer = match.TurnTime,
-                            EnemyWinCount = enemyData.PlayerStatistics.WinCount,
+                            IsYourTurn = match.MatchDetails.CurrentPlayer.PlayFabId == requestBattleDto.AccountId.ToString(),
+                            Timer = (int)match.MatchDetails.TurnTime,
+                            EnemyWinCount = enemyPlayerData.PlayerStatistics.WinCount,
                             StartDamageFatigue = int.Parse(Configurator.data["BattleConfiguration"]["fatigueDamageStart"]),
                             TurnFatigue = int.Parse(Configurator.data["BattleConfiguration"]["fatigueTurnStart"]),
                             FatigueLimit = int.Parse(Configurator.data["BattleConfiguration"]["fatigueLimit"]),
-                            Division = match.MatchDivision
+                            Division = match.MatchDetails.Division
                         });
 
-                        match.PlayerReady(requestBattleDto.AccountId);
+                        match.MatchDetails.Players.FirstOrDefault(p => p.PlayFabId == requestBattleDto.AccountId.ToString())!.IsReady = true;
                     }
                     else 
                     {
 
                         string[] names = File.ReadAllLines(Application.dataPath + "/StreamingAssets" + "/names.txt");
 
-
+                        PlayerData yourPlayerData = MainServer.GetPlayerData(Guid.Parse(yourData.PlayFabId));
                         connection.Send(new RequestBattleInfo
                         {
                             AccountId = requestBattleDto.AccountId,
@@ -187,15 +187,15 @@ namespace Core.Server
                             EnemyTowerHealth = yourData.Castle.Tower.Health,
                             YourWallHealth = yourData.Castle.Wall.Health,
                             EnemyWallHealth = yourData.Castle.Wall.Health,
-                            IsYourTurn = match.CurrentPlayerTurn.Id == requestBattleDto.AccountId,
-                            Timer = match.TurnTime,
-                            EnemyWinCount = UnityEngine.Random.Range(yourData.PlayerStatistics.WinCount, yourData.PlayerStatistics.WinCount + 5),
+                            IsYourTurn = match.MatchDetails.CurrentPlayer.PlayFabId == requestBattleDto.AccountId.ToString(),
+                            Timer = (int)match.MatchDetails.TurnTime,
+                            EnemyWinCount = UnityEngine.Random.Range(yourPlayerData.PlayerStatistics.WinCount, yourPlayerData.PlayerStatistics.WinCount + 5),
                             StartDamageFatigue = int.Parse(Configurator.data["BattleConfiguration"]["fatigueDamageStart"]),
                             TurnFatigue = int.Parse(Configurator.data["BattleConfiguration"]["fatigueTurnStart"]),
                             FatigueLimit = int.Parse(Configurator.data["BattleConfiguration"]["fatigueLimit"]),
-                            Division = match.MatchDivision
+                            Division = match.MatchDetails.Division
                         });
-                        match.PlayerReady(requestBattleDto.AccountId);
+                        match.MatchDetails.Players.FirstOrDefault(p => p.PlayFabId == requestBattleDto.AccountId.ToString())!.IsReady = true;
                     }
                 }
                 else
@@ -207,36 +207,15 @@ namespace Core.Server
             NetworkServer.RegisterHandler<RequestMatchDto>(HandleSearchMatchRequest, false);
         }
 
-        private void RequestEndTurn(PlayerData player)
-        {
-            var match = _matches
-                    .Where(m => m.Players
-                        .FirstOrDefault(p => p.Key.Id == player.Id).Key != null)
-                    .FirstOrDefault();
-
-            if (match != null)
-                if (match.CurrentPlayerTurn == player)
-                    StartCoroutine(match.WaitNextTurn());
-        }
-
         private void LeaveMatch(PlayerData player)
         {
             var match = _matches
-                    .Where(m => m.Players
-                        .FirstOrDefault(p => p.Key.Id == player.Id).Key != null)
-                    .FirstOrDefault();
+                .FirstOrDefault(m => m.MatchDetails.Players
+                    .FirstOrDefault(p => p.PlayFabId == player.PlayFabId) != null);
 
             if (match != null)
             {
                 player.Castle.Tower.Damage(player.Castle.Tower.Health);
-                if (match.Players.Count == 1)
-                {
-                    match.Stop();
-                }
-                else
-                {
-                    match.CheckEndMatch();
-                }
             }
         }
 
@@ -288,7 +267,19 @@ namespace Core.Server
             //     player = instance._playersLookingForMatches.First();
             // }
 
-            _matches.Add(new Match(player, _gameLogger, levelInfo, mapProgress));
+            MatchServer.MatchServerCreator creator = new MatchServer.MatchServerCreator();
+            MatchServer match = levelInfo == null || mapProgress == null
+                ? creator.CreateBotMatchServer(false)
+                : creator.CreateBotMatchServer(true);
+            match.MatchDetails.LevelInfo = levelInfo;
+            match.MatchDetails.MapProgress = mapProgress;
+            match.AddPlayer(player.PlayFabId, player.Name, player.Cards, player.Division, player.Connection);
+            List<Guid> cards = new List<Guid>();
+            player.Cards.CardsIdDeck.ForEach(c => cards.Add(c));
+            player.Cards.CardsIdHand.ForEach(c => cards.Add(c));
+            PlayerCards botCards = new PlayerCards(cards);
+            match.AddBot(botCards, nameGenerator.Generate());
+            _matches.Add(match);
 
             StartMatch(player);
         }
@@ -323,12 +314,22 @@ namespace Core.Server
 
                 List<PlayerData> players = new List<PlayerData> { instance._playersLookingForMatches[playerindex], instance._playersLookingForMatches[playersCount - 1] };
 
-                _matches.Add(new Match(players, _gameLogger));
+                MatchServer match = new MatchServer.MatchServerCreator().CrateMatchServer();
+                foreach (var player in players)
+                {
+                    match.AddPlayer(player.PlayFabId, player.Name, player.Cards, player.Division, player.Connection);
+                    player.Connection.Send(new LoadBattleSceneDto()
+                    {
+                        MatchId = match.MatchId.ToString(),
+                        RequestId = match.MatchId.ToString() + player.PlayFabId
+                    });
+                }
+                _matches.Add(match);
+                yield return new WaitForSeconds(1);
+                match.Start();
 
                 players.ForEach(StartMatch);
             }
-
-            yield return new WaitForSeconds(1f);
         }
 
         private void StartMatch(PlayerData player)
@@ -341,11 +342,6 @@ namespace Core.Server
         private void OnDestroy()
         {
             _timer.Dispose();
-        }
-
-        public void StartBotTurn(Match match) 
-        {
-            StartCoroutine(match.BotTurn());
         }
 
         private void HandleSearchMatchRequest(NetworkConnectionToClient connection, RequestMatchDto requestMatchDto)
@@ -377,7 +373,7 @@ namespace Core.Server
                         LeaveMatch(playerData);
                         break;
                     case MatchRequestType.EndTurn:
-                        RequestEndTurn(playerData);
+                        //RequestEndTurn(playerData);
                         break;
                 }
             }

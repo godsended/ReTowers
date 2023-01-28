@@ -8,6 +8,8 @@ using Core.Map;
 using Core.Map.Server;
 using Core.Server;
 using Core.Utils;
+using Mirror;
+using UnityEngine;
 
 namespace Core.Match.Server
 {
@@ -27,36 +29,51 @@ namespace Core.Match.Server
 
         private MatchServer(bool isPve)
         {
+            Debug.Log("Match creating");
             MatchId = Guid.NewGuid();
-            MatchDetails = isPve ? new PveMatchDetails() : new MatchDetails();
+            MatchDetails = new MatchDetails();
             this.isPve = isPve;
             MatchDetails.TurnTime = int.Parse(Configurator.data["BattleConfiguration"]["turnTime"]);
             MatchDetails.FatigueTurn = int.Parse(Configurator.data["BattleConfiguration"]["fatigueTurnStart"]);
             MatchDetails.PrepareTime = 5;
         }
 
-        public void AddPlayer(string playFabId, string name, PlayerCards cards)
+        public void AddPlayer(string playFabId, string name, PlayerCards cards, int division, NetworkConnectionToClient connection)
         {
-            MatchPlayer player = new MatchPlayer() {PlayFabId = playFabId, PlayerCards = cards, Name = name};
+            MatchPlayer player = new MatchPlayer()
+                {PlayFabId = playFabId, PlayerCards = new PlayerCards(cards.CardsIdDeck), Name = name, Division = division, Connection = connection};
             MatchDetails.Players.Add(player);
         }
 
         public void AddBot(PlayerCards cards, string name)
         {
-            MatchBot bot = new MatchBot(this) {PlayerCards = cards, Name = name};
+            MatchBot bot = new MatchBot(this) {PlayerCards = new PlayerCards(cards.CardsIdDeck), Name = name};
             MatchDetails.Players.Add(bot);
         }
 
         public void Start()
         {
+            Debug.Log("Match starting");
             matchState = MatchState.Game;
+            MatchDetails.Division = MatchDetails.Players.Select(p => p.Division).Min();
             foreach (var player in MatchDetails.Players)
             {
                 player.Castle = new DivisionCastleCreator(MatchDetails.Division).CreateCastle();
+                try
+                {
+                    player.PlayerCards.FillHand();
+                }
+                catch (NullReferenceException e)
+                {
+                    Debug.LogError("PlayerCards on match start is null!");
+                    throw;
+                }
             }
 
             MatchDetails.Fatigue = new Fatigue(MatchDetails.Division);
             MatchDetails.Turn = 0;
+            if (MatchDetails.LevelInfo == null)
+                MatchDetails.LevelInfo = new ();
             SendOutMatchDetails();
         }
 
@@ -64,7 +81,7 @@ namespace Core.Match.Server
         {
             if (discardNextTurn || matchState != MatchState.Game)
                 return;
-            
+
             MatchPlayer matchPlayer = MatchDetails.CurrentPlayer;
             if (matchPlayer == null || matchPlayer.PlayFabId != playerData.PlayFabId)
                 return;
@@ -82,7 +99,7 @@ namespace Core.Match.Server
         {
             if (matchState != MatchState.Game)
                 return;
-            
+
             saveNextTurn = cardData.SaveTurn;
             foreach (var effect in cardData.Effects)
             {
@@ -90,6 +107,7 @@ namespace Core.Match.Server
                 {
                     discardNextTurn = true;
                 }
+
                 effect.Execute(MatchDetails.CurrentPlayer, MatchDetails.NextPlayer);
             }
 
@@ -102,19 +120,20 @@ namespace Core.Match.Server
                     MatchDetails.Fatigue++;
                 }
             }
-            
+
             MatchDetails.CurrentPlayer.PlayerCards.RemoveCardFromHand(Guid.Parse(cardData.Id));
             MatchDetails.CurrentPlayer.PlayerCards.FillHand();
             saveNextTurn = false;
 
             SendOutMatchDetails();
+            ValidateGameState();
         }
 
         public void HandleDiscardCardRequest(PlayerData playerData, CardData cardData)
         {
             if (matchState != MatchState.Game)
                 return;
-            
+
             MatchPlayer matchPlayer = MatchDetails.CurrentPlayer;
             if (matchPlayer == null || matchPlayer.PlayFabId != playerData.PlayFabId)
                 return;
@@ -145,7 +164,7 @@ namespace Core.Match.Server
                     MatchDetails.Fatigue++;
                 }
             }
-            
+
             MatchDetails.CurrentPlayer.PlayerCards.RemoveCardFromHand(Guid.Parse(cardData.Id));
             MatchDetails.CurrentPlayer.PlayerCards.FillHand();
             saveNextTurn = false;
@@ -153,25 +172,25 @@ namespace Core.Match.Server
             //NotifyClientsAboutPlayedCard(cardData, CardActionType.RequestDiscard);
             //NotifyClientsAboutPlayedCard(cardData, CardActionType.Draft);
             SendOutMatchDetails();
+            ValidateGameState();
         }
 
         private void HandleImpossibleMove()
         {
             if (matchState != MatchState.Game)
                 return;
-            
+
             SendOutMatchDetails();
         }
-        
+
         private void SendOutMatchDetails()
         {
             if (matchState != MatchState.Game)
                 return;
-            
+
             foreach (var player in MatchDetails.Players)
             {
-                if (isPve)
-                    player.Connection.Send(CreatePveMatchDetailsDto(player));
+                player.Connection.Send(CreateMatchDetailsDto(player));
             }
         }
 
@@ -179,7 +198,7 @@ namespace Core.Match.Server
         {
             if (matchState != MatchState.Game)
                 return;
-            
+
             foreach (var player in MatchDetails.Players)
             {
                 RequestCardDto dto = new()
@@ -196,28 +215,15 @@ namespace Core.Match.Server
         {
             return new()
             {
+                PlayerId = player.PlayFabId,
                 Players = MatchDetails.Players.Select(p => new MatchPlayerDto()
                 {
-                    Castle = p.Castle, Name = p.Name
+                    Castle = p.Castle, Name = p.Name, PlayerId = p.PlayFabId == player.PlayFabId ? p.PlayFabId : ""
                 }).ToArray(),
                 Fatigue = MatchDetails.Fatigue,
                 IsYourTurn = MatchDetails.CurrentPlayer.PlayFabId == player.PlayFabId,
-                CardsInHandIds = player.PlayerCards.CardsIdHand.Select(c => c.ToString()).ToArray()
-            };
-        }
-
-        private PveMatchDetailsDto CreatePveMatchDetailsDto(MatchPlayer player)
-        {
-            return new()
-            {
-                Players = MatchDetails.Players.Select(p => new MatchPlayerDto()
-                {
-                    Castle = p.Castle, Name = p.Name
-                }).ToArray(),
-                Fatigue = MatchDetails.Fatigue,
-                IsYourTurn = MatchDetails.CurrentPlayer.PlayFabId == player.PlayFabId,
-                CardsInHandIds = player.PlayerCards.CardsIdHand.Select(c => c.ToString()).ToArray(),
-                LevelInfo = (MatchDetails as PveMatchDetails)?.LevelInfo
+                CardsInHandIds = player?.PlayerCards?.CardsIdHand?.Select(c => c.ToString())?.ToArray(),
+                LevelInfo = MatchDetails.LevelInfo
             };
         }
 
@@ -225,18 +231,20 @@ namespace Core.Match.Server
         {
             if (matchState != MatchState.Game)
                 return;
-            
+
             foreach (var player in MatchDetails.Players)
             {
                 DamagePlayer(player, MatchDetails.Fatigue.Damage, false);
             }
+
+            ValidateGameState();
         }
 
         private void DamagePlayer(MatchPlayer player, int damage, bool spread = true)
         {
             if (matchState != MatchState.Game)
                 return;
-            
+
             if (!spread)
             {
                 if (player.Castle.Wall.Health > 0)
@@ -254,6 +262,8 @@ namespace Core.Match.Server
             int towerDamage = Math.Max(0, damage - player.Castle.Wall.Health);
             player.Castle.Tower.Damage(towerDamage);
             player.Castle.Wall.Damage(damage - towerDamage);
+
+            ValidateGameState();
         }
 
         public void Stop()
@@ -261,7 +271,7 @@ namespace Core.Match.Server
             matchState = MatchState.Ended;
             MatchServerController.RemoveMatch(MatchId);
         }
-        
+
         private void ValidateGameState()
         {
             List<MatchPlayer> winPlayers = new();
@@ -272,12 +282,13 @@ namespace Core.Match.Server
                 {
                     winPlayers.Add(player);
                 }
+
                 if (player.Castle.Tower.Health <= 0)
                 {
                     losePlayers.Add(player);
                 }
             }
-            
+
             winPlayers.ForEach(p =>
             {
                 ApplyAfterGameStatistics(p, true);
@@ -290,8 +301,8 @@ namespace Core.Match.Server
                 SendGameResult(p, false);
                 MatchDetails.Players.Remove(p);
             });
-            
-            if(MatchDetails.Players.Count < 2)
+
+            if (MatchDetails.Players.Count < 2)
                 Stop();
         }
 
@@ -300,7 +311,8 @@ namespace Core.Match.Server
             RequestMatchDto dto = new()
             {
                 AccountId = Guid.Parse(player.PlayFabId),
-                LevelId = (MatchDetails as PveMatchDetails)?.LevelInfo.LevelId ?? -1,
+                // ReSharper disable once Unity.NoNullPropagation
+                LevelId = MatchDetails.LevelInfo?.LevelId ?? -1,
                 RequestType = isWin ? MatchRequestType.WinMatch : MatchRequestType.LoseMatch
             };
             player.Connection.Send(dto);
@@ -310,11 +322,10 @@ namespace Core.Match.Server
         {
             if (isWin)
             {
-                var pveDetails = MatchDetails as PveMatchDetails;
-                if (pveDetails != null)
+                if (MatchDetails.LevelInfo != null && MatchDetails.MapProgress != null)
                 {
-                    ServerMapController.Instance.UpdateMapProgress(pveDetails.MapProgress, 
-                        pveDetails.LevelInfo, player.PlayFabId);
+                    ServerMapController.Instance.UpdateMapProgress(MatchDetails.MapProgress,
+                        MatchDetails.LevelInfo, player.PlayFabId);
                 }
                 //Update play fab wins count statistic here
             }

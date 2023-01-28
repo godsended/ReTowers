@@ -25,6 +25,7 @@ namespace Core.Cards
         public PlayerCards(List<Guid> cards)
         {
             CardsIdDeck = cards;
+            CardsIdHand = new List<Guid>();
             ShuffleCards();
         }
 

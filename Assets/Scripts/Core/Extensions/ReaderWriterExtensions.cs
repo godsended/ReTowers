@@ -1,8 +1,10 @@
+using System;
 using Core;
 using Core.Castle;
 using Core.Contracts;
 using Core.Map;
 using Newtonsoft.Json;
+using UnityEngine;
 
 namespace Mirror.Extensions
 {
@@ -148,32 +150,10 @@ namespace Mirror.Extensions
                 IsError = reader.ReadBool()
             };
         }
-
+        
         public static void WriteMatchDetailsDto(this NetworkWriter writer, MatchDetailsDto details)
         {
-            writer.WriteGuid(details.PlayerId);
-            writer.WriteArray(details.Players);
-            writer.WriteString(JsonConvert.SerializeObject(details.Fatigue));
-            writer.WriteArray(details.CardsInHandIds);
-            writer.WriteBool(details.IsYourTurn);
-        }
-
-        public static MatchDetailsDto ReadMatchDetailsDto(this NetworkReader reader)
-        {
-            return new()
-            {
-                PlayerId = reader.ReadGuid(),
-                Players = reader.ReadArray<MatchPlayerDto>(),
-                Fatigue = JsonConvert.DeserializeObject<Fatigue>(reader.ReadString()),
-                CardsInHandIds = reader.ReadArray<string>(),
-                IsYourTurn = reader.ReadBool()
-            };
-        }
-        
-        
-        public static void WritePveMatchDetailsDto(this NetworkWriter writer, PveMatchDetailsDto details)
-        {
-            writer.WriteGuid(details.PlayerId);
+            writer.WriteString(details.PlayerId);
             writer.WriteArray(details.Players);
             writer.WriteString(JsonConvert.SerializeObject(details.Fatigue));
             writer.WriteArray(details.CardsInHandIds);
@@ -181,11 +161,11 @@ namespace Mirror.Extensions
             writer.WriteBool(details.IsYourTurn);
         }
 
-        public static PveMatchDetailsDto ReadPveMatchDetailsDto(this NetworkReader reader)
+        public static MatchDetailsDto ReadMatchDetailsDto(this NetworkReader reader)
         {
             return new()
             {
-                PlayerId = reader.ReadGuid(),
+                PlayerId = reader.ReadString(),
                 Players = reader.ReadArray<MatchPlayerDto>(),
                 Fatigue = JsonConvert.DeserializeObject<Fatigue>(reader.ReadString()),
                 CardsInHandIds = reader.ReadArray<string>(),
@@ -197,7 +177,7 @@ namespace Mirror.Extensions
         
         public static void WriteMatchPlayerDto(this NetworkWriter writer, MatchPlayerDto player)
         {
-            writer.WriteGuid(player.PlayerId);
+            writer.WriteString(player.PlayerId);
             writer.WriteString(player.Name);
             writer.WriteString(JsonConvert.SerializeObject(player.Castle));
         }
@@ -206,7 +186,7 @@ namespace Mirror.Extensions
         {
             return new()
             {
-                PlayerId = reader.ReadGuid(),
+                PlayerId = reader.ReadString(),
                 Name = reader.ReadString(),
                 Castle = JsonConvert.DeserializeObject<CastleEntity>(reader.ReadString())
             };
@@ -224,6 +204,21 @@ namespace Mirror.Extensions
             {
                 PlayerId = reader.ReadGuid(),
                 Damage = reader.ReadInt()
+            };
+        }
+
+        public static void WriteLoadBattleSceneDto(this NetworkWriter writer, LoadBattleSceneDto dto)
+        {
+            writer.WriteString(dto.MatchId);
+            writer.WriteString(dto.RequestId);
+        }
+
+        public static LoadBattleSceneDto ReadLoadBattleSceneDto(this NetworkReader reader)
+        {
+            return new()
+            {
+                MatchId = reader.ReadString(),
+                RequestId = reader.ReadString(),
             };
         }
     }

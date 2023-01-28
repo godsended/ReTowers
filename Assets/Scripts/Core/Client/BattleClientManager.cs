@@ -5,11 +5,16 @@ using Core.Castle;
 using Core.Cards;
 using System.Linq;
 using System;
+using System.Collections;
+using Core.Match;
+using Core.Match.Client;
+using Core.Match.Server;
 using Core.Utils;
 using Effects;
 using MainMenu.Registration;
 using UnityEngine.SceneManagement;
 using Mirror;
+using Newtonsoft.Json;
 
 namespace Core.Client
 {
@@ -17,49 +22,32 @@ namespace Core.Client
     {
         public static BattleClientManager instance;
 
-        private PlayerData _myPlayerData;
-        private PlayerData _enemyPlayerData;
-        private bool _isMyTurn;
+        public ClientMatchState MatchState { get; } = new();
         private bool _canPlay;
         private bool _matchEnded;
         private float _timer;
         private float _elapsedTime;
-        private int _numberTurnForFatigue;
-        private Fatigue _fatigue;
-        private int _numberTurn;
         private int _winCount;
+        private bool isFatigueEffectShowed = false;
 
         private int division;
 
-        public static PlayerData GetMyData() => instance._myPlayerData;
-        public static PlayerData GetEnemyData() => instance._enemyPlayerData;
+        public static MatchPlayer GetMyData() => instance.MatchState.MyState;
+        public static MatchPlayer GetEnemyData() => instance.MatchState.EnemyState;
         public static float GetTimeLeft() => instance._timer - instance._elapsedTime;
-        public static bool IsMyTurn() => instance._isMyTurn;
+        public static bool IsMyTurn() => instance.MatchState.IsMyTurn;
         public static bool IsCanPlay() => instance._canPlay;
         public static bool IsMatchEnded() => instance._matchEnded;
 
         public static void ResetBattleClient()
         {
-            instance._myPlayerData = new PlayerData
-            {
-                Name = "Unknow",
-                Castle = new BlankCastleCreator().CreateCastle()
-            };
-
-            instance._enemyPlayerData = new PlayerData
-            {
-                Name = "Unknow",
-                Castle = new BlankCastleCreator().CreateCastle()
-            };
-
-            instance._isMyTurn = false;
+            instance.MatchState.Reset();
+            instance.isFatigueEffectShowed = false;
             instance._canPlay = false;
             instance._matchEnded = false;
             instance._timer = 0;
             instance._elapsedTime = 0;
-            instance._numberTurnForFatigue = 0;
             //instance._damageFatigue = 0;
-            instance._numberTurn = 0;
             //instance._fatigueLimit = 0;
         }
 
@@ -68,6 +56,7 @@ namespace Core.Client
             instance._elapsedTime = 0;
         }
 
+        //Эта хуйня магическая и ее нужно переделать, neccesary to pay attention to this
         public static void SetTurn(bool isMyTurn)
         {
             if (CardObject.IsDiscardMode)
@@ -83,45 +72,42 @@ namespace Core.Client
                 CardObject.IsDiscardMode = false;
             }
 
-            if (SceneManager.GetActiveScene().name == "Battle")
+            // if (SceneManager.GetActiveScene().name == "Battle")
+            // {
+            //     BattleUI.HideTipsWindow();
+            //     
+            //     if (instance._numberTurn % 2 == 0)
+            //     {
+            //         if (instance._numberTurn == instance._numberTurnForFatigue)
+            //             BattleUI.ActivateFatigueDamageText();
+            //
+            //         if (instance._numberTurn == instance._numberTurnForFatigue)
+            //             EffectSpawner.StartFatigueEffect();
+            //
+            //         if (instance._numberTurn >= instance._numberTurnForFatigue)
+            //         {
+            //             if (GetMyData().Castle.Wall.Health > 0)
+            //                 BattleUI.DamageMyWall(instance._fatigue.Damage);
+            //             else
+            //                 BattleUI.DamageMyTower(instance._fatigue.Damage);
+            //
+            //             if (GetEnemyData().Castle.Wall.Health > 0)
+            //                 BattleUI.DamageEnemyWall(instance._fatigue.Damage);
+            //             else
+            //                 BattleUI.DamageEnemyTower(instance._fatigue.Damage);
+            //
+            //             EffectSpawner.ApplyFatigueEffect();
+            //
+            //             instance._fatigue++;
+            //         }
+            //     }
+            //
+            //     BattleUI.SetTextFatigueDamage(instance._fatigue.Damage);
+            // }
+            
+            if (true)
             {
-                BattleUI.HideTipsWindow();
-
-                if (instance._numberTurn % 2 == 0)
-                {
-                    if (instance._numberTurn == instance._numberTurnForFatigue)
-                        BattleUI.ActivateFatigueDamageText();
-
-                    if (instance._numberTurn == instance._numberTurnForFatigue)
-                        EffectSpawner.StartFatigueEffect();
-
-                    if (instance._numberTurn >= instance._numberTurnForFatigue)
-                    {
-                        if (GetMyData().Castle.Wall.Health > 0)
-                            BattleUI.DamageMyWall(instance._fatigue.Damage);
-                        else
-                            BattleUI.DamageMyTower(instance._fatigue.Damage);
-
-                        if (GetEnemyData().Castle.Wall.Health > 0)
-                            BattleUI.DamageEnemyWall(instance._fatigue.Damage);
-                        else
-                            BattleUI.DamageEnemyTower(instance._fatigue.Damage);
-
-                        EffectSpawner.ApplyFatigueEffect();
-
-                        instance._fatigue++;
-                    }
-                }
-
-                BattleUI.SetTextFatigueDamage(instance._fatigue.Damage);
-            }
-
-            if (instance._matchEnded || SceneManager.GetActiveScene().name != "Battle")
-                return;
-
-            if (!instance.CheckEndMatch())
-            {
-                instance._isMyTurn = isMyTurn;
+                //instance._isMyTurn = isMyTurn;
 
                 ResetTimer();
                 SetCanPlay(isMyTurn);
@@ -130,19 +116,10 @@ namespace Core.Client
                 {
                     var cardObjects = FindObjectsOfType<CardObject>()
                         .Where(c => c.GetCardPosition() != null
-                            && !c.card.NonDiscard)
+                                    && !c.card.NonDiscard)
                         .ToList();
 
                     cardObjects.FirstOrDefault()!.OnEndDrag(null);
-                }
-
-                if (instance._numberTurn % 2 == 0)
-                {
-                    foreach (Resource resource in instance._myPlayerData.Castle.Resources)
-                        BattleUI.AddMyResourceValue(resource.Name, resource.Income);
-
-                    foreach (Resource resource in instance._enemyPlayerData.Castle.Resources)
-                        BattleUI.AddEnemyResourceValue(resource.Name, resource.Income);
                 }
 
                 if (isMyTurn)
@@ -156,8 +133,6 @@ namespace Core.Client
                     BattleUI.instanse.skipTurnButton.SetActive(false);
                 }
             }
-
-            instance._numberTurn++;
         }
 
         public static void SetCanPlay(bool canPlay)
@@ -165,52 +140,47 @@ namespace Core.Client
             instance._canPlay = canPlay;
         }
 
-        public static void SetPlayerDatas(PlayerData myPlayerData, PlayerData enemyPlayerData)
-        {
-            instance._myPlayerData = myPlayerData;
-            instance._enemyPlayerData = enemyPlayerData;
-        }
+        // public bool CheckEndMatch()
+        // {
+        //     try
+        //     {
+        //         if (_enemyPlayerData.Castle.Tower.Health <= 0
+        //            && _myPlayerData.Castle.Tower.Health <= 0)
+        //         {
+        //             BattleUI.instanse.ShowDrawWindow();
+        //             _matchEnded = true;
+        //
+        //             return true;
+        //         }
+        //
+        //         if (_myPlayerData.Castle.Tower.Health <= 0
+        //             || _enemyPlayerData.Castle.Tower.Health >= _enemyPlayerData.Castle.Tower.MaxHealth)
+        //         {
+        //             BattleUI.instanse.ShowLoseWindow();
+        //             _matchEnded = true;
+        //
+        //             return true;
+        //         }
+        //
+        //         if (_enemyPlayerData.Castle.Tower.Health <= 0
+        //             || _myPlayerData.Castle.Tower.Health >= _myPlayerData.Castle.Tower.MaxHealth)
+        //         {
+        //             BattleUI.instanse.ShowWinWindow();
+        //             _matchEnded = true;
+        //             return true;
+        //         }
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         //TODO: Логгер сюда засунуть
+        //         Debug.Log(e);
+        //     }
+        //
+        //     return false;
+        // }
 
-        public bool CheckEndMatch()
-        {
-            try
-            {
-                if (_enemyPlayerData.Castle.Tower.Health <= 0
-                   && _myPlayerData.Castle.Tower.Health <= 0)
-                {
-                    BattleUI.instanse.ShowDrawWindow();
-                    _matchEnded = true;
-
-                    return true;
-                }
-
-                if (_myPlayerData.Castle.Tower.Health <= 0
-                    || _enemyPlayerData.Castle.Tower.Health >= _enemyPlayerData.Castle.Tower.MaxHealth)
-                {
-                    BattleUI.instanse.ShowLoseWindow();
-                    _matchEnded = true;
-
-                    return true;
-                }
-
-                if (_enemyPlayerData.Castle.Tower.Health <= 0
-                    || _myPlayerData.Castle.Tower.Health >= _myPlayerData.Castle.Tower.MaxHealth)
-                {
-                    BattleUI.instanse.ShowWinWindow();
-                    _matchEnded = true;
-                    return true;
-                }
-            }
-            catch (Exception e)
-            {
-                //TODO: Логгер сюда засунуть
-                Debug.Log(e);
-            }
-
-            return false;
-        }
-
-        public void SetWin() 
+        //Этот пиздец в будущем перенесется на сервер
+        public void SetWin()
         {
             int _winCount = MainClient.GetWinCount();
             MainClient.SetWinCount(_winCount++);
@@ -220,30 +190,29 @@ namespace Core.Client
         private void Start()
         {
             instance = this;
+            MatchState.OnStateChanged += OnMatchStateUpdated;
 
             NetworkClient.RegisterHandler<RequestBattleInfo>(requestBattleInfo =>
             {
                 ResetBattleClient();
-                
+
                 Debug.Log($"RequestBattleInfo updated with division {requestBattleInfo.Division}!");
 
                 division = requestBattleInfo.Division;
 
                 ICastleCreator castleCreator = new DivisionCastleCreator(requestBattleInfo.Division);
 
-                PlayerData myData = new PlayerData
+                MatchPlayer myData = new()
                 {
                     Name = requestBattleInfo.YourName,
                     Castle = castleCreator.CreateCastle()
                 };
 
-                PlayerData enemyData = new PlayerData
+                MatchPlayer enemyData = new()
                 {
                     Name = requestBattleInfo.EnemyName,
                     Castle = castleCreator.CreateCastle()
                 };
-
-                SetPlayerDatas(myData, enemyData);
 
                 BattleUI.instanse.myNickname.text = MainClient.GetUsername();
                 BattleUI.instanse.enemyNickname.text = requestBattleInfo.EnemyName;
@@ -251,25 +220,27 @@ namespace Core.Client
                 BattleUI.instanse.textHealthEnemyTower.text = requestBattleInfo.EnemyTowerHealth.ToString();
                 BattleUI.instanse.textHealthMyWall.text = requestBattleInfo.YourWallHealth.ToString();
                 BattleUI.instanse.textHealthEnemyWall.text = requestBattleInfo.EnemyWallHealth.ToString();
-                BattleUI.instanse.enemyResourceIncome_1.text = enemyData.Castle.GetResource("Resource_1").Income.ToString();
-                BattleUI.instanse.enemyResourceIncome_2.text = enemyData.Castle.GetResource("Resource_2").Income.ToString();
-                BattleUI.instanse.enemyResourceIncome_3.text = enemyData.Castle.GetResource("Resource_3").Income.ToString();
+                BattleUI.instanse.enemyResourceIncome_1.text =
+                    enemyData.Castle.GetResource("Resource_1").Income.ToString();
+                BattleUI.instanse.enemyResourceIncome_2.text =
+                    enemyData.Castle.GetResource("Resource_2").Income.ToString();
+                BattleUI.instanse.enemyResourceIncome_3.text =
+                    enemyData.Castle.GetResource("Resource_3").Income.ToString();
                 BattleUI.instanse.myResourceIncome_1.text = myData.Castle.GetResource("Resource_1").Income.ToString();
                 BattleUI.instanse.myResourceIncome_2.text = myData.Castle.GetResource("Resource_2").Income.ToString();
                 BattleUI.instanse.myResourceIncome_3.text = myData.Castle.GetResource("Resource_3").Income.ToString();
-                BattleUI.instanse.enemyResourceValue_1.text = enemyData.Castle.GetResource("Resource_1").Value.ToString();
-                BattleUI.instanse.enemyResourceValue_2.text = enemyData.Castle.GetResource("Resource_2").Value.ToString();
-                BattleUI.instanse.enemyResourceValue_3.text = enemyData.Castle.GetResource("Resource_3").Value.ToString();
+                BattleUI.instanse.enemyResourceValue_1.text =
+                    enemyData.Castle.GetResource("Resource_1").Value.ToString();
+                BattleUI.instanse.enemyResourceValue_2.text =
+                    enemyData.Castle.GetResource("Resource_2").Value.ToString();
+                BattleUI.instanse.enemyResourceValue_3.text =
+                    enemyData.Castle.GetResource("Resource_3").Value.ToString();
                 BattleUI.instanse.myResourceValue_1.text = myData.Castle.GetResource("Resource_1").Value.ToString();
                 BattleUI.instanse.myResourceValue_2.text = myData.Castle.GetResource("Resource_2").Value.ToString();
                 BattleUI.instanse.myResourceValue_3.text = myData.Castle.GetResource("Resource_3").Value.ToString();
                 BattleUI.instanse.enemyWinCountText.text = requestBattleInfo.EnemyWinCount.ToString();
 
                 _timer = requestBattleInfo.Timer;
-                _numberTurnForFatigue = requestBattleInfo.TurnFatigue;
-                _fatigue = new Fatigue(division);
-
-                _numberTurn = 0;
                 _matchEnded = false;
 
                 BattleUI.HideWaitStartWindow();
@@ -283,6 +254,91 @@ namespace Core.Client
 
             if (_elapsedTime > _timer)
                 _elapsedTime = _timer;
+        }
+
+        public void ApplyFatigue(int damage)
+        {
+            if (SceneManager.GetActiveScene().name != "Battle")
+                return;
+
+            BattleUI.HideTipsWindow();
+
+            if (!isFatigueEffectShowed)
+            {
+                BattleUI.ActivateFatigueDamageText();
+                EffectSpawner.StartFatigueEffect();
+            }
+
+            isFatigueEffectShowed = true;
+
+            if (GetMyData().Castle.Wall.Health > 0)
+                BattleUI.DamageMyWall(damage);
+            else
+                BattleUI.DamageMyTower(damage);
+
+            if (GetEnemyData().Castle.Wall.Health > 0)
+                BattleUI.DamageEnemyWall(damage);
+            else
+                BattleUI.DamageEnemyTower(damage);
+
+            EffectSpawner.ApplyFatigueEffect();
+
+            BattleUI.SetTextFatigueDamage(damage);
+        }
+
+
+        private void OnMatchStateUpdated(ClientMatchState state)
+        {
+            if (SceneManager.GetActiveScene().name != MatchClientController.instance.battleScene)
+            {
+                AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(MatchClientController.instance.battleScene);
+                asyncOperation.completed += (op) => StartCoroutine(UpdateUIFromState(state, true));
+                return;
+            }
+            StartCoroutine(UpdateUIFromState(state, false));
+        }
+        
+        //Куратинный кастылек тк если обновлять данные сразу после загрузки сцены есть подозрение
+        //что они перезаписываются на стандартные задданые в сцене и вообще сцена не реагирует на скрипты
+        private IEnumerator UpdateUIFromState(ClientMatchState state, bool wait)
+        {
+            if(wait)
+                yield return new WaitForSeconds(1);
+            
+            BattleUI.instanse.myNickname.text = state.MyState.Name;
+            BattleUI.instanse.enemyNickname.text = state.EnemyState.Name;
+            BattleUI.instanse.textHealthMyTower.text = state.MyState.Castle.Tower.Health.ToString();
+            BattleUI.instanse.textHealthEnemyTower.text = state.EnemyState.Castle.Tower.Health.ToString();
+            BattleUI.instanse.textHealthMyWall.text = state.MyState.Castle.Wall.Health.ToString();
+            BattleUI.instanse.textHealthEnemyWall.text = state.EnemyState.Castle.Wall.Health.ToString();
+            BattleUI.instanse.enemyResourceIncome_1.text =
+                state.EnemyState.Castle.GetResource("Resource_1").Income.ToString();
+            BattleUI.instanse.enemyResourceIncome_2.text =
+                state.EnemyState.Castle.GetResource("Resource_2").Income.ToString();
+            BattleUI.instanse.enemyResourceIncome_3.text =
+                state.EnemyState.Castle.GetResource("Resource_3").Income.ToString();
+            BattleUI.instanse.myResourceIncome_1.text = state.MyState.Castle.GetResource("Resource_1").Income.ToString();
+            BattleUI.instanse.myResourceIncome_2.text = state.MyState.Castle.GetResource("Resource_2").Income.ToString();
+            BattleUI.instanse.myResourceIncome_3.text = state.MyState.Castle.GetResource("Resource_3").Income.ToString();
+            BattleUI.instanse.enemyResourceValue_1.text =
+                state.EnemyState.Castle.GetResource("Resource_1").Value.ToString();
+            BattleUI.instanse.enemyResourceValue_2.text =
+                state.EnemyState.Castle.GetResource("Resource_2").Value.ToString();
+            BattleUI.instanse.enemyResourceValue_3.text =
+                state.EnemyState.Castle.GetResource("Resource_3").Value.ToString();
+            BattleUI.instanse.myResourceValue_1.text = state.MyState.Castle.GetResource("Resource_1").Value.ToString();
+            BattleUI.instanse.myResourceValue_2.text = state.MyState.Castle.GetResource("Resource_2").Value.ToString();
+            BattleUI.instanse.myResourceValue_3.text = state.MyState.Castle.GetResource("Resource_3").Value.ToString();
+            foreach (var guid in state.CardsToDraftGuids)
+            {
+                CardSpawner.SpawnDraftCard(guid);
+            }
+            //BattleUI.instanse.enemyWinCountText.text = state.MyState.;
+            
+            _matchEnded = false;
+
+            BattleUI.HideWaitStartWindow();
+            SetTurn(state.IsMyTurn);
         }
     }
 }

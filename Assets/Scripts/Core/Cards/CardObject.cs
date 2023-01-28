@@ -301,7 +301,7 @@ namespace Core.Cards
                 MatchClientController.EndTurn();
             }
 
-            BattleClientManager.instance.CheckEndMatch();
+            //BattleClientManager.instance.CheckEndMatch();
 
             HistoryUI.AddMyHistory(card);
 
@@ -350,7 +350,7 @@ namespace Core.Cards
             while (Vector3.Distance(_rectTransform.position, targetTransformPosition.position) > 0.1f)
                 yield return new WaitForFixedUpdate();
 
-            BattleClientManager.instance.CheckEndMatch();
+            //BattleClientManager.instance.CheckEndMatch();
 
             HistoryUI.AddEnemyHistory(card);
 
@@ -395,7 +395,7 @@ namespace Core.Cards
             while (Vector3.Distance(_rectTransform.position, targetTransformPosition.position) > 0.1f)
                 yield return new WaitForFixedUpdate();
 
-            BattleClientManager.instance.CheckEndMatch();
+            //BattleClientManager.instance.CheckEndMatch();
             BattleUI.HideTipsWindow();
             Destroy(gameObject);
         }

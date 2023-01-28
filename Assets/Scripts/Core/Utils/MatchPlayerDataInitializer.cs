@@ -1,3 +1,4 @@
+using Core.Match;
 using Core.Server;
 
 namespace Core.Utils
@@ -11,7 +12,7 @@ namespace Core.Utils
             this.castleCreator = castleCreator;
         }
 
-        public void Initialize(PlayerData playerData)
+        public void Initialize(MatchPlayer playerData)
         {
             playerData.Castle = castleCreator.CreateCastle();
         }

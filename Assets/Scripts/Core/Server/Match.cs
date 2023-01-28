@@ -17,7 +17,7 @@ namespace Core.Server
     /// Match entity
     /// Responsible for match logic
     /// </summary>
-    public class Match
+    public class DMatch
     {
         public Guid Id { get; private set; }
         public Dictionary<PlayerData, bool> Players { get; private set; }
@@ -41,7 +41,7 @@ namespace Core.Server
 
         public MapProgress MapProgress { get; set; }
 
-        public Match(PlayerData player, IGameLogger gameLogger, LevelInfo levelInfo, MapProgress mapProgress)
+        public DMatch(PlayerData player, IGameLogger gameLogger, LevelInfo levelInfo, MapProgress mapProgress)
         {
             MatchDivision = player.Division;
 
@@ -111,7 +111,7 @@ namespace Core.Server
             _gameLogger.Log($"Create match {Id}!", LogTypeMessage.Info);
         }
 
-        public Match(List<PlayerData> players, IGameLogger gameLogger)
+        public DMatch(List<PlayerData> players, IGameLogger gameLogger)
         {
             Init(gameLogger);
 
@@ -141,7 +141,7 @@ namespace Core.Server
 
         private void InitPlayer(PlayerData player)
         {
-            player.CMatch = this;
+            //player.CMatch = this;
             player.Castle = new DivisionCastleCreator(MatchDivision).CreateCastle();
             player.Cards = new PlayerCards(player.Cards.CardsIdDeck, player.Connection);
 
@@ -373,7 +373,7 @@ namespace Core.Server
                         //card.Effects.ForEach(e => e.Execute(bot, CurrentPlayerTurn));
                         if (card.SaveTurn)
                         {
-                            MatchServerController.instance.StartBotTurn(this);
+                           // MatchServerController.instance.StartBotTurn(this);
                         }
                     }
                 }
@@ -526,7 +526,7 @@ namespace Core.Server
                     });
                 }
 
-                playerData.CMatch = null;
+               // playerData.CMatch = null;
             }
 
             Players.Clear();
@@ -642,7 +642,7 @@ namespace Core.Server
             else
             {
                 _numberTurn++;
-                MatchServerController.instance.StartBotTurn(this);
+                //MatchServerController.instance.StartBotTurn(this);
             }
         }
     }
