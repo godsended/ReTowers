@@ -2,6 +2,7 @@ using Core.Cards;
 using Core.Contracts;
 using Mirror;
 using System;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -28,6 +29,7 @@ namespace Core.Client
             if (SceneManager.GetActiveScene().name != "Battle")
                 return;
 
+            Debug.Log("Handling card request:\n" + JsonConvert.SerializeObject(requestCardDto));
             switch (requestCardDto.ActionType)
             {
                 case CardActionType.YouPlayed:
@@ -44,19 +46,19 @@ namespace Core.Client
 
         private void YouPlayedCard(Guid cardId)
         {
-            //Debug.Log($"You played card: {cardId}");
+            Debug.Log($"You played card: {cardId}");
         }
 
         private void EnemyPlayedCard(Guid cardId)
         {
-            //Debug.Log($"Enemy played card: {cardId}");
+            Debug.Log($"Enemy played card: {cardId}");
 
             CardSpawner.SpawnEnemyCard(cardId);
         }
 
         private void DraftCard(Guid cardId)
         {
-            //Debug.Log($"Draft card: {cardId}");
+            Debug.Log($"Draft card: {cardId}");
 
             CardSpawner.SpawnDraftCard(cardId);
         }

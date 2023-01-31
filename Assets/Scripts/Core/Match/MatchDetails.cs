@@ -11,9 +11,9 @@ namespace Core.Match
     {
         public List<MatchPlayer> Players { get; private set; }
 
-        public MatchPlayer CurrentPlayer => Players[TurnPlayer];
+        [CanBeNull] public MatchPlayer CurrentPlayer => TurnPlayer >= 0 ? Players[TurnPlayer] : null;
 
-        public MatchPlayer NextPlayer => Players[NextTurnPlayer];
+        [CanBeNull] public MatchPlayer NextPlayer => NextTurnPlayer >= 0 ? Players[NextTurnPlayer] : null;
         
         public Fatigue Fatigue { get; set; }
         
@@ -27,9 +27,9 @@ namespace Core.Match
         
         public int FatigueTurn { get; set; }
 
-        public int TurnPlayer => Turn % Players.Count;
+        public int TurnPlayer => Players.Count > 0 ? Turn % Players.Count : -1;
 
-        public int NextTurnPlayer => (TurnPlayer + 1) % Players.Count;
+        public int NextTurnPlayer => TurnPlayer >= 0 ? (TurnPlayer + 1) % Players.Count : -1;
         
         [CanBeNull] public LevelInfo LevelInfo { get; set; }
         
@@ -39,15 +39,6 @@ namespace Core.Match
         {
             Division = 1;
             Players = new List<MatchPlayer>();
-        }
-
-        public virtual void Init()
-        {
-            Fatigue = new Fatigue(Division);
-            foreach (var player in Players)
-            {
-                player.Castle = new DivisionCastleCreator(Division).CreateCastle();
-            }
         }
     }
 }

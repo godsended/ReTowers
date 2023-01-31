@@ -1,5 +1,5 @@
 using Core.Castle;
-using Core.Client;
+//using Core.Client;
 using Core.Server;
 using System.Collections;
 using Core.Match;
@@ -25,36 +25,37 @@ namespace Core.Cards.Effects
 
         public override IEnumerator Animation(CardObject cardObject, bool isSender)
         {
-            if (isSelfAdd)
-            {
-                if (isSender)
-                {
-                    BattleUI.AddMyResourceIncome(nameResource, income);
-
-                    yield return new WaitForSeconds(0.2f);
-                }
-                else
-                {
-                    BattleUI.AddEnemyResourceIncome(nameResource, income);
-
-                    yield return new WaitForSeconds(0.2f);
-                }
-            }
-            else
-            {
-                if (isSender)
-                {
-                    BattleUI.AddEnemyResourceIncome(nameResource, income);
-
-                    yield return new WaitForSeconds(0.2f);
-                }
-                else
-                {
-                    BattleUI.AddMyResourceIncome(nameResource, income);
-
-                    yield return new WaitForSeconds(0.2f);
-                }
-            }
+            // if (isSelfAdd)
+            // {
+            //     if (isSender)
+            //     {
+            //         BattleUI.AddMyResourceIncome(nameResource, income);
+            //
+            //         yield return new WaitForSeconds(0.2f);
+            //     }
+            //     else
+            //     {
+            //         BattleUI.AddEnemyResourceIncome(nameResource, income);
+            //
+            //         yield return new WaitForSeconds(0.2f);
+            //     }
+            // }
+            // else
+            // {
+            //     if (isSender)
+            //     {
+            //         BattleUI.AddEnemyResourceIncome(nameResource, income);
+            //
+            //         yield return new WaitForSeconds(0.2f);
+            //     }
+            //     else
+            //     {
+            //         BattleUI.AddMyResourceIncome(nameResource, income);
+            //
+            //         yield return new WaitForSeconds(0.2f);
+            //     }
+            // }
+            yield break;
         }
     }
 }

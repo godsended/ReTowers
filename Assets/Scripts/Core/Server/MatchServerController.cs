@@ -317,6 +317,7 @@ namespace Core.Server
                 MatchServer match = new MatchServer.MatchServerCreator().CrateMatchServer();
                 foreach (var player in players)
                 {
+                    player.CurrentMatch = match;
                     match.AddPlayer(player.PlayFabId, player.Name, player.Cards, player.Division, player.Connection);
                     player.Connection.Send(new LoadBattleSceneDto()
                     {
@@ -373,7 +374,7 @@ namespace Core.Server
                         LeaveMatch(playerData);
                         break;
                     case MatchRequestType.EndTurn:
-                        //RequestEndTurn(playerData);
+                        RequestEndTurn(playerData);
                         break;
                 }
             }
@@ -381,6 +382,13 @@ namespace Core.Server
             {
                 _gameLogger.Log($"Player data is not found!", LogTypeMessage.Low);
             }
+        }
+
+        private void RequestEndTurn(PlayerData playerData)
+        {
+            Debug.Log("Request to force pass the move!");
+            playerData.CurrentMatch.PassTheMove(true);
+            playerData.CurrentMatch.SendOutMatchDetails();
         }
     }
 }

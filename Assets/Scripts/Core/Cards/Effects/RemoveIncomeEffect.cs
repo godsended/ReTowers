@@ -29,13 +29,13 @@ namespace Core.Cards.Effects
             {
                 if (isSender)
                 {
-                    BattleUI.RemoveMyResourceIncome(nameResource, income);
+                    //BattleUI.RemoveMyResourceIncome(nameResource, income);
 
                     yield return new WaitForSeconds(0.2f);
                 }
                 else
                 {
-                    BattleUI.RemoveEnemyResourceIncome(nameResource, income);
+                    //BattleUI.RemoveEnemyResourceIncome(nameResource, income);
 
                     yield return new WaitForSeconds(0.2f);
                 }
@@ -44,13 +44,13 @@ namespace Core.Cards.Effects
             {
                 if (isSender)
                 {
-                    BattleUI.RemoveEnemyResourceIncome(nameResource, income);
+                    //BattleUI.RemoveEnemyResourceIncome(nameResource, income);
 
                     yield return new WaitForSeconds(0.2f);
                 }
                 else
                 {
-                    BattleUI.RemoveMyResourceIncome(nameResource, income);
+                    //BattleUI.RemoveMyResourceIncome(nameResource, income);
 
                     yield return new WaitForSeconds(0.2f);
                 }

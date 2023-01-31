@@ -29,21 +29,21 @@ namespace Core.Cards.Effects
             {
                 if (isSender)
                 {
-                    BattleUI.HealMyWall(heal);
+                    //BattleUI.HealMyWall(heal);
                     EffectSpawner.SpawnEffect(
                         EffectSpawner.instance.effectHealFlying,
                         GameObject.Find("SpawnAnimationPlaceHolder").transform.position,
-                        BattleUI.instanse.myWall.transform.position);
+                        BattleUI.Instance.myWall.transform.position);
 
                     yield return new WaitForSeconds(0.2f);
                 }
                 else
                 {
-                    BattleUI.HealEnemyWall(heal);
+                    //BattleUI.HealEnemyWall(heal);
                     EffectSpawner.SpawnEffect(
                         EffectSpawner.instance.effectHealFlying,
                         GameObject.Find("SpawnAnimationPlaceHolder").transform.position,
-                        BattleUI.instanse.enemyWall.transform.position);
+                        BattleUI.Instance.enemyWall.transform.position);
 
                     yield return new WaitForSeconds(0.2f);
                 }
@@ -52,21 +52,21 @@ namespace Core.Cards.Effects
             {
                 if (isSender)
                 {
-                    BattleUI.HealEnemyWall(heal);
+                    //BattleUI.HealEnemyWall(heal);
                     EffectSpawner.SpawnEffect(
                         EffectSpawner.instance.effectHealFlying,
                         GameObject.Find("SpawnAnimationPlaceHolder").transform.position,
-                        BattleUI.instanse.enemyWall.transform.position);
+                        BattleUI.Instance.enemyWall.transform.position);
 
                     yield return new WaitForSeconds(0.2f);
                 }
                 else
                 {
-                    BattleUI.HealMyWall(heal);
+                    //BattleUI.HealMyWall(heal);
                     EffectSpawner.SpawnEffect(
                         EffectSpawner.instance.effectHealFlying,
                         GameObject.Find("SpawnAnimationPlaceHolder").transform.position,
-                        BattleUI.instanse.myWall.transform.position);
+                        BattleUI.Instance.myWall.transform.position);
 
                     yield return new WaitForSeconds(0.2f);
                 }

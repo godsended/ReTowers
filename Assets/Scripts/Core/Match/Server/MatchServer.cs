@@ -4,11 +4,11 @@ using System.Linq;
 using Core.Cards;
 using Core.Cards.Effects;
 using Core.Contracts;
-using Core.Map;
 using Core.Map.Server;
 using Core.Server;
 using Core.Utils;
 using Mirror;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Core.Match.Server
@@ -61,7 +61,7 @@ namespace Core.Match.Server
                 player.Castle = new DivisionCastleCreator(MatchDetails.Division).CreateCastle();
                 try
                 {
-                    player.PlayerCards.FillHand();
+                    player.PlayerCards!.FillHand();
                 }
                 catch (NullReferenceException e)
                 {
@@ -79,6 +79,10 @@ namespace Core.Match.Server
 
         public void HandlePlayCardRequest(PlayerData playerData, CardData cardData)
         {
+            if (matchState != MatchState.Game || MatchDetails.Players.Count <= 1)
+                return;
+            
+            Debug.Log("Playing card");
             if (discardNextTurn || matchState != MatchState.Game)
                 return;
 
@@ -93,13 +97,26 @@ namespace Core.Match.Server
             }
 
             PlayCard(cardData);
+            
+            MatchDetails.CurrentPlayer?.PlayerCards!.RemoveCardFromHand(Guid.Parse(cardData.Id));
+            MatchDetails.CurrentPlayer?.PlayerCards!.FillHand();
+            saveNextTurn = false;
+
+            NotifyClientsAboutPlayedCard(cardData, playerData.PlayFabId);
+            SendOutMatchDetails();
+            ValidateGameState();
         }
 
         private void PlayCard(CardData cardData)
         {
-            if (matchState != MatchState.Game)
+            if (matchState != MatchState.Game || MatchDetails.Players.Count <= 1)
                 return;
 
+            foreach (var res in cardData.Cost)
+            {
+                MatchDetails.CurrentPlayer?.Castle.GetResource(res.Name).RemoveResource(res.Value);
+            }
+            
             saveNextTurn = cardData.SaveTurn;
             foreach (var effect in cardData.Effects)
             {
@@ -110,28 +127,15 @@ namespace Core.Match.Server
 
                 effect.Execute(MatchDetails.CurrentPlayer, MatchDetails.NextPlayer);
             }
+            MatchDetails.CurrentPlayer?.PlayerCards!.RemoveCardFromHand(Guid.Parse(cardData.Id));
+            MatchDetails.CurrentPlayer?.PlayerCards!.FillHand();
 
-            if (!saveNextTurn)
-            {
-                MatchDetails.Turn++;
-                if (MatchDetails.Turn >= MatchDetails.FatigueTurn)
-                {
-                    DamageFatigue();
-                    MatchDetails.Fatigue++;
-                }
-            }
-
-            MatchDetails.CurrentPlayer.PlayerCards.RemoveCardFromHand(Guid.Parse(cardData.Id));
-            MatchDetails.CurrentPlayer.PlayerCards.FillHand();
-            saveNextTurn = false;
-
-            SendOutMatchDetails();
-            ValidateGameState();
+            PassTheMove();
         }
 
         public void HandleDiscardCardRequest(PlayerData playerData, CardData cardData)
         {
-            if (matchState != MatchState.Game)
+            if (matchState != MatchState.Game || MatchDetails.Players.Count <= 1)
                 return;
 
             MatchPlayer matchPlayer = MatchDetails.CurrentPlayer;
@@ -147,32 +151,47 @@ namespace Core.Match.Server
             if (discardNextTurn)
             {
                 discardNextTurn = false;
-                MatchDetails.CurrentPlayer.PlayerCards.RemoveCardFromHand(Guid.Parse(cardData.Id));
-                MatchDetails.CurrentPlayer.PlayerCards.FillHand();
+                MatchDetails.CurrentPlayer?.PlayerCards!.RemoveCardFromHand(Guid.Parse(cardData.Id));
+                MatchDetails.CurrentPlayer?.PlayerCards!.FillHand();
                 //NotifyClientsAboutPlayedCard(cardData, CardActionType.RequestDiscard);
                 //NotifyClientsAboutPlayedCard(cardData, CardActionType.Draft);
                 SendOutMatchDetails();
                 return;
             }
+            
+            MatchDetails.CurrentPlayer?.PlayerCards!.RemoveCardFromHand(Guid.Parse(cardData.Id));
+            MatchDetails.CurrentPlayer?.PlayerCards!.FillHand();
 
-            if (!saveNextTurn)
+            PassTheMove();
+
+            //NotifyClientsAboutCardDiscard(cardData, pla);
+            SendOutMatchDetails();
+            ValidateGameState();
+        }
+
+        public void PassTheMove(bool force = false)
+        {
+            if (saveNextTurn && !force)
+                return;
+            
+            saveNextTurn = false;
+            if(force)
+                discardNextTurn = false;
+            
+            MatchDetails.Turn++;
+
+            if (MatchDetails.Turn != 0 && MatchDetails.Turn % 2 == 0)
             {
-                MatchDetails.Turn++;
                 if (MatchDetails.Turn >= MatchDetails.FatigueTurn)
                 {
                     DamageFatigue();
                     MatchDetails.Fatigue++;
                 }
+                foreach (var player in MatchDetails.Players)
+                {
+                    player.Castle.Resources.ForEach(r => r.AddResource(r.Income));
+                }
             }
-
-            MatchDetails.CurrentPlayer.PlayerCards.RemoveCardFromHand(Guid.Parse(cardData.Id));
-            MatchDetails.CurrentPlayer.PlayerCards.FillHand();
-            saveNextTurn = false;
-
-            //NotifyClientsAboutPlayedCard(cardData, CardActionType.RequestDiscard);
-            //NotifyClientsAboutPlayedCard(cardData, CardActionType.Draft);
-            SendOutMatchDetails();
-            ValidateGameState();
         }
 
         private void HandleImpossibleMove()
@@ -183,18 +202,20 @@ namespace Core.Match.Server
             SendOutMatchDetails();
         }
 
-        private void SendOutMatchDetails()
+        public void SendOutMatchDetails()
         {
             if (matchState != MatchState.Game)
                 return;
 
             foreach (var player in MatchDetails.Players)
             {
-                player.Connection.Send(CreateMatchDetailsDto(player));
+                var matchDetailsDto = CreateMatchDetailsDto(player);
+                Debug.Log("Match details to send:\n" + JsonConvert.SerializeObject(matchDetailsDto));
+                player.Connection?.Send(matchDetailsDto);
             }
         }
 
-        private void NotifyClientsAboutPlayedCard(CardData cardData, CardActionType actionType)
+        private void NotifyClientsAboutPlayedCard(CardData cardData, string playerId)
         {
             if (matchState != MatchState.Game)
                 return;
@@ -203,11 +224,12 @@ namespace Core.Match.Server
             {
                 RequestCardDto dto = new()
                 {
-                    AccountId = Guid.Parse(MatchDetails.CurrentPlayer.PlayFabId),
+                    AccountId = Guid.Empty,
                     CardId = Guid.Parse(cardData.Id),
-                    ActionType = actionType
+                    ActionType = player.PlayFabId == playerId ? CardActionType.YouPlayed : CardActionType.EnemyPlayed
                 };
-                player.Connection.Send(dto);
+                Debug.Log("Played card info to send\n" + JsonConvert.SerializeObject(dto));
+                player.Connection?.Send(dto);
             }
         }
 
@@ -221,7 +243,7 @@ namespace Core.Match.Server
                     Castle = p.Castle, Name = p.Name, PlayerId = p.PlayFabId == player.PlayFabId ? p.PlayFabId : ""
                 }).ToArray(),
                 Fatigue = MatchDetails.Fatigue,
-                IsYourTurn = MatchDetails.CurrentPlayer.PlayFabId == player.PlayFabId,
+                IsYourTurn = MatchDetails.CurrentPlayer?.PlayFabId == player.PlayFabId,
                 CardsInHandIds = player?.PlayerCards?.CardsIdHand?.Select(c => c.ToString())?.ToArray(),
                 LevelInfo = MatchDetails.LevelInfo
             };
@@ -232,9 +254,15 @@ namespace Core.Match.Server
             if (matchState != MatchState.Game)
                 return;
 
+            Debug.Log($"Fatigue is damaging for {MatchDetails.Fatigue.Damage}");
             foreach (var player in MatchDetails.Players)
             {
                 DamagePlayer(player, MatchDetails.Fatigue.Damage, false);
+                player.Connection?.Send(new FatigueDto()
+                {
+                    PlayerId = Guid.Empty,
+                    Damage = MatchDetails.Fatigue.Damage
+                });
             }
 
             ValidateGameState();
@@ -278,13 +306,16 @@ namespace Core.Match.Server
             List<MatchPlayer> losePlayers = new();
             foreach (var player in MatchDetails.Players)
             {
+                Debug.Log($"Validation player info:\nMaxHp: {player.Castle.Tower.MaxHealth} Hp: {player.Castle.Tower.Health}");
                 if (player.Castle.Tower.Health >= player.Castle.Tower.MaxHealth)
                 {
+                    Debug.Log("Player wins by castle!");
                     winPlayers.Add(player);
                 }
 
                 if (player.Castle.Tower.Health <= 0)
                 {
+                    Debug.Log("Player lose by castle!");
                     losePlayers.Add(player);
                 }
             }
@@ -303,19 +334,28 @@ namespace Core.Match.Server
             });
 
             if (MatchDetails.Players.Count < 2)
+            {
+                if (MatchDetails.Players.Count == 1)
+                {
+                    var p = MatchDetails.Players[0];
+                    ApplyAfterGameStatistics(p, winPlayers.Count == 0);
+                    SendGameResult(p, winPlayers.Count == 0);
+                    MatchDetails.Players.Remove(p);
+                }
                 Stop();
+            }
         }
 
         private void SendGameResult(MatchPlayer player, bool isWin)
         {
             RequestMatchDto dto = new()
             {
-                AccountId = Guid.Parse(player.PlayFabId),
+                AccountId = Guid.Empty,
                 // ReSharper disable once Unity.NoNullPropagation
                 LevelId = MatchDetails.LevelInfo?.LevelId ?? -1,
                 RequestType = isWin ? MatchRequestType.WinMatch : MatchRequestType.LoseMatch
             };
-            player.Connection.Send(dto);
+            player.Connection?.Send(dto);
         }
 
         private void ApplyAfterGameStatistics(MatchPlayer player, bool isWin)

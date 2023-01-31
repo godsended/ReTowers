@@ -45,16 +45,16 @@ namespace Core.Cards.Effects
 
                     if (wallHealth >= damageCount)
                     {
-                        BattleUI.DamageEnemyWall(damageCount);
-                        ShowFlyEffect(BattleUI.instanse.enemyWall.transform.position);
+                        //BattleUI.DamageEnemyWall(damageCount);
+                        ShowFlyEffect(BattleUI.Instance.enemyWall.transform.position);
                     }
                     else
                     {
                         damageCount -= wallHealth;
 
-                        BattleUI.DamageEnemyWall(wallHealth);                        
-                        BattleUI.DamageEnemyTower(damageCount);
-                        ShowFlyEffect(BattleUI.instanse.enemyWall.transform.position);
+                        //BattleUI.DamageEnemyWall(wallHealth);                        
+                        //BattleUI.DamageEnemyTower(damageCount);
+                        ShowFlyEffect(BattleUI.Instance.enemyWall.transform.position);
                     }
 
                     yield return new WaitForSeconds(2f);
@@ -66,16 +66,16 @@ namespace Core.Cards.Effects
 
                     if (wallHealth >= damageCount)
                     {
-                        BattleUI.DamageMyWall(damageCount);
-                        ShowFlyEffect(BattleUI.instanse.myWall.transform.position);
+                        //BattleUI.DamageMyWall(damageCount);
+                        ShowFlyEffect(BattleUI.Instance.myWall.transform.position);
                     }
                     else
                     {
                         damageCount -= wallHealth;
 
-                        BattleUI.DamageMyWall(wallHealth);                       
-                        BattleUI.DamageMyTower(damageCount);
-                        ShowFlyEffect(BattleUI.instanse.myWall.transform.position);
+                        //BattleUI.DamageMyWall(wallHealth);                       
+                        //BattleUI.DamageMyTower(damageCount);
+                        ShowFlyEffect(BattleUI.Instance.myWall.transform.position);
                     }
 
                     yield return new WaitForSeconds(2f);
@@ -90,16 +90,16 @@ namespace Core.Cards.Effects
 
                     if (wallHealth >= damageCount)
                     {
-                        BattleUI.DamageMyWall(damageCount);
-                        ShowFlyEffect(BattleUI.instanse.myWall.transform.position);
+                        //BattleUI.DamageMyWall(damageCount);
+                        ShowFlyEffect(BattleUI.Instance.myWall.transform.position);
                     }
                     else
                     {
                         damageCount -= wallHealth;
 
-                        BattleUI.DamageMyWall(wallHealth);                     
-                        BattleUI.DamageMyTower(damageCount);
-                        ShowFlyEffect(BattleUI.instanse.myWall.transform.position);
+                        //BattleUI.DamageMyWall(wallHealth);                     
+                        //BattleUI.DamageMyTower(damageCount);
+                        ShowFlyEffect(BattleUI.Instance.myWall.transform.position);
                     }
 
                     yield return new WaitForSeconds(2f);
@@ -111,16 +111,16 @@ namespace Core.Cards.Effects
 
                     if (wallHealth >= damageCount)
                     {
-                        BattleUI.DamageEnemyWall(damageCount);
-                        ShowFlyEffect(BattleUI.instanse.enemyWall.transform.position);
+                        //BattleUI.DamageEnemyWall(damageCount);
+                        ShowFlyEffect(BattleUI.Instance.enemyWall.transform.position);
                     }
                     else
                     {
                         damageCount -= wallHealth;
 
-                        BattleUI.DamageEnemyWall(wallHealth);                        
-                        BattleUI.DamageEnemyTower(damageCount);
-                        ShowFlyEffect(BattleUI.instanse.enemyWall.transform.position);
+                        //BattleUI.DamageEnemyWall(wallHealth);                        
+                        //BattleUI.DamageEnemyTower(damageCount);
+                        ShowFlyEffect(BattleUI.Instance.enemyWall.transform.position);
                     }
 
                     yield return new WaitForSeconds(2f);

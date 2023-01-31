@@ -20,19 +20,19 @@ namespace Core.Cards.Effects
 
         public override IEnumerator Animation(CardObject cardObject, bool isSender)
         {
-            int usedWallHealth = BattleClientManager.GetMyData().Castle.Wall.Health;
-            int enemyWallHealth = BattleClientManager.GetEnemyData().Castle.Wall.Health;
-
-            if (usedWallHealth > enemyWallHealth)
-            {
-                BattleUI.DamageMyWall(usedWallHealth - enemyWallHealth);
-                BattleUI.HealEnemyWall(usedWallHealth - enemyWallHealth);
-            }
-            else
-            {
-                BattleUI.HealMyWall(enemyWallHealth - usedWallHealth);
-                BattleUI.DamageEnemyWall(enemyWallHealth - usedWallHealth);
-            }
+            // int usedWallHealth = BattleClientManager.GetMyData().Castle.Wall.Health;
+            // int enemyWallHealth = BattleClientManager.GetEnemyData().Castle.Wall.Health;
+            //
+            // if (usedWallHealth > enemyWallHealth)
+            // {
+            //     BattleUI.DamageMyWall(usedWallHealth - enemyWallHealth);
+            //     BattleUI.HealEnemyWall(usedWallHealth - enemyWallHealth);
+            // }
+            // else
+            // {
+            //     BattleUI.HealMyWall(enemyWallHealth - usedWallHealth);
+            //     BattleUI.DamageEnemyWall(enemyWallHealth - usedWallHealth);
+            // }
 
             yield return null;
         }

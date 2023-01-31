@@ -29,21 +29,21 @@ namespace Core.Cards.Effects
             {
                 if (isSender)
                 {
-                    BattleUI.HealMyTower(heal);
+                    //BattleUI.HealMyTower(heal);
                     EffectSpawner.SpawnEffect(
                             EffectSpawner.instance.effectHealFlying,
                             GameObject.Find("SpawnAnimationPlaceHolder").transform.position,
-                            BattleUI.instanse.myTower.transform.position);
+                            BattleUI.Instance.myTower.transform.position);
 
                     yield return new WaitForSeconds(0.2f);
                 }
                 else
                 {
-                    BattleUI.HealEnemyTower(heal);
+                    //BattleUI.HealEnemyTower(heal);
                     EffectSpawner.SpawnEffect(
                             EffectSpawner.instance.effectHealFlying,
                             GameObject.Find("SpawnAnimationPlaceHolder").transform.position,
-                            BattleUI.instanse.enemyTower.transform.position);
+                            BattleUI.Instance.enemyTower.transform.position);
 
                     yield return new WaitForSeconds(0.2f);
                 }
@@ -52,21 +52,21 @@ namespace Core.Cards.Effects
             {
                 if (isSender)
                 {                 
-                    BattleUI.HealEnemyTower(heal);
+                    //BattleUI.HealEnemyTower(heal);
                     EffectSpawner.SpawnEffect(
                             EffectSpawner.instance.effectHealFlying,
                             GameObject.Find("SpawnAnimationPlaceHolder").transform.position,
-                            BattleUI.instanse.enemyTower.transform.position);
+                            BattleUI.Instance.enemyTower.transform.position);
 
                     yield return new WaitForSeconds(0.2f);
                 }
                 else
                 {
-                    BattleUI.HealMyTower(heal);
+                    //BattleUI.HealMyTower(heal);
                     EffectSpawner.SpawnEffect(
                             EffectSpawner.instance.effectHealFlying,
                             GameObject.Find("SpawnAnimationPlaceHolder").transform.position,
-                            BattleUI.instanse.myTower.transform.position);
+                            BattleUI.Instance.myTower.transform.position);
 
                     yield return new WaitForSeconds(0.2f);
                 }

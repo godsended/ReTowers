@@ -104,7 +104,7 @@ namespace Core.Client
             //
             //     BattleUI.SetTextFatigueDamage(instance._fatigue.Damage);
             // }
-            
+
             if (true)
             {
                 //instance._isMyTurn = isMyTurn;
@@ -125,12 +125,12 @@ namespace Core.Client
                 if (isMyTurn)
                 {
                     BattleUI.SetTextMyTurn();
-                    BattleUI.instanse.skipTurnButton.SetActive(true);
+                    BattleUI.Instance.skipTurnButton.SetActive(true);
                 }
                 else
                 {
                     BattleUI.SetTextEnemyTurn();
-                    BattleUI.instanse.skipTurnButton.SetActive(false);
+                    BattleUI.Instance.skipTurnButton.SetActive(false);
                 }
             }
         }
@@ -147,7 +147,7 @@ namespace Core.Client
         //         if (_enemyPlayerData.Castle.Tower.Health <= 0
         //            && _myPlayerData.Castle.Tower.Health <= 0)
         //         {
-        //             BattleUI.instanse.ShowDrawWindow();
+        //             BattleUI.Instance.ShowDrawWindow();
         //             _matchEnded = true;
         //
         //             return true;
@@ -156,7 +156,7 @@ namespace Core.Client
         //         if (_myPlayerData.Castle.Tower.Health <= 0
         //             || _enemyPlayerData.Castle.Tower.Health >= _enemyPlayerData.Castle.Tower.MaxHealth)
         //         {
-        //             BattleUI.instanse.ShowLoseWindow();
+        //             BattleUI.Instance.ShowLoseWindow();
         //             _matchEnded = true;
         //
         //             return true;
@@ -165,7 +165,7 @@ namespace Core.Client
         //         if (_enemyPlayerData.Castle.Tower.Health <= 0
         //             || _myPlayerData.Castle.Tower.Health >= _myPlayerData.Castle.Tower.MaxHealth)
         //         {
-        //             BattleUI.instanse.ShowWinWindow();
+        //             BattleUI.Instance.ShowWinWindow();
         //             _matchEnded = true;
         //             return true;
         //         }
@@ -190,6 +190,7 @@ namespace Core.Client
         private void Start()
         {
             instance = this;
+            MatchState.OnStateChanged -= OnMatchStateUpdated;
             MatchState.OnStateChanged += OnMatchStateUpdated;
 
             NetworkClient.RegisterHandler<RequestBattleInfo>(requestBattleInfo =>
@@ -214,31 +215,31 @@ namespace Core.Client
                     Castle = castleCreator.CreateCastle()
                 };
 
-                BattleUI.instanse.myNickname.text = MainClient.GetUsername();
-                BattleUI.instanse.enemyNickname.text = requestBattleInfo.EnemyName;
-                BattleUI.instanse.textHealthMyTower.text = requestBattleInfo.YourTowerHealth.ToString();
-                BattleUI.instanse.textHealthEnemyTower.text = requestBattleInfo.EnemyTowerHealth.ToString();
-                BattleUI.instanse.textHealthMyWall.text = requestBattleInfo.YourWallHealth.ToString();
-                BattleUI.instanse.textHealthEnemyWall.text = requestBattleInfo.EnemyWallHealth.ToString();
-                BattleUI.instanse.enemyResourceIncome_1.text =
+                BattleUI.Instance.myNickname.text = MainClient.GetUsername();
+                BattleUI.Instance.enemyNickname.text = requestBattleInfo.EnemyName;
+                BattleUI.Instance.textHealthMyTower.text = requestBattleInfo.YourTowerHealth.ToString();
+                BattleUI.Instance.textHealthEnemyTower.text = requestBattleInfo.EnemyTowerHealth.ToString();
+                BattleUI.Instance.textHealthMyWall.text = requestBattleInfo.YourWallHealth.ToString();
+                BattleUI.Instance.textHealthEnemyWall.text = requestBattleInfo.EnemyWallHealth.ToString();
+                BattleUI.Instance.enemyResourceIncome_1.text =
                     enemyData.Castle.GetResource("Resource_1").Income.ToString();
-                BattleUI.instanse.enemyResourceIncome_2.text =
+                BattleUI.Instance.enemyResourceIncome_2.text =
                     enemyData.Castle.GetResource("Resource_2").Income.ToString();
-                BattleUI.instanse.enemyResourceIncome_3.text =
+                BattleUI.Instance.enemyResourceIncome_3.text =
                     enemyData.Castle.GetResource("Resource_3").Income.ToString();
-                BattleUI.instanse.myResourceIncome_1.text = myData.Castle.GetResource("Resource_1").Income.ToString();
-                BattleUI.instanse.myResourceIncome_2.text = myData.Castle.GetResource("Resource_2").Income.ToString();
-                BattleUI.instanse.myResourceIncome_3.text = myData.Castle.GetResource("Resource_3").Income.ToString();
-                BattleUI.instanse.enemyResourceValue_1.text =
+                BattleUI.Instance.myResourceIncome_1.text = myData.Castle.GetResource("Resource_1").Income.ToString();
+                BattleUI.Instance.myResourceIncome_2.text = myData.Castle.GetResource("Resource_2").Income.ToString();
+                BattleUI.Instance.myResourceIncome_3.text = myData.Castle.GetResource("Resource_3").Income.ToString();
+                BattleUI.Instance.enemyResourceValue_1.text =
                     enemyData.Castle.GetResource("Resource_1").Value.ToString();
-                BattleUI.instanse.enemyResourceValue_2.text =
+                BattleUI.Instance.enemyResourceValue_2.text =
                     enemyData.Castle.GetResource("Resource_2").Value.ToString();
-                BattleUI.instanse.enemyResourceValue_3.text =
+                BattleUI.Instance.enemyResourceValue_3.text =
                     enemyData.Castle.GetResource("Resource_3").Value.ToString();
-                BattleUI.instanse.myResourceValue_1.text = myData.Castle.GetResource("Resource_1").Value.ToString();
-                BattleUI.instanse.myResourceValue_2.text = myData.Castle.GetResource("Resource_2").Value.ToString();
-                BattleUI.instanse.myResourceValue_3.text = myData.Castle.GetResource("Resource_3").Value.ToString();
-                BattleUI.instanse.enemyWinCountText.text = requestBattleInfo.EnemyWinCount.ToString();
+                BattleUI.Instance.myResourceValue_1.text = myData.Castle.GetResource("Resource_1").Value.ToString();
+                BattleUI.Instance.myResourceValue_2.text = myData.Castle.GetResource("Resource_2").Value.ToString();
+                BattleUI.Instance.myResourceValue_3.text = myData.Castle.GetResource("Resource_3").Value.ToString();
+                BattleUI.Instance.enemyWinCountText.text = requestBattleInfo.EnemyWinCount.ToString();
 
                 _timer = requestBattleInfo.Timer;
                 _matchEnded = false;
@@ -258,7 +259,7 @@ namespace Core.Client
 
         public void ApplyFatigue(int damage)
         {
-            if (SceneManager.GetActiveScene().name != "Battle")
+            if (SceneManager.GetActiveScene().path != MatchClientController.instance.battleScene)
                 return;
 
             BattleUI.HideTipsWindow();
@@ -287,57 +288,170 @@ namespace Core.Client
         }
 
 
-        private void OnMatchStateUpdated(ClientMatchState state)
+        private void OnMatchStateUpdated(ClientMatchState state, CastleEntity newMyCastle, CastleEntity newEnemyCastle)
         {
-            if (SceneManager.GetActiveScene().name != MatchClientController.instance.battleScene)
+            if (SceneManager.GetActiveScene().path != MatchClientController.instance.battleScene)
             {
+                Debug.Log("Loading battle scene");
                 AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(MatchClientController.instance.battleScene);
-                asyncOperation.completed += (op) => StartCoroutine(UpdateUIFromState(state, true));
+                asyncOperation.completed += (op) =>
+                    StartCoroutine(UpdateUIFromState(state, true, newMyCastle, newEnemyCastle));
                 return;
             }
-            StartCoroutine(UpdateUIFromState(state, false));
+
+            StartCoroutine(UpdateUIFromState(state, false, newMyCastle, newEnemyCastle));
         }
-        
+
         //Куратинный кастылек тк если обновлять данные сразу после загрузки сцены есть подозрение
         //что они перезаписываются на стандартные задданые в сцене и вообще сцена не реагирует на скрипты
-        private IEnumerator UpdateUIFromState(ClientMatchState state, bool wait)
+        private IEnumerator UpdateUIFromState(ClientMatchState state, bool wait, CastleEntity newMyCastle,
+            CastleEntity newEnemyCastle)
         {
-            if(wait)
-                yield return new WaitForSeconds(1);
-            
-            BattleUI.instanse.myNickname.text = state.MyState.Name;
-            BattleUI.instanse.enemyNickname.text = state.EnemyState.Name;
-            BattleUI.instanse.textHealthMyTower.text = state.MyState.Castle.Tower.Health.ToString();
-            BattleUI.instanse.textHealthEnemyTower.text = state.EnemyState.Castle.Tower.Health.ToString();
-            BattleUI.instanse.textHealthMyWall.text = state.MyState.Castle.Wall.Health.ToString();
-            BattleUI.instanse.textHealthEnemyWall.text = state.EnemyState.Castle.Wall.Health.ToString();
-            BattleUI.instanse.enemyResourceIncome_1.text =
-                state.EnemyState.Castle.GetResource("Resource_1").Income.ToString();
-            BattleUI.instanse.enemyResourceIncome_2.text =
-                state.EnemyState.Castle.GetResource("Resource_2").Income.ToString();
-            BattleUI.instanse.enemyResourceIncome_3.text =
-                state.EnemyState.Castle.GetResource("Resource_3").Income.ToString();
-            BattleUI.instanse.myResourceIncome_1.text = state.MyState.Castle.GetResource("Resource_1").Income.ToString();
-            BattleUI.instanse.myResourceIncome_2.text = state.MyState.Castle.GetResource("Resource_2").Income.ToString();
-            BattleUI.instanse.myResourceIncome_3.text = state.MyState.Castle.GetResource("Resource_3").Income.ToString();
-            BattleUI.instanse.enemyResourceValue_1.text =
-                state.EnemyState.Castle.GetResource("Resource_1").Value.ToString();
-            BattleUI.instanse.enemyResourceValue_2.text =
-                state.EnemyState.Castle.GetResource("Resource_2").Value.ToString();
-            BattleUI.instanse.enemyResourceValue_3.text =
-                state.EnemyState.Castle.GetResource("Resource_3").Value.ToString();
-            BattleUI.instanse.myResourceValue_1.text = state.MyState.Castle.GetResource("Resource_1").Value.ToString();
-            BattleUI.instanse.myResourceValue_2.text = state.MyState.Castle.GetResource("Resource_2").Value.ToString();
-            BattleUI.instanse.myResourceValue_3.text = state.MyState.Castle.GetResource("Resource_3").Value.ToString();
-            foreach (var guid in state.CardsToDraftGuids)
+            Debug.Log("State after reply before rollback\n" + JsonConvert.SerializeObject(state));
+            Debug.Log("newMyCastle before rollback\n" + JsonConvert.SerializeObject(newMyCastle));
+            state.RollbackCastles();
+            Debug.Log("newMyCastle after rollback\n" + JsonConvert.SerializeObject(newMyCastle));
+            Debug.Log("State after reply after rollback\n" + JsonConvert.SerializeObject(state));
+            yield return new WaitForSeconds(0.3f);
+
+            BattleUI.Instance.myNickname.text = state.MyState.Name;
+            BattleUI.Instance.enemyNickname.text = state.EnemyState.Name;
+
+            int change =
+                newMyCastle.Tower.Health - state.OldMyCastle.Tower.Health;
+            if (change > 0)
             {
-                CardSpawner.SpawnDraftCard(guid);
+                BattleUI.HealMyTower(change);
+                Debug.Log($"Хилимся на {change}");
             }
-            //BattleUI.instanse.enemyWinCountText.text = state.MyState.;
-            
+            else if (change < 0)
+                BattleUI.DamageMyTower(-change);
+
+            change =
+                newEnemyCastle.Tower.Health - state.OldEnemyCastle.Tower.Health;
+            if (change > 0)
+                BattleUI.HealEnemyTower(change);
+            else if (change < 0)
+                BattleUI.DamageEnemyTower(-change);
+
+            change =
+                newMyCastle.Wall.Health - state.OldMyCastle.Wall.Health;
+            if (change > 0)
+                BattleUI.HealMyWall(change);
+            else if (change < 0)
+                BattleUI.DamageMyWall(-change);
+
+            change =
+                newEnemyCastle.Wall.Health - state.OldEnemyCastle.Wall.Health;
+            if (change > 0)
+                BattleUI.HealEnemyWall(change);
+            else if (change < 0)
+                BattleUI.DamageEnemyWall(-change);
+
+            change =
+                newEnemyCastle.GetResource("Resource_1").Income -
+                int.Parse(BattleUI.Instance.enemyResourceIncome_1.text);
+            if (change > 0)
+                BattleUI.AddEnemyResourceIncome("Resource_1", change);
+            else if (change < 0)
+                BattleUI.RemoveEnemyResourceIncome("Resource_1", -change);
+
+            change =
+                newEnemyCastle.GetResource("Resource_2").Income -
+                int.Parse(BattleUI.Instance.enemyResourceIncome_2.text);
+            if (change > 0)
+                BattleUI.AddEnemyResourceIncome("Resource_2", change);
+            else if (change < 0)
+                BattleUI.RemoveEnemyResourceIncome("Resource_2", -change);
+
+            change =
+                newEnemyCastle.GetResource("Resource_3").Income -
+                int.Parse(BattleUI.Instance.enemyResourceIncome_3.text);
+            if (change > 0)
+                BattleUI.AddEnemyResourceIncome("Resource_3", change);
+            else if (change < 0)
+                BattleUI.RemoveEnemyResourceIncome("Resource_3", -change);
+
+            change =
+                newEnemyCastle.GetResource("Resource_1").Value - int.Parse(BattleUI.Instance.enemyResourceValue_1.text);
+            if (change > 0)
+                BattleUI.AddEnemyResourceValue("Resource_1", change);
+            else if (change < 0)
+                BattleUI.RemoveEnemyResourceValue("Resource_1", -change);
+
+            change =
+                newEnemyCastle.GetResource("Resource_2").Value - int.Parse(BattleUI.Instance.enemyResourceValue_2.text);
+            if (change > 0)
+                BattleUI.AddEnemyResourceValue("Resource_2", change);
+            else if (change < 0)
+                BattleUI.RemoveEnemyResourceValue("Resource_2", -change);
+
+            change =
+                newEnemyCastle.GetResource("Resource_3").Value - int.Parse(BattleUI.Instance.enemyResourceValue_3.text);
+            if (change > 0)
+                BattleUI.AddEnemyResourceValue("Resource_3", change);
+            else if (change < 0)
+                BattleUI.RemoveEnemyResourceValue("Resource_3", -change);
+
+            change =
+                newMyCastle.GetResource("Resource_1").Income - int.Parse(BattleUI.Instance.myResourceIncome_1.text);
+            if (change > 0)
+                BattleUI.AddMyResourceIncome("Resource_1", change);
+            else if (change < 0)
+                BattleUI.RemoveMyResourceIncome("Resource_1", -change);
+
+            change =
+                newMyCastle.GetResource("Resource_2").Income - int.Parse(BattleUI.Instance.myResourceIncome_2.text);
+            if (change > 0)
+                BattleUI.AddMyResourceIncome("Resource_2", change);
+            else if (change < 0)
+                BattleUI.RemoveMyResourceIncome("Resource_2", -change);
+
+            change =
+                newMyCastle.GetResource("Resource_3").Income - int.Parse(BattleUI.Instance.myResourceIncome_3.text);
+            if (change > 0)
+                BattleUI.AddMyResourceIncome("Resource_3", change);
+            else if (change < 0)
+                BattleUI.RemoveMyResourceIncome("Resource_3", -change);
+
+            change =
+                newMyCastle.GetResource("Resource_1").Value - int.Parse(BattleUI.Instance.myResourceValue_1.text);
+            if (change > 0)
+                BattleUI.AddMyResourceValue("Resource_1", change);
+            else if (change < 0)
+                BattleUI.RemoveMyResourceValue("Resource_1", -change);
+
+            change =
+                newMyCastle.GetResource("Resource_2").Value - int.Parse(BattleUI.Instance.myResourceValue_2.text);
+            if (change > 0)
+                BattleUI.AddMyResourceValue("Resource_2", change);
+            else if (change < 0)
+                BattleUI.RemoveMyResourceValue("Resource_2", -change);
+
+            change =
+                newMyCastle.GetResource("Resource_3").Value - int.Parse(BattleUI.Instance.myResourceValue_3.text);
+            if (change > 0)
+                BattleUI.AddMyResourceValue("Resource_3", change);
+            else if (change < 0)
+                BattleUI.RemoveMyResourceValue("Resource_3", -change);
+
+            Debug.Log("State after UI changes\n" + JsonConvert.SerializeObject(state));
+            foreach (var id in state.CardsInHandIds!)
+            {
+                if (state.DraftedCards.Contains(id))
+                    continue;
+                state.DraftedCards.Add(id);
+                Debug.Log("Draft card!");
+                CardSpawner.SpawnDraftCard(id);
+            }
+            Debug.Log("State after card spawning\n" + JsonConvert.SerializeObject(state));
+            //BattleUI.Instance.enemyWinCountText.text = state.MyState.;
+
             _matchEnded = false;
 
-            BattleUI.HideWaitStartWindow();
+            if (wait)
+                BattleUI.HideWaitStartWindow();
+
             SetTurn(state.IsMyTurn);
         }
     }

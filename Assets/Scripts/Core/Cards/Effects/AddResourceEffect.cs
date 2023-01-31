@@ -25,36 +25,37 @@ namespace Core.Cards.Effects
 
         public override IEnumerator Animation(CardObject cardObject, bool isSender)
         {
-            if (isSelfAdd)
-            {
-                if (isSender)
-                {
-                    BattleUI.AddMyResourceValue(nameResource, value);
-
-                    yield return new WaitForSeconds(0.2f);
-                }
-                else
-                {
-                    BattleUI.AddEnemyResourceValue(nameResource, value);
-
-                    yield return new WaitForSeconds(0.2f);
-                }
-            }
-            else
-            {
-                if (isSender)
-                {
-                    BattleUI.AddEnemyResourceValue(nameResource, value);
-
-                    yield return new WaitForSeconds(0.2f);
-                }
-                else
-                {
-                    BattleUI.AddMyResourceValue(nameResource, value);
-
-                    yield return new WaitForSeconds(0.2f);
-                }
-            }
+            yield break;
+            // if (isSelfAdd)
+            // {
+            //     if (isSender)
+            //     {
+            //         BattleUI.AddMyResourceValue(nameResource, value);
+            //
+            //         yield return new WaitForSeconds(0.2f);
+            //     }
+            //     else
+            //     {
+            //         BattleUI.AddEnemyResourceValue(nameResource, value);
+            //
+            //         yield return new WaitForSeconds(0.2f);
+            //     }
+            // }
+            // else
+            // {
+            //     if (isSender)
+            //     {
+            //         BattleUI.AddEnemyResourceValue(nameResource, value);
+            //
+            //         yield return new WaitForSeconds(0.2f);
+            //     }
+            //     else
+            //     {
+            //         BattleUI.AddMyResourceValue(nameResource, value);
+            //
+            //         yield return new WaitForSeconds(0.2f);
+            //     }
+            // }
         }
     }
 }

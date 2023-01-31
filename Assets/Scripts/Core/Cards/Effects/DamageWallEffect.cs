@@ -29,28 +29,28 @@ namespace Core.Cards.Effects
             {
                 if (isSender)
                 {
-                    BattleUI.DamageEnemyWall(damage);
+                    //BattleUI.DamageEnemyWall(damage);
 
                     if (BattleClientManager.GetEnemyData().Castle.Wall.Health > 0)
                     {
                         EffectSpawner.SpawnEffect(
                             EffectSpawner.instance.effectDamageFlying,
                             GameObject.Find("SpawnAnimationPlaceHolder").transform.position,
-                            BattleUI.instanse.enemyWall.transform.position);
+                            BattleUI.Instance.enemyWall.transform.position);
                     }
 
                     yield return new WaitForSeconds(0.2f);
                 }
                 else
                 {
-                    BattleUI.DamageMyWall(damage);
+                    //BattleUI.DamageMyWall(damage);
 
                     if (BattleClientManager.GetMyData().Castle.Wall.Health > 0)
                     {
                         EffectSpawner.SpawnEffect(
                             EffectSpawner.instance.effectDamageFlying,
                             GameObject.Find("SpawnAnimationPlaceHolder").transform.position,
-                            BattleUI.instanse.myWall.transform.position);
+                            BattleUI.Instance.myWall.transform.position);
                     }
 
                     yield return new WaitForSeconds(0.2f);
@@ -60,28 +60,28 @@ namespace Core.Cards.Effects
             {
                 if (isSender)
                 {
-                    BattleUI.DamageMyWall(damage);
+                    //BattleUI.DamageMyWall(damage);
 
                     if (BattleClientManager.GetMyData().Castle.Wall.Health > 0)
                     {
                         EffectSpawner.SpawnEffect(
                             EffectSpawner.instance.effectDamageFlying,
                             GameObject.Find("SpawnAnimationPlaceHolder").transform.position,
-                            BattleUI.instanse.myWall.transform.position);
+                            BattleUI.Instance.myWall.transform.position);
                     }
 
                     yield return new WaitForSeconds(0.2f);
                 }
                 else
                 {
-                    BattleUI.DamageEnemyWall(damage);
+                    //BattleUI.DamageEnemyWall(damage);
 
                     if (BattleClientManager.GetEnemyData().Castle.Wall.Health > 0)
                     {
                         EffectSpawner.SpawnEffect(
                             EffectSpawner.instance.effectDamageFlying,
                             GameObject.Find("SpawnAnimationPlaceHolder").transform.position,
-                            BattleUI.instanse.enemyWall.transform.position);
+                            BattleUI.Instance.enemyWall.transform.position);
                     }
 
                     yield return new WaitForSeconds(0.2f);

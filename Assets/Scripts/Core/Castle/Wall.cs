@@ -4,11 +4,7 @@ namespace Core.Castle
     {
         public int MaxHealth { get; set; }
         public int Health { get; set; }
-
-        public Wall() : this(50, 10)
-        {
-        }
-
+        
         public Wall(int maxHealth, int health)
         {
             MaxHealth = maxHealth;

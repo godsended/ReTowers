@@ -10,12 +10,8 @@ namespace Core.Castle
         public int Value;
         public int Income;
 
-        public Resource(string name) : this(name, 5, 2)
-        {
-        }
-        
         [JsonConstructor]
-        public Resource(string name, int value, int income)
+        public Resource(string name, int value = 0, int income = 0)
         {
             Name = name;
             Value = value;

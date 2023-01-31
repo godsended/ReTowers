@@ -1,28 +1,35 @@
 using System;
 using System.Collections.Generic;
+using Core.Castle;
 using Core.Map;
 using Core.Utils;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
+using UnityEngine;
 
 namespace Core.Match.Client
 {
     public class ClientMatchState
     {
-        public MatchPlayer MyState { get; private set; }
-
-        public MatchPlayer EnemyState { get; private set; }
+        public CastleEntity OldMyCastle { get; set; }
         
-        public bool IsMyTurn { get; private set; }
+        public CastleEntity OldEnemyCastle { get; set; }
 
-        public List<Guid> CardsToDraftGuids { get; } = new();
+        public MatchPlayer MyState { get; set; }
 
-        [CanBeNull] public Guid[] CardsInHandIds { get; private set; }
+        public MatchPlayer EnemyState { get; set; }
         
-        [CanBeNull] public Fatigue Fatigue { get; private set; }
-        
-        [CanBeNull] public LevelInfo LevelInfo { get; private set; }
+        public bool IsMyTurn { get; set; }
 
-        public delegate void ClientMatchStateChangeHandler(ClientMatchState state);
+        public List<Guid> DraftedCards { get; } = new();
+
+        [CanBeNull] public Guid[] CardsInHandIds { get; set; }
+        
+        [CanBeNull] public Fatigue Fatigue { get; set; }
+        
+        [CanBeNull] public LevelInfo LevelInfo { get; set; }
+
+        public delegate void ClientMatchStateChangeHandler(ClientMatchState state, CastleEntity newMyCastle, CastleEntity newEnemyCastle);
 
         public event ClientMatchStateChangeHandler OnStateChanged;
 
@@ -31,31 +38,39 @@ namespace Core.Match.Client
             Reset();
         }
 
-        public void ApplyChanges(MatchPlayer myState = null, MatchPlayer enemyState = null, bool? isMyTurn = null, [CanBeNull] Guid[]
-            cardsInHandIds = null, Fatigue fatigue = null, [CanBeNull] LevelInfo levelInfo = null)
+        public void ApplyChanges()
         {
-            MyState = myState ?? MyState;
-            EnemyState = enemyState ?? EnemyState;
-            IsMyTurn = isMyTurn ?? IsMyTurn;
-            CardsInHandIds = cardsInHandIds ?? CardsInHandIds;
-            Fatigue = fatigue ?? Fatigue;
-            LevelInfo = levelInfo != null ? levelInfo : LevelInfo;
-            OnStateChanged?.Invoke(this);
+            OnStateChanged?.Invoke(this, new CastleEntity(MyState.Castle), new CastleEntity(EnemyState.Castle));
         }
 
         public void Reset()
         {
-            MyState = EnemyState = new MatchPlayer()
+            MyState = new MatchPlayer()
             {
                 Name = "Unknown",
                 Castle = new BlankCastleCreator().CreateCastle()
             };
+            EnemyState = new MatchPlayer()
+            {
+                Name = "Unknown",
+                Castle = new BlankCastleCreator().CreateCastle()
+            };
+            OldMyCastle = new CastleEntity(MyState.Castle);
+            OldEnemyCastle = new CastleEntity(EnemyState.Castle);
 
             IsMyTurn = false;
             CardsInHandIds = Array.Empty<Guid>();
             Fatigue = null;
             LevelInfo = null;
-            OnStateChanged?.Invoke(this);
+            OnStateChanged?.Invoke(this, new CastleEntity(MyState.Castle), new CastleEntity(EnemyState.Castle));
+        }
+
+        public void RollbackCastles()
+        {
+            if (OldEnemyCastle != null)
+                EnemyState.Castle = OldEnemyCastle;
+            if (OldMyCastle != null)
+                MyState.Castle = OldMyCastle;
         }
     }
 }

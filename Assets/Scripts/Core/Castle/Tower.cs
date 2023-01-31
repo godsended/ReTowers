@@ -2,13 +2,9 @@ namespace Core.Castle
 {
     public class Tower
     {
-        public int MaxHealth { get; private set; }
-        public int Health { get; private set; }
-
-        public Tower() : this(50, 20)
-        {
-        }
-
+        public int MaxHealth { get; set; }
+        public int Health { get; set; }
+        
         public Tower(int maxHealth, int health)
         {
             MaxHealth = maxHealth;

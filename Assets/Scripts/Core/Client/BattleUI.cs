@@ -11,7 +11,13 @@ namespace Core.Client
 {
     public class BattleUI : MonoBehaviour
     {
-        public static BattleUI instanse;
+        [SerializeField] private static BattleUI instance;
+
+        public static BattleUI Instance
+        {
+            get => instance;
+            private set => instance = value;
+        }
 
         [Header("Scenes")]
         [Scene]
@@ -102,119 +108,119 @@ namespace Core.Client
 
         public static void ActivateFatigueDamageText()
         {
-            instanse.textFatigueNextDamage.SetActive(true);
+            Instance.textFatigueNextDamage.SetActive(true);
         }
 
         public static void SetTextFatigueDamage(int damage)
         {
-            instanse.textFatigueNextDamage.GetComponent<TextMeshProUGUI>().text = $"NEXT NECRO'S HIT DAMAGE: {damage}";
+            Instance.textFatigueNextDamage.GetComponent<TextMeshProUGUI>().text = $"NEXT NECRO'S HIT DAMAGE: {damage}";
         }
 
         public static void SetTextMyTurn()
         {
-            instanse.opponentsTurn.SetActive(false);
-            instanse.myTurn.SetActive(true);
+            Instance.opponentsTurn.SetActive(false);
+            Instance.myTurn.SetActive(true);
         }
 
         public static void SetTextEnemyTurn()
         {
-            instanse.myTurn.SetActive(false);
-            instanse.opponentsTurn.SetActive(true);
+            Instance.myTurn.SetActive(false);
+            Instance.opponentsTurn.SetActive(true);
         }
 
         public static void RemoveMyResourceValue(string resourceName, int value)
         {
-            instanse.StartCoroutine(instanse.AnimationRemoveMyResourceValue(resourceName, value));
-            instanse._audioSource.PlayOneShot(instanse.downIncomeSound);
+            Instance.StartCoroutine(Instance.AnimationRemoveMyResourceValue(resourceName, value));
+            Instance._audioSource.PlayOneShot(Instance.downIncomeSound);
         }
 
         public static void AddMyResourceValue(string resourceName, int value)
         {
-            instanse.StartCoroutine(instanse.AnimationAddMyResourceValue(resourceName, value));
-            instanse._audioSource.PlayOneShot(instanse.upIncomeSound);
+            Instance.StartCoroutine(Instance.AnimationAddMyResourceValue(resourceName, value));
+            Instance._audioSource.PlayOneShot(Instance.upIncomeSound);
         }
 
         public static void RemoveEnemyResourceValue(string resourceName, int value)
         {
-            instanse.StartCoroutine(instanse.AnimationRemoveEnemyResourceValue(resourceName, value));
-            instanse._audioSource.PlayOneShot(instanse.downIncomeSound);
+            Instance.StartCoroutine(Instance.AnimationRemoveEnemyResourceValue(resourceName, value));
+            Instance._audioSource.PlayOneShot(Instance.downIncomeSound);
         }
 
         public static void AddEnemyResourceValue(string resourceName, int value)
         {
-            instanse.StartCoroutine(instanse.AnimationAddEnemyResourceValue(resourceName, value));
-            instanse._audioSource.PlayOneShot(instanse.upIncomeSound);
+            Instance.StartCoroutine(Instance.AnimationAddEnemyResourceValue(resourceName, value));
+            Instance._audioSource.PlayOneShot(Instance.upIncomeSound);
         }
 
         public static void RemoveMyResourceIncome(string resourceName, int value)
         {
-            instanse.StartCoroutine(instanse.AnimationRemoveMyResourceIncome(resourceName, value));
-            instanse._audioSource.PlayOneShot(instanse.downIncomeSound);
+            Instance.StartCoroutine(Instance.AnimationRemoveMyResourceIncome(resourceName, value));
+            Instance._audioSource.PlayOneShot(Instance.downIncomeSound);
         }
 
         public static void AddMyResourceIncome(string resourceName, int value)
         {
-            instanse.StartCoroutine(instanse.AnimationAddMyResourceIncome(resourceName, value));
-            instanse._audioSource.PlayOneShot(instanse.upIncomeSound);
+            Instance.StartCoroutine(Instance.AnimationAddMyResourceIncome(resourceName, value));
+            Instance._audioSource.PlayOneShot(Instance.upIncomeSound);
         }
 
         public static void RemoveEnemyResourceIncome(string resourceName, int value)
         {
-            instanse.StartCoroutine(instanse.AnimationRemoveEnemyResourceIncome(resourceName, value));
-            instanse._audioSource.PlayOneShot(instanse.downIncomeSound);
+            Instance.StartCoroutine(Instance.AnimationRemoveEnemyResourceIncome(resourceName, value));
+            Instance._audioSource.PlayOneShot(Instance.downIncomeSound);
         }
 
         public static void AddEnemyResourceIncome(string resourceName, int value)
         {
-            instanse.StartCoroutine(instanse.AnimationAddEnemyResourceIncome(resourceName, value));
-            instanse._audioSource.PlayOneShot(instanse.upIncomeSound);
+            Instance.StartCoroutine(Instance.AnimationAddEnemyResourceIncome(resourceName, value));
+            Instance._audioSource.PlayOneShot(Instance.upIncomeSound);
         }
 
         public static void DamageEnemyTower(int damage)
         {
             if (ScensVar.BossType == 0)
             {
-                instanse.StartCoroutine(instanse.AnimationDamageEnemyTower(damage));
+                Instance.StartCoroutine(Instance.AnimationDamageEnemyTower(damage));
             }
             else
             {
-                instanse.StartCoroutine(instanse.AnimationDamageBossTower(damage));
+                Instance.StartCoroutine(Instance.AnimationDamageBossTower(damage));
             }
-            instanse._audioSource.PlayOneShot(instanse.damageCastleSound);
+            Instance._audioSource.PlayOneShot(Instance.damageCastleSound);
         }
 
         public static void HealEnemyTower(int heal)
         {
             if (ScensVar.BossType == 0)
             {
-                instanse.StartCoroutine(instanse.AnimationHealEnemyTower(heal));
+                Instance.StartCoroutine(Instance.AnimationHealEnemyTower(heal));
             }
             else
             {
-                instanse.StartCoroutine(instanse.AnimationHealBossTower(heal));
+                Instance.StartCoroutine(Instance.AnimationHealBossTower(heal));
             }
-            instanse._audioSource.PlayOneShot(instanse.healCastleSound);
+            Instance._audioSource.PlayOneShot(Instance.healCastleSound);
         }
 
         public static void DamageEnemyWall(int damage)
         {
             if (ScensVar.BossType == 0)
             {
-                instanse.StartCoroutine(instanse.AnimationDamageEnemyWall(damage));
+                Instance.StartCoroutine(Instance.AnimationDamageEnemyWall(damage));
             }
             else 
             {
-                instanse.StartCoroutine(instanse.AnimationDamageBossWall(damage));
+                Instance.StartCoroutine(Instance.AnimationDamageBossWall(damage));
             }
-            instanse._audioSource.PlayOneShot(instanse.damageCastleSound);
+            Instance._audioSource.PlayOneShot(Instance.damageCastleSound);
         }
 
         public static void ActivateTurnHistory()
         {
-            if (instanse.turnHistory != null)
+            if (Instance.turnHistory != null)
             {
-                bool isActive = instanse.turnHistory.activeSelf;
-                instanse.turnHistory.SetActive(!isActive);
+                bool isActive = Instance.turnHistory.activeSelf;
+                Instance.turnHistory.SetActive(!isActive);
             }
         }
 
@@ -232,66 +238,66 @@ namespace Core.Client
         {
             if (ScensVar.BossType == 0)
             {
-                instanse.StartCoroutine(instanse.AnimationHealEnemyWall(heal));
+                Instance.StartCoroutine(Instance.AnimationHealEnemyWall(heal));
             }
             else 
             {
-                instanse.StartCoroutine(instanse.AnimationHealBossWall(heal));
+                Instance.StartCoroutine(Instance.AnimationHealBossWall(heal));
             }
-            instanse._audioSource.PlayOneShot(instanse.healCastleSound);
+            Instance._audioSource.PlayOneShot(Instance.healCastleSound);
         }
 
         public static void DamageMyTower(int damage)
         {
-            instanse.StartCoroutine(instanse.AnimationDamageMyTower(damage));
-            instanse._audioSource.PlayOneShot(instanse.damageCastleSound);
+            Instance.StartCoroutine(Instance.AnimationDamageMyTower(damage));
+            Instance._audioSource.PlayOneShot(Instance.damageCastleSound);
         }
 
         public static void HealMyTower(int heal)
         {
-            instanse.StartCoroutine(instanse.AnimationHealMyTower(heal));
-            instanse._audioSource.PlayOneShot(instanse.healCastleSound);
+            Instance.StartCoroutine(Instance.AnimationHealMyTower(heal));
+            Instance._audioSource.PlayOneShot(Instance.healCastleSound);
         }
 
         public static void DamageMyWall(int damage)
         {
-            instanse.StartCoroutine(instanse.AnimationDamageMyWall(damage));
-            instanse._audioSource.PlayOneShot(instanse.damageCastleSound);
+            Instance.StartCoroutine(Instance.AnimationDamageMyWall(damage));
+            Instance._audioSource.PlayOneShot(Instance.damageCastleSound);
         }
 
         public static void HealMyWall(int heal)
         {
-            instanse.StartCoroutine(instanse.AnimationHealMyWall(heal));
-            instanse._audioSource.PlayOneShot(instanse.healCastleSound);
+            Instance.StartCoroutine(Instance.AnimationHealMyWall(heal));
+            Instance._audioSource.PlayOneShot(Instance.healCastleSound);
         }
 
         public static void ShowTipsWindow(string text)
         {
-            if (instanse.animationTipsCoroutine != null)
-                instanse.StopCoroutine(instanse.animationTipsCoroutine);
+            if (Instance.animationTipsCoroutine != null)
+                Instance.StopCoroutine(Instance.animationTipsCoroutine);
 
-            instanse.animationTipsCoroutine = instanse.StartCoroutine(instanse.AnimationShowTips());
-            instanse.tipsText.text = text;
+            Instance.animationTipsCoroutine = Instance.StartCoroutine(Instance.AnimationShowTips());
+            Instance.tipsText.text = text;
         }
 
         public static void HideTipsWindow()
         {
-            if (instanse.animationTipsCoroutine != null)
-                instanse.StopCoroutine(instanse.animationTipsCoroutine);
+            if (Instance.animationTipsCoroutine != null)
+                Instance.StopCoroutine(Instance.animationTipsCoroutine);
 
-            instanse.animationTipsCoroutine = instanse.StartCoroutine(instanse.AnimationHideTips());
+            Instance.animationTipsCoroutine = Instance.StartCoroutine(Instance.AnimationHideTips());
         }
 
         public static void HideWaitStartWindow()
         {
-            instanse.waitStartWindow.SetActive(false);
+            Instance.waitStartWindow.SetActive(false);
         }
 
         public void ShowWinWindow()
         {
             if (!BattleClientManager.IsMatchEnded())
             {
-                instanse.winWindow.SetActive(true); 
+                Instance.winWindow.SetActive(true); 
                 BattleClientManager.instance.SetWin();
             }
         }
@@ -299,13 +305,13 @@ namespace Core.Client
             public void ShowLoseWindow()
         {
             if (!BattleClientManager.IsMatchEnded())
-                instanse.loseWindow.SetActive(true);
+                Instance.loseWindow.SetActive(true);
         }
 
         public void ShowDrawWindow()
         {
             if (!BattleClientManager.IsMatchEnded())
-                instanse.drawWindow.SetActive(true);
+                Instance.drawWindow.SetActive(true);
         }
 
         public void ExitToMenu()
@@ -316,7 +322,7 @@ namespace Core.Client
 
         private void Awake()
         {
-            instanse = this;
+            Instance = this;
         }
 
         private void Start()
@@ -375,7 +381,7 @@ namespace Core.Client
 
         private void FixedUpdate()
         {
-            instanse.timer.text = FormatTime(BattleClientManager.GetTimeLeft());
+            Instance.timer.text = FormatTime(BattleClientManager.GetTimeLeft());
         }
 
         private IEnumerator AnimationRemoveMyResourceValue(string resourceName, int value)
@@ -389,17 +395,17 @@ namespace Core.Client
                 case "Resource_1":
                     myResourceValue_1.text = resource.Value.ToString();
                     EffectSpawner.instance.myDownResource_1.Play();
-                    instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(myResourceValue_1, value, false));
+                    Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(myResourceValue_1, value, false));
                     break;
                 case "Resource_2":
                     myResourceValue_2.text = resource.Value.ToString();
                     EffectSpawner.instance.myDownResource_2.Play();
-                    instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(myResourceValue_2, value, false));
+                    Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(myResourceValue_2, value, false));
                     break;
                 case "Resource_3":
                     myResourceValue_3.text = resource.Value.ToString();
                     EffectSpawner.instance.myDownResource_3.Play();
-                    instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(myResourceValue_3, value, false));
+                    Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(myResourceValue_3, value, false));
                     break;
             }
 
@@ -417,17 +423,17 @@ namespace Core.Client
                 case "Resource_1":
                     myResourceValue_1.text = resource.Value.ToString();
                     EffectSpawner.instance.myUpResource_1.Play();
-                    instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(myResourceValue_1, value));
+                    Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(myResourceValue_1, value));
                     break;
                 case "Resource_2":
                     myResourceValue_2.text = resource.Value.ToString();
                     EffectSpawner.instance.myUpResource_2.Play();
-                    instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(myResourceValue_2, value));
+                    Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(myResourceValue_2, value));
                     break;
                 case "Resource_3":
                     myResourceValue_3.text = resource.Value.ToString();
                     EffectSpawner.instance.myUpResource_3.Play();
-                    instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(myResourceValue_3, value));
+                    Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(myResourceValue_3, value));
                     break;
             }
 
@@ -445,17 +451,17 @@ namespace Core.Client
                 case "Resource_1":
                     enemyResourceValue_1.text = resource.Value.ToString();
                     EffectSpawner.instance.enemyDownResource_1.Play();
-                    instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(enemyResourceValue_1, value, false));
+                    Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(enemyResourceValue_1, value, false));
                     break;
                 case "Resource_2":
                     enemyResourceValue_2.text = resource.Value.ToString();
                     EffectSpawner.instance.enemyDownResource_2.Play();
-                    instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(enemyResourceValue_2, value, false));
+                    Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(enemyResourceValue_2, value, false));
                     break;
                 case "Resource_3":
                     enemyResourceValue_3.text = resource.Value.ToString();
                     EffectSpawner.instance.enemyDownResource_3.Play();
-                    instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(enemyResourceValue_3, value, false));
+                    Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(enemyResourceValue_3, value, false));
                     break;
             }
 
@@ -473,17 +479,17 @@ namespace Core.Client
                 case "Resource_1":
                     enemyResourceValue_1.text = resource.Value.ToString();
                     EffectSpawner.instance.enemyUpResource_1.Play();
-                    instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(enemyResourceValue_1, value));
+                    Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(enemyResourceValue_1, value));
                     break;
                 case "Resource_2":
                     enemyResourceValue_2.text = resource.Value.ToString();
                     EffectSpawner.instance.enemyUpResource_2.Play();
-                    instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(enemyResourceValue_2, value));
+                    Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(enemyResourceValue_2, value));
                     break;
                 case "Resource_3":
                     enemyResourceValue_3.text = resource.Value.ToString();
                     EffectSpawner.instance.enemyUpResource_3.Play();
-                    instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(enemyResourceValue_3, value));
+                    Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(enemyResourceValue_3, value));
                     break;
             }
 
@@ -501,17 +507,17 @@ namespace Core.Client
                 case "Resource_1":
                     myResourceIncome_1.text = resource.Income.ToString();
                     EffectSpawner.instance.myDownIncome_1.Play();
-                    instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(myResourceIncome_1, value, false));
+                    Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(myResourceIncome_1, value, false));
                     break;
                 case "Resource_2":
                     myResourceIncome_2.text = resource.Income.ToString();
                     EffectSpawner.instance.myDownIncome_2.Play();
-                    instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(myResourceIncome_2, value, false));
+                    Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(myResourceIncome_2, value, false));
                     break;
                 case "Resource_3":
                     myResourceIncome_3.text = resource.Income.ToString();
                     EffectSpawner.instance.myDownIncome_3.Play();
-                    instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(myResourceIncome_3, value, false));
+                    Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(myResourceIncome_3, value, false));
                     break;
             }
 
@@ -529,17 +535,17 @@ namespace Core.Client
                 case "Resource_1":
                     myResourceIncome_1.text = resource.Income.ToString();
                     EffectSpawner.instance.myUpIncome_1.Play();
-                    instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(myResourceIncome_1, value));
+                    Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(myResourceIncome_1, value));
                     break;
                 case "Resource_2":
                     myResourceIncome_2.text = resource.Income.ToString();
                     EffectSpawner.instance.myUpIncome_2.Play();
-                    instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(myResourceIncome_2, value));
+                    Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(myResourceIncome_2, value));
                     break;
                 case "Resource_3":
                     myResourceIncome_3.text = resource.Income.ToString();
                     EffectSpawner.instance.myUpIncome_3.Play();
-                    instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(myResourceIncome_3, value));
+                    Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(myResourceIncome_3, value));
                     break;
             }
 
@@ -557,17 +563,17 @@ namespace Core.Client
                 case "Resource_1":
                     enemyResourceIncome_1.text = resource.Income.ToString();
                     EffectSpawner.instance.enemyDownIncome_1.Play();
-                    instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(enemyResourceIncome_1, value, false));
+                    Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(enemyResourceIncome_1, value, false));
                     break;
                 case "Resource_2":
                     enemyResourceIncome_2.text = resource.Income.ToString();
                     EffectSpawner.instance.enemyDownIncome_2.Play();
-                    instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(enemyResourceIncome_2, value, false));
+                    Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(enemyResourceIncome_2, value, false));
                     break;
                 case "Resource_3":
                     enemyResourceIncome_3.text = resource.Income.ToString();
                     EffectSpawner.instance.enemyDownIncome_3.Play();
-                    instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(enemyResourceIncome_3, value, false));
+                    Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(enemyResourceIncome_3, value, false));
                     break;
             }
 
@@ -585,17 +591,17 @@ namespace Core.Client
                 case "Resource_1":
                     enemyResourceIncome_1.text = resource.Income.ToString();
                     EffectSpawner.instance.enemyUpIncome_1.Play();
-                    instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(enemyResourceIncome_1, value));
+                    Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(enemyResourceIncome_1, value));
                     break;
                 case "Resource_2":
                     enemyResourceIncome_2.text = resource.Income.ToString();
                     EffectSpawner.instance.enemyUpIncome_2.Play();
-                    instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(enemyResourceIncome_2, value));
+                    Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(enemyResourceIncome_2, value));
                     break;
                 case "Resource_3":
                     enemyResourceIncome_3.text = resource.Income.ToString();
                     EffectSpawner.instance.enemyUpIncome_3.Play();
-                    instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(enemyResourceIncome_3, value));
+                    Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(enemyResourceIncome_3, value));
                     break;
             }
 
@@ -605,7 +611,7 @@ namespace Core.Client
         private IEnumerator AnimationDamageEnemyTower(int damage)
         {
             BattleClientManager.GetEnemyData().Castle.Tower.Damage(damage);
-            instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(textHealthEnemyTower, damage, false));
+            Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(textHealthEnemyTower, damage, false));
 
             float moveForOneHealth = (maxTowerHeight - minTowerHeight) / BattleClientManager.GetEnemyData().Castle.Tower.MaxHealth;
 
@@ -628,7 +634,7 @@ namespace Core.Client
         private IEnumerator AnimationHealEnemyTower(int heal)
         {
             BattleClientManager.GetEnemyData().Castle.Tower.Heal(heal);
-            instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(textHealthEnemyTower, heal));
+            Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(textHealthEnemyTower, heal));
 
             float moveForOneHealth = (maxTowerHeight - minTowerHeight) / BattleClientManager.GetEnemyData().Castle.Tower.MaxHealth;
 
@@ -653,7 +659,7 @@ namespace Core.Client
             int wallHealth = BattleClientManager.GetEnemyData().Castle.Wall.Health;
 
             BattleClientManager.GetEnemyData().Castle.Wall.Damage(damage);
-            instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(textHealthEnemyWall,
+            Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(textHealthEnemyWall,
                 (BattleClientManager.GetEnemyData().Castle.Wall.Health > 0) ? damage : wallHealth,
                 false));
 
@@ -678,7 +684,7 @@ namespace Core.Client
         private IEnumerator AnimationHealEnemyWall(int heal)
         {
             BattleClientManager.GetEnemyData().Castle.Wall.Heal(heal);
-            instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(textHealthEnemyWall, heal));
+            Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(textHealthEnemyWall, heal));
 
             float moveForOneHealth = (maxWallHeight - minWallHeight) / BattleClientManager.GetEnemyData().Castle.Wall.MaxHealth;
 
@@ -701,7 +707,7 @@ namespace Core.Client
         private IEnumerator AnimationDamageBossTower(int damage)
         {
             BattleClientManager.GetEnemyData().Castle.Tower.Damage(damage);
-            instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(textHealthEnemyTower, damage, false));
+            Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(textHealthEnemyTower, damage, false));
 
             textHealthEnemyTower.text = BattleClientManager.GetEnemyData().Castle.Tower.Health.ToString();
 
@@ -711,7 +717,7 @@ namespace Core.Client
         private IEnumerator AnimationHealBossTower(int heal)
         {
             BattleClientManager.GetEnemyData().Castle.Tower.Heal(heal);
-            instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(textHealthEnemyTower, heal));
+            Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(textHealthEnemyTower, heal));
        
             textHealthEnemyTower.text = BattleClientManager.GetEnemyData().Castle.Tower.Health.ToString();
 
@@ -723,7 +729,7 @@ namespace Core.Client
             int wallHealth = BattleClientManager.GetEnemyData().Castle.Wall.Health;
 
             BattleClientManager.GetEnemyData().Castle.Wall.Damage(damage);
-            instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(textHealthEnemyWall,
+            Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(textHealthEnemyWall,
                 (BattleClientManager.GetEnemyData().Castle.Wall.Health > 0) ? damage : wallHealth,
                 false));
 
@@ -735,7 +741,7 @@ namespace Core.Client
         private IEnumerator AnimationHealBossWall(int heal)
         {
             BattleClientManager.GetEnemyData().Castle.Wall.Heal(heal);
-            instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(textHealthEnemyWall, heal));
+            Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(textHealthEnemyWall, heal));
 
             textHealthEnemyWall.text = BattleClientManager.GetEnemyData().Castle.Wall.Health.ToString();
 
@@ -745,7 +751,7 @@ namespace Core.Client
         private IEnumerator AnimationDamageMyTower(int damage)
         {
             BattleClientManager.GetMyData().Castle.Tower.Damage(damage);
-            instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(textHealthMyTower, damage, false));
+            Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(textHealthMyTower, damage, false));
 
             float moveForOneHealth = (maxTowerHeight - minTowerHeight) / BattleClientManager.GetMyData().Castle.Tower.MaxHealth;
 
@@ -768,7 +774,7 @@ namespace Core.Client
         private IEnumerator AnimationHealMyTower(int heal)
         {
             BattleClientManager.GetMyData().Castle.Tower.Heal(heal);
-            instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(textHealthMyTower, heal));
+            Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(textHealthMyTower, heal));
 
             float moveForOneHealth = (maxTowerHeight - minTowerHeight) / BattleClientManager.GetMyData().Castle.Tower.MaxHealth;
 
@@ -793,7 +799,7 @@ namespace Core.Client
             int wallHealth = BattleClientManager.GetMyData().Castle.Wall.Health;
 
             BattleClientManager.GetMyData().Castle.Wall.Damage(damage);
-            instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(textHealthMyWall,
+            Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(textHealthMyWall,
                 (BattleClientManager.GetMyData().Castle.Wall.Health > 0) ? damage : wallHealth,
                 false));
 
@@ -818,7 +824,7 @@ namespace Core.Client
         private IEnumerator AnimationHealMyWall(int heal)
         {
             BattleClientManager.GetMyData().Castle.Wall.Heal(heal);
-            instanse.StartCoroutine(instanse.AnimationChangePlayerCastleValue(textHealthMyWall, heal));
+            Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(textHealthMyWall, heal));
 
             float moveForOneHealth = (maxWallHeight - minWallHeight) / BattleClientManager.GetMyData().Castle.Wall.MaxHealth;
 

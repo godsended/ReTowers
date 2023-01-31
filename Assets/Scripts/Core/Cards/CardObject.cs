@@ -98,7 +98,6 @@ namespace Core.Cards
                 else
                 {
                     BattleClientManager.SetCanPlay(false);
-                    MatchClientController.EndTurn();
                 }
             }
         }
@@ -251,8 +250,8 @@ namespace Core.Cards
 
             yield return new WaitForEndOfFrame();
 
-            foreach (Resource resource in card.Cost)
-                BattleUI.RemoveMyResourceValue(resource.Name, resource.Value);
+            // foreach (Resource resource in card.Cost)
+            //     BattleUI.RemoveMyResourceValue(resource.Name, resource.Value);
 
             _cardPosition.card = null;
             _cardPosition = null;
@@ -298,7 +297,6 @@ namespace Core.Cards
             else
             {
                 BattleUI.HideTipsWindow();
-                MatchClientController.EndTurn();
             }
 
             //BattleClientManager.instance.CheckEndMatch();
@@ -312,8 +310,8 @@ namespace Core.Cards
         {
             yield return new WaitForEndOfFrame();
 
-            foreach (Resource resource in card.Cost)
-                BattleUI.RemoveEnemyResourceValue(resource.Name, resource.Value);
+            // foreach (Resource resource in card.Cost)
+            //     BattleUI.RemoveEnemyResourceValue(resource.Name, resource.Value);
 
             _tableTopImage.sprite = card.CardImage;
             _tableTopImage.raycastTarget = false;

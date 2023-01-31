@@ -31,15 +31,15 @@ namespace Core.Cards.Effects
             {
                 if (isSender)
                 {
-                    BattleUI.DamageEnemyTower(damage);
-                    ShowFlyEffect(BattleUI.instanse.enemyTower.transform.position + fireballTowerOffset);
+                    //BattleUI.DamageEnemyTower(damage);
+                    ShowFlyEffect(BattleUI.Instance.enemyTower.transform.position + fireballTowerOffset);
 
                     yield return new WaitForSeconds(0.2f);
                 }
                 else
                 {
-                    BattleUI.DamageMyTower(damage);
-                    ShowFlyEffect(BattleUI.instanse.myTower.transform.position + fireballTowerOffset);
+                    //BattleUI.DamageMyTower(damage);
+                    ShowFlyEffect(BattleUI.Instance.myTower.transform.position + fireballTowerOffset);
 
                     yield return new WaitForSeconds(0.2f);
                 }
@@ -48,15 +48,15 @@ namespace Core.Cards.Effects
             {
                 if (isSender)
                 {
-                    BattleUI.DamageMyTower(damage);
-                    ShowFlyEffect(BattleUI.instanse.myTower.transform.position + fireballTowerOffset);
+                    //BattleUI.DamageMyTower(damage);
+                    ShowFlyEffect(BattleUI.Instance.myTower.transform.position + fireballTowerOffset);
 
                     yield return new WaitForSeconds(0.2f);
                 }
                 else
                 {
-                    BattleUI.DamageEnemyTower(damage);
-                    ShowFlyEffect(BattleUI.instanse.enemyTower.transform.position + fireballTowerOffset);
+                    //BattleUI.DamageEnemyTower(damage);
+                    ShowFlyEffect(BattleUI.Instance.enemyTower.transform.position + fireballTowerOffset);
 
                     yield return new WaitForSeconds(0.2f);
                 }

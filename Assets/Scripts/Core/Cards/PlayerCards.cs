@@ -47,13 +47,15 @@ namespace Core.Cards
 
         public void RemoveCardFromHand(Guid cardId)
         {
+            Debug.Log(CardsIdHand.Contains(cardId) + " " + cardId);
+            Debug.Log(JsonConvert.SerializeObject(CardsIdHand));
             CardsIdHand.Remove(cardId);
             ShuffleCard(cardId);
         }
 
         public void FillHand()
         {
-            for (int i = 0; i < CardsInHandLimit; i++)
+            for (int i = CardsIdHand.Count; i < CardsInHandLimit; i++)
             {
                 GetAndTakeNearestCard();
             }      
@@ -63,8 +65,8 @@ namespace Core.Cards
         {
             Guid id = CardsIdDeck.LastOrDefault();
 
-            if (id == null)
-                _gameLogger.Log($"Card take error! Connection: [{_connection}]", LogTypeMessage.Warning);
+            // if (id == null)
+            //     _gameLogger.Log($"Card take error! Connection: [{_connection}]", LogTypeMessage.Warning);
 
             CardsIdDeck.Remove(CardsIdDeck.LastOrDefault());
             CardsIdHand.Add(id);
@@ -86,7 +88,7 @@ namespace Core.Cards
 
             CardsIdDeck.Insert(random.Next(0, maxIndex), cardId);
 
-            _gameLogger.Log($"[{_connection}] Count cards in deck: {CardsIdDeck.Count}", LogTypeMessage.Low);
+            //_gameLogger.Log($"[{_connection}] Count cards in deck: {CardsIdDeck.Count}", LogTypeMessage.Low);
         }
 
         public void ShuffleCards() 

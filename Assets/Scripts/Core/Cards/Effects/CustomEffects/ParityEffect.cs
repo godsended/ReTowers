@@ -25,13 +25,13 @@ namespace Core.Cards.Effects
 
         public override IEnumerator Animation(CardObject cardObject, bool isSender)
         {
-            Resource myPlayerResource = BattleClientManager.GetMyData().Castle.GetResource(nameResource);
-            Resource enemyPlayerResource = BattleClientManager.GetEnemyData().Castle.GetResource(nameResource);
-
-            if (myPlayerResource.Income > enemyPlayerResource.Income)
-                BattleUI.AddEnemyResourceIncome(nameResource, myPlayerResource.Income - enemyPlayerResource.Income);
-            else
-                BattleUI.AddMyResourceIncome(nameResource, enemyPlayerResource.Income - myPlayerResource.Income);
+            // Resource myPlayerResource = BattleClientManager.GetMyData().Castle.GetResource(nameResource);
+            // Resource enemyPlayerResource = BattleClientManager.GetEnemyData().Castle.GetResource(nameResource);
+            //
+            // if (myPlayerResource.Income > enemyPlayerResource.Income)
+            //     BattleUI.AddEnemyResourceIncome(nameResource, myPlayerResource.Income - enemyPlayerResource.Income);
+            // else
+            //     BattleUI.AddMyResourceIncome(nameResource, enemyPlayerResource.Income - myPlayerResource.Income);
 
             yield return null;
         }
