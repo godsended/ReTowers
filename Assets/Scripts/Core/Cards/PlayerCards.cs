@@ -24,7 +24,8 @@ namespace Core.Cards
         
         public PlayerCards(List<Guid> cards)
         {
-            CardsIdDeck = cards;
+            CardsIdDeck = new();
+            cards.ForEach(guid => CardsIdDeck.Add(guid));
             CardsIdHand = new List<Guid>();
             ShuffleCards();
         }
@@ -63,12 +64,12 @@ namespace Core.Cards
 
         public void GetAndTakeNearestCard() 
         {
-            Guid id = CardsIdDeck.LastOrDefault();
+            Guid id = CardsIdDeck[0];
 
             // if (id == null)
             //     _gameLogger.Log($"Card take error! Connection: [{_connection}]", LogTypeMessage.Warning);
 
-            CardsIdDeck.Remove(CardsIdDeck.LastOrDefault());
+            CardsIdDeck.Remove(CardsIdDeck[0]);
             CardsIdHand.Add(id);
             // _connection.Send(new RequestCardDto
             // {
@@ -81,13 +82,7 @@ namespace Core.Cards
 
         public void ShuffleCard(Guid cardId, int maxIndex = 0)
         {
-            if (maxIndex > CardsIdDeck.Count - 1)
-                maxIndex = CardsIdDeck.Count - 1;
-
-            System.Random random = new System.Random();
-
-            CardsIdDeck.Insert(random.Next(0, maxIndex), cardId);
-
+            CardsIdDeck.Add(cardId);
             //_gameLogger.Log($"[{_connection}] Count cards in deck: {CardsIdDeck.Count}", LogTypeMessage.Low);
         }
 

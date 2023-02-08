@@ -25,7 +25,7 @@ namespace Core.Client
         public ClientMatchState MatchState { get; } = new();
         private bool _canPlay;
         private bool _matchEnded;
-        private float _timer;
+        public float _timer = 45;
         private float _elapsedTime;
         private int _winCount;
         private bool isFatigueEffectShowed = false;
@@ -41,12 +41,15 @@ namespace Core.Client
 
         public static void ResetBattleClient()
         {
-            instance.MatchState.Reset();
-            instance.isFatigueEffectShowed = false;
-            instance._canPlay = false;
-            instance._matchEnded = false;
-            instance._timer = 0;
-            instance._elapsedTime = 0;
+            if (instance != null)
+            {
+                instance.MatchState.Reset();
+                instance.isFatigueEffectShowed = false;
+                instance._canPlay = false;
+                instance._matchEnded = false;
+                instance._timer = 0;
+                instance._elapsedTime = 0;
+            }
             //instance._damageFatigue = 0;
             //instance._fatigueLimit = 0;
         }
@@ -257,11 +260,8 @@ namespace Core.Client
                 _elapsedTime = _timer;
         }
 
-        public void ApplyFatigue(int damage)
+        public void ApplyFatigue(int nextDamage)
         {
-            if (SceneManager.GetActiveScene().path != MatchClientController.instance.battleScene)
-                return;
-
             BattleUI.HideTipsWindow();
 
             if (!isFatigueEffectShowed)
@@ -272,19 +272,19 @@ namespace Core.Client
 
             isFatigueEffectShowed = true;
 
-            if (GetMyData().Castle.Wall.Health > 0)
-                BattleUI.DamageMyWall(damage);
-            else
-                BattleUI.DamageMyTower(damage);
-
-            if (GetEnemyData().Castle.Wall.Health > 0)
-                BattleUI.DamageEnemyWall(damage);
-            else
-                BattleUI.DamageEnemyTower(damage);
+            // if (GetMyData().Castle.Wall.Health > 0)
+            //     BattleUI.DamageMyWall(damage);
+            // else
+            //     BattleUI.DamageMyTower(damage);
+            //
+            // if (GetEnemyData().Castle.Wall.Health > 0)
+            //     BattleUI.DamageEnemyWall(damage);
+            // else
+            //     BattleUI.DamageEnemyTower(damage);
 
             EffectSpawner.ApplyFatigueEffect();
 
-            BattleUI.SetTextFatigueDamage(damage);
+            BattleUI.SetTextFatigueDamage(nextDamage);
         }
 
 
@@ -440,10 +440,10 @@ namespace Core.Client
             {
                 if (state.DraftedCards.Contains(id))
                     continue;
-                state.DraftedCards.Add(id);
+                state.AddDraftedCard(id);
                 Debug.Log("Draft card!");
-                CardSpawner.SpawnDraftCard(id);
             }
+
             Debug.Log("State after card spawning\n" + JsonConvert.SerializeObject(state));
             //BattleUI.Instance.enemyWinCountText.text = state.MyState.;
 
@@ -454,5 +454,29 @@ namespace Core.Client
 
             SetTurn(state.IsMyTurn);
         }
+
+        public void OnTurnPassed()
+        {
+            BattleUI.HideTipsWindow();
+            ResetTimer();
+            //ЗАХАРДКОЖЕНО, ИСПРАВИТЬ
+            _timer = 30;
+            //DraftLoosedCards();
+        }
+
+        // private void DraftLoosedCards()
+        // {
+        //     var cardDatas = FindObjectsOfType<CardPosition>()?.Select(c => c?.card?.card)
+        //         ?? Array.Empty<CardData>();
+        //     var cardIds = cardDatas?.Select(c => c?.Id) ?? Array.Empty<string>();
+        //
+        //     foreach (var guid in MatchState.CardsInHandIds)
+        //     {
+        //         if (cardIds.Contains(guid.ToString())) 
+        //             continue;
+        //         MatchState.RemoveDraftedCard(guid);
+        //         MatchState.AddDraftedCard(guid);
+        //     }
+        // }
     }
 }

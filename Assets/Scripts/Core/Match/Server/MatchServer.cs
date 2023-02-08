@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Timers;
 using Core.Cards;
 using Core.Cards.Effects;
 using Core.Contracts;
@@ -17,11 +18,15 @@ namespace Core.Match.Server
     {
         private bool isPve;
 
-        private bool saveNextTurn;
+        public bool SaveNextTurn { get; private set; }
 
-        private bool discardNextTurn;
+        public bool DiscardNextTurn { get; private set; }
+
+        private readonly TurnTimer turnTimer;
 
         private MatchState matchState = MatchState.Created;
+
+        public event EventHandler OnTurnPassed;
 
         public Guid MatchId { get; private set; }
 
@@ -36,18 +41,24 @@ namespace Core.Match.Server
             MatchDetails.TurnTime = int.Parse(Configurator.data["BattleConfiguration"]["turnTime"]);
             MatchDetails.FatigueTurn = int.Parse(Configurator.data["BattleConfiguration"]["fatigueTurnStart"]);
             MatchDetails.PrepareTime = 5;
+            turnTimer = new TurnTimer(this);
         }
 
-        public void AddPlayer(string playFabId, string name, PlayerCards cards, int division, NetworkConnectionToClient connection)
+        public void AddPlayer(string playFabId, string name, PlayerCards cards, int division,
+            NetworkConnectionToClient connection)
         {
             MatchPlayer player = new MatchPlayer()
-                {PlayFabId = playFabId, PlayerCards = new PlayerCards(cards.CardsIdDeck), Name = name, Division = division, Connection = connection};
+            {
+                PlayFabId = playFabId, PlayerCards = new PlayerCards(cards.CardsIdDeck), Name = name,
+                Division = division, Connection = connection
+            };
             MatchDetails.Players.Add(player);
         }
 
         public void AddBot(PlayerCards cards, string name)
         {
             MatchBot bot = new MatchBot(this) {PlayerCards = new PlayerCards(cards.CardsIdDeck), Name = name};
+            bot.Division = MatchDetails.Players.FirstOrDefault(p => p is not IMatchBot)?.Division ?? 10;
             MatchDetails.Players.Add(bot);
         }
 
@@ -55,7 +66,7 @@ namespace Core.Match.Server
         {
             Debug.Log("Match starting");
             matchState = MatchState.Game;
-            MatchDetails.Division = MatchDetails.Players.Select(p => p.Division).Min();
+            MatchDetails.Division = MatchDetails.Players.Where(p => p is not IMatchBot).Select(p => p.Division).Min();
             foreach (var player in MatchDetails.Players)
             {
                 player.Castle = new DivisionCastleCreator(MatchDetails.Division).CreateCastle();
@@ -73,17 +84,20 @@ namespace Core.Match.Server
             MatchDetails.Fatigue = new Fatigue(MatchDetails.Division);
             MatchDetails.Turn = 0;
             if (MatchDetails.LevelInfo == null)
-                MatchDetails.LevelInfo = new ();
+                MatchDetails.LevelInfo = new();
+
+            turnTimer.Start();
             SendOutMatchDetails();
+            OnTurnPassed?.Invoke(this, EventArgs.Empty);
         }
 
         public void HandlePlayCardRequest(PlayerData playerData, CardData cardData)
         {
             if (matchState != MatchState.Game || MatchDetails.Players.Count <= 1)
                 return;
-            
+
             Debug.Log("Playing card");
-            if (discardNextTurn || matchState != MatchState.Game)
+            if ((DiscardNextTurn && !SaveNextTurn) || matchState != MatchState.Game)
                 return;
 
             MatchPlayer matchPlayer = MatchDetails.CurrentPlayer;
@@ -92,41 +106,40 @@ namespace Core.Match.Server
 
             if (!TurnValidator.ValidateCardTurn(matchPlayer, Guid.Parse(cardData.Id), cardData))
             {
+                Debug.Log("This card move is illegal");
                 HandleImpossibleMove();
                 return;
             }
 
             PlayCard(cardData);
-            
-            MatchDetails.CurrentPlayer?.PlayerCards!.RemoveCardFromHand(Guid.Parse(cardData.Id));
-            MatchDetails.CurrentPlayer?.PlayerCards!.FillHand();
-            saveNextTurn = false;
-
             NotifyClientsAboutPlayedCard(cardData, playerData.PlayFabId);
             SendOutMatchDetails();
-            ValidateGameState();
         }
 
         private void PlayCard(CardData cardData)
         {
             if (matchState != MatchState.Game || MatchDetails.Players.Count <= 1)
+            {
+                Debug.Log("Match state is not eligible to play a card");
                 return;
+            }
 
             foreach (var res in cardData.Cost)
             {
                 MatchDetails.CurrentPlayer?.Castle.GetResource(res.Name).RemoveResource(res.Value);
             }
-            
-            saveNextTurn = cardData.SaveTurn;
+
+            SaveNextTurn = cardData.SaveTurn;
             foreach (var effect in cardData.Effects)
             {
                 if (effect is DiscardEffect)
                 {
-                    discardNextTurn = true;
+                    DiscardNextTurn = true;
                 }
 
                 effect.Execute(MatchDetails.CurrentPlayer, MatchDetails.NextPlayer);
             }
+
             MatchDetails.CurrentPlayer?.PlayerCards!.RemoveCardFromHand(Guid.Parse(cardData.Id));
             MatchDetails.CurrentPlayer?.PlayerCards!.FillHand();
 
@@ -136,21 +149,29 @@ namespace Core.Match.Server
         public void HandleDiscardCardRequest(PlayerData playerData, CardData cardData)
         {
             if (matchState != MatchState.Game || MatchDetails.Players.Count <= 1)
+            {
+                Debug.Log("Match state is not eligible to discard a card");
                 return;
+            }
 
             MatchPlayer matchPlayer = MatchDetails.CurrentPlayer;
             if (matchPlayer == null || matchPlayer.PlayFabId != playerData.PlayFabId)
+            {
+                Debug.Log("Card discard error: player is NULL");
                 return;
+            }
 
             if (!TurnValidator.ValidateCardInHand(matchPlayer, Guid.Parse(cardData.Id)) || cardData.NonDiscard)
             {
+                Debug.Log("Card you want to discard is not in hand!");
                 HandleImpossibleMove();
                 return;
             }
 
-            if (discardNextTurn)
+            if (DiscardNextTurn)
             {
-                discardNextTurn = false;
+                Debug.Log("Free discard!");
+                DiscardNextTurn = false;
                 MatchDetails.CurrentPlayer?.PlayerCards!.RemoveCardFromHand(Guid.Parse(cardData.Id));
                 MatchDetails.CurrentPlayer?.PlayerCards!.FillHand();
                 //NotifyClientsAboutPlayedCard(cardData, CardActionType.RequestDiscard);
@@ -158,7 +179,20 @@ namespace Core.Match.Server
                 SendOutMatchDetails();
                 return;
             }
-            
+
+            if (SaveNextTurn)
+            {
+                Debug.Log("Free turn discard!");
+                SaveNextTurn = false;
+                MatchDetails.CurrentPlayer?.PlayerCards!.RemoveCardFromHand(Guid.Parse(cardData.Id));
+                MatchDetails.CurrentPlayer?.PlayerCards!.FillHand();
+                //NotifyClientsAboutPlayedCard(cardData, CardActionType.RequestDiscard);
+                //NotifyClientsAboutPlayedCard(cardData, CardActionType.Draft);
+                SendOutMatchDetails();
+                return;
+            }
+
+            Debug.Log("Turn discard!");
             MatchDetails.CurrentPlayer?.PlayerCards!.RemoveCardFromHand(Guid.Parse(cardData.Id));
             MatchDetails.CurrentPlayer?.PlayerCards!.FillHand();
 
@@ -166,32 +200,47 @@ namespace Core.Match.Server
 
             //NotifyClientsAboutCardDiscard(cardData, pla);
             SendOutMatchDetails();
-            ValidateGameState();
         }
 
         public void PassTheMove(bool force = false)
         {
-            if (saveNextTurn && !force)
+            if (SaveNextTurn && !force)
+            {
+                SaveNextTurn = false;
+                OnTurnPassed?.Invoke(this, EventArgs.Empty);
+                Debug.Log("Free move!");
                 return;
+            }
             
-            saveNextTurn = false;
-            if(force)
-                discardNextTurn = false;
+            SaveNextTurn = false;
             
+            if (force)
+            {
+                Debug.Log("Turn passing is forced!");
+                DiscardNextTurn = false;
+            }
+
+            turnTimer.Start();
+
             MatchDetails.Turn++;
 
-            if (MatchDetails.Turn != 0 && MatchDetails.Turn % 2 == 0)
+            if (MatchDetails.Turn != 0)
             {
-                if (MatchDetails.Turn >= MatchDetails.FatigueTurn)
+                if (MatchDetails.Turn % 2 == 0)
+                {
+                    foreach (var player in MatchDetails.Players)
+                    {
+                        player.Castle.Resources.ForEach(r => r.AddResource(r.Income));
+                    }
+                }
+                else if (MatchDetails.Turn >= MatchDetails.FatigueTurn)
                 {
                     DamageFatigue();
                     MatchDetails.Fatigue++;
                 }
-                foreach (var player in MatchDetails.Players)
-                {
-                    player.Castle.Resources.ForEach(r => r.AddResource(r.Income));
-                }
             }
+
+            OnTurnPassed?.Invoke(this, EventArgs.Empty);
         }
 
         private void HandleImpossibleMove()
@@ -199,6 +248,7 @@ namespace Core.Match.Server
             if (matchState != MatchState.Game)
                 return;
 
+            Debug.Log("Impossible move catched!");
             SendOutMatchDetails();
         }
 
@@ -213,6 +263,8 @@ namespace Core.Match.Server
                 Debug.Log("Match details to send:\n" + JsonConvert.SerializeObject(matchDetailsDto));
                 player.Connection?.Send(matchDetailsDto);
             }
+
+            ValidateGameState();
         }
 
         private void NotifyClientsAboutPlayedCard(CardData cardData, string playerId)
@@ -261,14 +313,12 @@ namespace Core.Match.Server
                 player.Connection?.Send(new FatigueDto()
                 {
                     PlayerId = Guid.Empty,
-                    Damage = MatchDetails.Fatigue.Damage
+                    Damage = Math.Min(MatchDetails.Fatigue.Damage + MatchDetails.Fatigue.Income, MatchDetails.Fatigue.MaxDamage)
                 });
             }
-
-            ValidateGameState();
         }
 
-        private void DamagePlayer(MatchPlayer player, int damage, bool spread = true)
+        public void DamagePlayer(MatchPlayer player, int damage, bool spread = true)
         {
             if (matchState != MatchState.Game)
                 return;
@@ -290,14 +340,13 @@ namespace Core.Match.Server
             int towerDamage = Math.Max(0, damage - player.Castle.Wall.Health);
             player.Castle.Tower.Damage(towerDamage);
             player.Castle.Wall.Damage(damage - towerDamage);
-
-            ValidateGameState();
         }
 
         public void Stop()
         {
             matchState = MatchState.Ended;
             MatchServerController.RemoveMatch(MatchId);
+            turnTimer.Close();
         }
 
         private void ValidateGameState()
@@ -306,7 +355,8 @@ namespace Core.Match.Server
             List<MatchPlayer> losePlayers = new();
             foreach (var player in MatchDetails.Players)
             {
-                Debug.Log($"Validation player info:\nMaxHp: {player.Castle.Tower.MaxHealth} Hp: {player.Castle.Tower.Health}");
+                Debug.Log(
+                    $"Validation player info:\nMaxHp: {player.Castle.Tower.MaxHealth} Hp: {player.Castle.Tower.Health}");
                 if (player.Castle.Tower.Health >= player.Castle.Tower.MaxHealth)
                 {
                     Debug.Log("Player wins by castle!");
@@ -342,6 +392,7 @@ namespace Core.Match.Server
                     SendGameResult(p, winPlayers.Count == 0);
                     MatchDetails.Players.Remove(p);
                 }
+
                 Stop();
             }
         }
@@ -362,7 +413,8 @@ namespace Core.Match.Server
         {
             if (isWin)
             {
-                if (MatchDetails.LevelInfo != null && MatchDetails.MapProgress != null)
+                if (MatchDetails.LevelInfo != null && MatchDetails.MapProgress != null &&
+                    !string.IsNullOrEmpty(player.PlayFabId))
                 {
                     ServerMapController.Instance.UpdateMapProgress(MatchDetails.MapProgress,
                         MatchDetails.LevelInfo, player.PlayFabId);

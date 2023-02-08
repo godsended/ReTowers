@@ -22,7 +22,7 @@ namespace Core.Match
         public double TurnTime { get; set; }
         
         public double PrepareTime { get; set; }
-        
+
         public int Turn { get; set; }
         
         public int FatigueTurn { get; set; }

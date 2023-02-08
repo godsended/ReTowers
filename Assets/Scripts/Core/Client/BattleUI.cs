@@ -282,6 +282,9 @@ namespace Core.Client
 
         public static void HideTipsWindow()
         {
+            if (Instance == null)
+                return;
+            
             if (Instance.animationTipsCoroutine != null)
                 Instance.StopCoroutine(Instance.animationTipsCoroutine);
 

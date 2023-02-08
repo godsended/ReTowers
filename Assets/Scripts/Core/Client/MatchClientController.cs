@@ -26,10 +26,8 @@ namespace Core.Client
 
         public float timeSearchingLag;
 
-        [Scene]
-        public string battleScene;
-        [Scene]
-        public string menuScene;
+        [Scene] public string battleScene;
+        [Scene] public string menuScene;
 
         private Coroutine _searchingLag;
 
@@ -39,17 +37,18 @@ namespace Core.Client
             matchWin = new UnityEvent();
             matchLose = new UnityEvent();
             matchDraw = new UnityEvent();
-            
+
             NetworkClient.RegisterHandler<MatchDetailsDto>(HandleMatchDetailsUpdate);
             NetworkClient.RegisterHandler<FatigueDto>(HandleFatigueUpdate);
             NetworkClient.RegisterHandler<LoadBattleSceneDto>(HandleLoadBattleScene);
-            
-            NetworkClient.RegisterHandler<RequestMatchDto>((requestMatchDto) => 
+
+            NetworkClient.RegisterHandler<RequestMatchDto>((requestMatchDto) =>
             {
                 switch (requestMatchDto.RequestType)
                 {
                     case MatchRequestType.FindingMatch:
                         PlayfabManager.TakeAwayEnergy(1);
+                        BattleClientManager.ResetBattleClient();
                         SceneManager.LoadScene(battleScene);
                         break;
                     case MatchRequestType.WinMatch:
@@ -75,9 +74,9 @@ namespace Core.Client
             }, false);
         }
 
-        private void WinOnPoint() 
+        private void WinOnPoint()
         {
-            if(ScensVar.LevelId != -1) 
+            if (ScensVar.LevelId != -1)
             {
                 char[] data = PlayerPrefs.GetString("Points").ToCharArray();
                 data[ScensVar.LevelId] = '1';
@@ -107,6 +106,7 @@ namespace Core.Client
                 instance._searchingLag = instance.StartCoroutine(instance.SearhicngLag());
             }
         }
+
         public static void SearchingBotMatch(int levelId)
         {
             //CORRECT ENERGY SPENDING
@@ -156,6 +156,10 @@ namespace Core.Client
                 RequestType = MatchRequestType.FindingMatch,
                 LevelId = -1
             });
+
+            //HARDCODED
+            if (BattleClientManager.instance != null)
+                BattleClientManager.instance._timer = 45;
         }
 
         private IEnumerator SearchingLagBot(int levelId)
@@ -176,6 +180,8 @@ namespace Core.Client
         {
             Debug.Log("DTO:\n" + JsonConvert.SerializeObject(dto));
             ClientMatchState matchState = BattleClientManager.instance.MatchState;
+            if (matchState.IsMyTurn != dto.IsYourTurn)
+                BattleClientManager.instance.OnTurnPassed();
 
             if (dto.CardsInHandIds != null)
             {
@@ -188,7 +194,7 @@ namespace Core.Client
 
                 foreach (var guid in guidsToRemove)
                 {
-                    matchState.DraftedCards.Remove(guid);
+                    matchState.RemoveDraftedCard(guid);
                 }
             }
 
@@ -196,12 +202,12 @@ namespace Core.Client
             {
                 matchState.OldMyCastle = new CastleEntity(matchState.MyState.Castle);
             }
-            
+
             if (matchState.EnemyState?.Castle != null)
             {
                 matchState.OldEnemyCastle = new CastleEntity(matchState.EnemyState.Castle);
             }
-            
+
             MatchPlayerDto myDto = dto.Players.FirstOrDefault(p => p.PlayerId != "");
             MatchPlayerDto enemyDto = dto.Players.FirstOrDefault(p => p.PlayerId == "");
             MatchPlayer myState = matchState.MyState;
@@ -218,7 +224,7 @@ namespace Core.Client
                 matchState.OldMyCastle.Tower.MaxHealth = myDto.Castle.Tower.MaxHealth;
                 matchState.OldMyCastle.Wall.MaxHealth = myDto.Castle.Wall.MaxHealth;
             }
-            
+
             if (matchState.OldEnemyCastle != null)
             {
                 matchState.OldEnemyCastle.Tower.MaxHealth = enemyDto.Castle.Tower.MaxHealth;
@@ -231,6 +237,7 @@ namespace Core.Client
             enemyState.PlayFabId = enemyDto.PlayerId.ToString();
 
             matchState.CardsInHandIds = cardsInHandIds;
+            dto.Fatigue++;
             matchState.Fatigue = dto.Fatigue;
             matchState.LevelInfo = dto.LevelInfo;
             Debug.Log("MatchState after changes before apply:\n" + JsonConvert.SerializeObject(matchState));

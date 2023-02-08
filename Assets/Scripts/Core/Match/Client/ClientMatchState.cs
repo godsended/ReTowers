@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Core.Cards;
 using Core.Castle;
+using Core.Client;
 using Core.Map;
 using Core.Utils;
 using JetBrains.Annotations;
@@ -12,24 +15,27 @@ namespace Core.Match.Client
     public class ClientMatchState
     {
         public CastleEntity OldMyCastle { get; set; }
-        
+
         public CastleEntity OldEnemyCastle { get; set; }
 
         public MatchPlayer MyState { get; set; }
 
         public MatchPlayer EnemyState { get; set; }
-        
+
         public bool IsMyTurn { get; set; }
 
-        public List<Guid> DraftedCards { get; } = new();
+        private List<Guid> draftedCards { get; set; } = new();
+
+        public IReadOnlyList<Guid> DraftedCards => draftedCards.AsReadOnly();
 
         [CanBeNull] public Guid[] CardsInHandIds { get; set; }
-        
+
         [CanBeNull] public Fatigue Fatigue { get; set; }
-        
+
         [CanBeNull] public LevelInfo LevelInfo { get; set; }
 
-        public delegate void ClientMatchStateChangeHandler(ClientMatchState state, CastleEntity newMyCastle, CastleEntity newEnemyCastle);
+        public delegate void ClientMatchStateChangeHandler(ClientMatchState state, CastleEntity newMyCastle,
+            CastleEntity newEnemyCastle);
 
         public event ClientMatchStateChangeHandler OnStateChanged;
 
@@ -71,6 +77,17 @@ namespace Core.Match.Client
                 EnemyState.Castle = OldEnemyCastle;
             if (OldMyCastle != null)
                 MyState.Castle = OldMyCastle;
+        }
+
+        public void AddDraftedCard(Guid guid)
+        {
+            draftedCards.Add(guid);
+            CardSpawner.SpawnDraftCard(guid);
+        }
+
+        public void RemoveDraftedCard(Guid id)
+        {
+            draftedCards.Remove(id);
         }
     }
 }

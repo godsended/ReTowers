@@ -4,7 +4,7 @@ namespace Core.Cards
 {
     public class CardPosition : MonoBehaviour
     {
-        public GameObject card;
+        public CardObject card;
         public RectTransform rectTransform;
 
         public int startIndex;

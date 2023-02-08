@@ -181,7 +181,7 @@ namespace Core.Map.Server
         private MapProgress UpdateMapProgress(MapProgress mapProgress)
         {
             DateTime mapProgressTime = mapProgress.LastUpdated.ToUniversalTime();
-            if ((DateTime.UtcNow - mapProgressTime).TotalDays >= 1)
+            if (DateTime.UtcNow.DayOfYear != mapProgressTime.DayOfYear || DateTime.UtcNow.Year != mapProgressTime.Year)
             {
                 mapProgress = new MapProgressBuilder().AddBiomes(3).Build();
             }

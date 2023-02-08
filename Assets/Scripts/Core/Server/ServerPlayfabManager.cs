@@ -163,14 +163,12 @@ namespace Core.Server
                         if (cardDatas[i].Rang == 0)
                         {
                             DeckDatas.Add(cardDatas[i]);
-                            break;
                         }
                     }
-
-                    player.Division = DivisionCalculator.CalculateDivision(DeckDatas.ToArray());
+                    
                     player.Cards = new PlayerCards(DeckDatas.Select(c => Guid.Parse(c.Id)).ToList());
                     Debug.Log($"WhenPlayerDataRecievedInBotMatch player division {player.Division}");
-                    MatchServerController.instance.StartToBot(level, progress, player);
+                    StartCoroutine(MatchServerController.instance.StartToBot(level, progress, player));
                     players.Remove(player);
                 });
             }

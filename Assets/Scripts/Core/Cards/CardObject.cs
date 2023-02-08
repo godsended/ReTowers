@@ -20,38 +20,28 @@ namespace Core.Cards
         public static bool IsDiscardMode;
 
         #region variables
-        [Header("Card data")]
-        public CardData card;
 
-        [Space(10)]
-        [Header("Sounds setting")]
-        public AudioClip playSound;
+        [Header("Card data")] public CardData card;
+
+        [Space(10)] [Header("Sounds setting")] public AudioClip playSound;
         public AudioClip discardSound;
 
-        [Space(10)]
-        [Header("Size settings")]
-        [SerializeField]
+        [Space(10)] [Header("Size settings")] [SerializeField]
         private float deltaSize = 0.05f;
-        [SerializeField]
-        private float defaultSize = 1.25f;
-        [SerializeField]
-        private float handleSize = 1.4f;
 
-        [Space(10)]
-        [Header("Rotate handle settings")]
-        [SerializeField]
+        [SerializeField] private float defaultSize = 1.25f;
+        [SerializeField] private float handleSize = 1.4f;
+
+        [Space(10)] [Header("Rotate handle settings")] [SerializeField]
         private float rotateModificator = 0.1f;
-        [SerializeField]
-        private float limitAngle = 0.4f;
-        [SerializeField]
-        private float smoothRotate = 0.08f;
 
-        [Space(10)]
-        [Header("Move settings")]
-        [SerializeField]
+        [SerializeField] private float limitAngle = 0.4f;
+        [SerializeField] private float smoothRotate = 0.08f;
+
+        [Space(10)] [Header("Move settings")] [SerializeField]
         private int smoothMove = 2;
-        [SerializeField]
-        private RectTransform targetTransformPosition;
+
+        [SerializeField] private RectTransform targetTransformPosition;
 
         private Canvas _canvas;
         private RectTransform _rectTransform;
@@ -65,14 +55,17 @@ namespace Core.Cards
         private GameObject _spawnEnemyCardPosition;
         private CardPosition _cardPosition;
         private AudioSource _audioSource;
+
         #endregion
 
         #region Methods
+
         public CardPosition GetCardPosition() => _cardPosition;
 
         public void Discard()
         {
             StartCoroutine(CardDiscardPlayAnimation());
+            OnDestroy();
 
             CardClientController.SendRequestCardAction(new RequestCardDto
             {
@@ -149,7 +142,8 @@ namespace Core.Cards
             if (_canPlayed && !IsDiscardMode)
             {
                 _rectTransform.anchoredPosition += eventData.delta / _canvas.scaleFactor;
-                _rectTransform.position = new Vector3(transform.position.x, transform.position.y, _rectTransform.position.z);
+                _rectTransform.position =
+                    new Vector3(transform.position.x, transform.position.y, _rectTransform.position.z);
                 _targetAngle = new Quaternion(
                     Mathf.Clamp(eventData.delta.y * rotateModificator, -limitAngle, limitAngle),
                     Mathf.Clamp(-eventData.delta.x * rotateModificator, -limitAngle, limitAngle),
@@ -175,6 +169,13 @@ namespace Core.Cards
                 if (DropZone.isPlayable && _canPlayed)
                     StartCoroutine(CardYouPlayAnimation());
             }
+        }
+
+        public void OnDestroy()
+        {
+            var id = Guid.Parse(card.Id);
+            if (BattleClientManager.instance.MatchState.DraftedCards.Contains(id))
+                BattleClientManager.instance.MatchState.RemoveDraftedCard(id);
         }
 
         public void SetCanPlayed(bool canPlayed)
@@ -239,6 +240,9 @@ namespace Core.Cards
 
         public IEnumerator CardYouPlayAnimation()
         {
+            OnDestroy();
+
+            BattleClientManager.instance.MatchState.RemoveDraftedCard(Guid.Parse(card.Id));
             CardClientController.SendRequestCardAction(new RequestCardDto
             {
                 AccountId = MainClient.GetClientId(),
@@ -360,12 +364,16 @@ namespace Core.Cards
             yield return new WaitForEndOfFrame();
 
             _tableTopImage.sprite = card.CardImage;
-            _cardPosition = FindObjectsOfType<CardPosition>()
-                .Where(p => p.card == null)
-                .FirstOrDefault();
+            _cardPosition = FindObjectsOfType<CardPosition>().FirstOrDefault(p => p.card == null);
+
+            if (_cardPosition == null)
+            {
+                Destroy(gameObject);
+                yield break;
+            }
 
             transform.SetParent(_cardPosition.transform);
-            _cardPosition.card = gameObject;
+            _cardPosition.card = this;
             targetTransformPosition = _cardPosition.rectTransform;
 
             _cardPosition.transform.SetSiblingIndex(_cardPosition.startPointerIndex);
@@ -415,17 +423,24 @@ namespace Core.Cards
         {
             _rectTransform.rotation = Quaternion.Slerp(_rectTransform.rotation, _targetAngle, smoothRotate);
             _targetAngle = new Quaternion(
-               0, 0,
-               _rectTransform.rotation.z,
-               _rectTransform.rotation.w);
+                0, 0,
+                _rectTransform.rotation.z,
+                _rectTransform.rotation.w);
 
             if (!_isDragging && targetTransformPosition != null)
-                _rectTransform.position = Vector3.Slerp(_rectTransform.position, targetTransformPosition.position, Time.deltaTime * 8);
+                _rectTransform.position = Vector3.Slerp(_rectTransform.position, targetTransformPosition.position,
+                    Time.deltaTime * 8);
 
             SetCanPlayed(BattleClientManager.IsMyTurn()
-                && BattleClientManager.IsCanPlay()
-                && HasResources());
+                         && BattleClientManager.IsCanPlay()
+                         && HasResources());
         }
+
         #endregion
+
+        public void Destroy()
+        {
+            Destroy(gameObject);
+        }
     }
 }
