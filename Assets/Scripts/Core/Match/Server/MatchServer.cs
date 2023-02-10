@@ -228,15 +228,16 @@ namespace Core.Match.Server
             {
                 if (MatchDetails.Turn % 2 == 0)
                 {
+                    if (MatchDetails.Turn >= MatchDetails.FatigueTurn)
+                    {
+                        DamageFatigue();
+                        MatchDetails.Fatigue++;
+                    }
+                    
                     foreach (var player in MatchDetails.Players)
                     {
                         player.Castle.Resources.ForEach(r => r.AddResource(r.Income));
                     }
-                }
-                else if (MatchDetails.Turn >= MatchDetails.FatigueTurn)
-                {
-                    DamageFatigue();
-                    MatchDetails.Fatigue++;
                 }
             }
 

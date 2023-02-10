@@ -290,21 +290,21 @@ namespace Core.Client
 
         private void OnMatchStateUpdated(ClientMatchState state, CastleEntity newMyCastle, CastleEntity newEnemyCastle)
         {
-            if (SceneManager.GetActiveScene().path != MatchClientController.instance.battleScene)
-            {
-                Debug.Log("Loading battle scene");
-                AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(MatchClientController.instance.battleScene);
-                asyncOperation.completed += (op) =>
-                    StartCoroutine(UpdateUIFromState(state, true, newMyCastle, newEnemyCastle));
-                return;
-            }
+            // if (SceneManager.GetActiveScene().path != MatchClientController.instance.battleScene)
+            // {
+            //     Debug.Log("Loading battle scene");
+            //     AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(MatchClientController.instance.battleScene);
+            //     asyncOperation.completed += (op) =>
+            //         StartCoroutine(UpdateUIFromState(state, true, newMyCastle, newEnemyCastle));
+            //     return;
+            // }
 
-            StartCoroutine(UpdateUIFromState(state, false, newMyCastle, newEnemyCastle));
+            StartCoroutine(UpdateUIFromState(state, newMyCastle, newEnemyCastle));
         }
 
         //Куратинный кастылек тк если обновлять данные сразу после загрузки сцены есть подозрение
         //что они перезаписываются на стандартные задданые в сцене и вообще сцена не реагирует на скрипты
-        private IEnumerator UpdateUIFromState(ClientMatchState state, bool wait, CastleEntity newMyCastle,
+        private IEnumerator UpdateUIFromState(ClientMatchState state, CastleEntity newMyCastle,
             CastleEntity newEnemyCastle)
         {
             Debug.Log("State after reply before rollback\n" + JsonConvert.SerializeObject(state));
@@ -449,8 +449,8 @@ namespace Core.Client
 
             _matchEnded = false;
 
-            if (wait)
-                BattleUI.HideWaitStartWindow();
+            // if (wait)
+            //     BattleUI.HideWaitStartWindow();
 
             SetTurn(state.IsMyTurn);
         }

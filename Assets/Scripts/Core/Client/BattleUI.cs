@@ -331,7 +331,7 @@ namespace Core.Client
         private void Start()
         {
             SpriteRenderer enemySpriteRenderer = enemyTower.GetComponent<SpriteRenderer>();
-            if (ScensVar.BossType == 1)
+            if (ScensVar.BossType == -10)
             {
                 enemyTower.transform.position = new Vector3(enemyTower.transform.position.x, -1.5f, enemyTower.transform.position.z);
                 enemySpriteRenderer.flipX = true;
@@ -339,7 +339,7 @@ namespace Core.Client
                 enemySpriteRenderer.sprite = bossFire;
                 enemyWall.active = false;
             }
-            else if(ScensVar.BossType == 2) 
+            else if(ScensVar.BossType == -10) 
             {
                 enemyTower.transform.position = new Vector3(enemyTower.transform.position.x, -1.5f, enemyTower.transform.position.z);
                 enemySpriteRenderer.flipX = true;
@@ -347,7 +347,7 @@ namespace Core.Client
                 enemySpriteRenderer.sprite = bossWater;
                 enemyWall.active = false;
             }
-            else if(ScensVar.BossType == 3) 
+            else if(ScensVar.BossType == -10) 
             {
                 enemyTower.transform.position = new Vector3(enemyTower.transform.position.x, -1.5f, enemyTower.transform.position.z);
                 enemySpriteRenderer.flipX = true;
