@@ -14,14 +14,14 @@ namespace Core.Cards
     {
         public static readonly int CardsInHandLimit = 6;
         public List<Guid> CardsIdDeck { get; private set; }
-        
+
         public List<Guid> CardsIdHand { get; private set; }
-        
+
         private NetworkConnectionToClient _connection;
         private IGameLogger _gameLogger;
 
         public bool IsHandFilled => CardsIdHand.Count >= CardsInHandLimit;
-        
+
         public PlayerCards(List<Guid> cards)
         {
             CardsIdDeck = new();
@@ -39,10 +39,10 @@ namespace Core.Cards
 
             _gameLogger = new ConsoleLogger(new List<LogTypeMessage>
             {
-                 LogTypeMessage.Error,
-                 LogTypeMessage.Warning,
-                 LogTypeMessage.Info,
-                 LogTypeMessage.Low
+                LogTypeMessage.Error,
+                LogTypeMessage.Warning,
+                LogTypeMessage.Info,
+                LogTypeMessage.Low
             });
         }
 
@@ -59,34 +59,29 @@ namespace Core.Cards
             for (int i = CardsIdHand.Count; i < CardsInHandLimit; i++)
             {
                 GetAndTakeNearestCard();
-            }      
+            }
         }
 
-        public void GetAndTakeNearestCard() 
+        public void GetAndTakeNearestCard()
         {
-            Guid id = CardsIdDeck[0];
+            while (true)
+            {
+                Guid id = CardsIdDeck[0];
+                CardsIdDeck.Remove(CardsIdDeck[0]);
+                if (CardsIdHand.Contains(id))
+                    continue;
 
-            // if (id == null)
-            //     _gameLogger.Log($"Card take error! Connection: [{_connection}]", LogTypeMessage.Warning);
-
-            CardsIdDeck.Remove(CardsIdDeck[0]);
-            CardsIdHand.Add(id);
-            // _connection.Send(new RequestCardDto
-            // {
-            //     ActionType = CardActionType.Draft,
-            //     CardId = id
-            // });
-
-            return;
+                CardsIdHand.Add(id);
+                break;
+            }
         }
 
         public void ShuffleCard(Guid cardId, int maxIndex = 0)
         {
             CardsIdDeck.Add(cardId);
-            //_gameLogger.Log($"[{_connection}] Count cards in deck: {CardsIdDeck.Count}", LogTypeMessage.Low);
         }
 
-        public void ShuffleCards() 
+        public void ShuffleCards()
         {
             for (int i = 0; i < CardsIdDeck.Count; i++)
             {

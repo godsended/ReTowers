@@ -42,7 +42,7 @@ namespace Core.Server
                     Connection = connection,
                     IsGuest = false,
                     PlayFabId = authDto.Login,
-                    LastLoginTime = DateTime.Parse(authDto.LastLoginTime)
+                    LastLoginTime = DateTime.UtcNow
                 });
             }
             

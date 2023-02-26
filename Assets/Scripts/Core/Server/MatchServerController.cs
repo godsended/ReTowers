@@ -14,6 +14,7 @@ using System.Linq;
 using Core.Cards;
 using Core.Map;
 using Core.Match;
+using Core.Match.Modifiers.Providers;
 using Core.Match.Server;
 using Core.Utils.NameGenerator;
 using Newtonsoft.Json;
@@ -28,6 +29,8 @@ namespace Core.Server
     public class MatchServerController : MonoBehaviour
     {
         private static INameGenerator nameGenerator = new MarkNameGenerator();
+        
+        public static IModifiersProvider ModifiersProvider { get; } = new HardCodedPveModifiersProvider();
 
         public int TimeToStartBot = 45;
 
@@ -321,6 +324,8 @@ namespace Core.Server
             _matches.Add(match);
 
             StartMatch(player);
+            
+            ModifiersProvider.Provide(match, levelInfo);
             yield return new WaitForSeconds(1);
             match.Start();
         }

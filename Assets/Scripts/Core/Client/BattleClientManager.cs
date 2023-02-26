@@ -436,9 +436,10 @@ namespace Core.Client
                 BattleUI.RemoveMyResourceValue("Resource_3", -change);
 
             Debug.Log("State after UI changes\n" + JsonConvert.SerializeObject(state));
+            var cardsPositions = FindObjectsOfType<CardPosition>();
             foreach (var id in state.CardsInHandIds!)
             {
-                if (state.DraftedCards.Contains(id))
+                if (state.DraftedCards.Contains(id) || cardsPositions.Any(c => (c?.card?.card?.Id ?? "") == id.ToString()))
                     continue;
                 state.AddDraftedCard(id);
                 Debug.Log("Draft card!");

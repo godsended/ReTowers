@@ -28,6 +28,14 @@ namespace Core.Match.Server
 
         public event EventHandler OnTurnPassed;
 
+        public event EventHandler OnMatchStarted;
+
+        public event EventHandler OnFatigueDamaged;
+
+        public event EventHandler BeforeFatigueDamaged;
+
+        public Predicate<MatchPlayer> FatigueFilter;
+
         public Guid MatchId { get; private set; }
 
         public MatchDetails MatchDetails { get; private set; }
@@ -87,6 +95,7 @@ namespace Core.Match.Server
                 MatchDetails.LevelInfo = new();
 
             turnTimer.Start();
+            OnMatchStarted?.Invoke(this, EventArgs.Empty);
             SendOutMatchDetails();
             OnTurnPassed?.Invoke(this, EventArgs.Empty);
         }
@@ -211,9 +220,9 @@ namespace Core.Match.Server
                 Debug.Log("Free move!");
                 return;
             }
-            
+
             SaveNextTurn = false;
-            
+
             if (force)
             {
                 Debug.Log("Turn passing is forced!");
@@ -233,7 +242,7 @@ namespace Core.Match.Server
                         DamageFatigue();
                         MatchDetails.Fatigue++;
                     }
-                    
+
                     foreach (var player in MatchDetails.Players)
                     {
                         player.Castle.Resources.ForEach(r => r.AddResource(r.Income));
@@ -310,11 +319,20 @@ namespace Core.Match.Server
             Debug.Log($"Fatigue is damaging for {MatchDetails.Fatigue.Damage}");
             foreach (var player in MatchDetails.Players)
             {
-                DamagePlayer(player, MatchDetails.Fatigue.Damage, false);
+                bool notDamagePlayer = FatigueFilter?.GetInvocationList().All(predicate => !((Predicate<MatchPlayer>) predicate)(player)) ?? false;
+
+                if (!notDamagePlayer)
+                {
+                    BeforeFatigueDamaged?.Invoke(this, EventArgs.Empty);
+                    DamagePlayer(player, MatchDetails.Fatigue.Damage, false);
+                    OnFatigueDamaged?.Invoke(this, EventArgs.Empty);
+                }
+
                 player.Connection?.Send(new FatigueDto()
                 {
                     PlayerId = Guid.Empty,
-                    Damage = Math.Min(MatchDetails.Fatigue.Damage + MatchDetails.Fatigue.Income, MatchDetails.Fatigue.MaxDamage)
+                    Damage = Math.Min(MatchDetails.Fatigue.Damage + MatchDetails.Fatigue.Income,
+                        MatchDetails.Fatigue.MaxDamage)
                 });
             }
         }

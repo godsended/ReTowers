@@ -17,7 +17,7 @@ namespace Core
 
         public int Damage { get; private set; }
 
-        public int MaxDamage { get; private set; }
+        public int MaxDamage { get; set; }
 
         public int Income { get; private set; }
 
