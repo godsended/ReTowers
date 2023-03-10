@@ -34,6 +34,8 @@ namespace Core.Cards
         public string Type;
         [Tooltip("Rang Card")]
         public int Rang;
+        [Tooltip("Is available for player")] 
+        public bool IsCollectible = true;
 
         public CardData()
         {

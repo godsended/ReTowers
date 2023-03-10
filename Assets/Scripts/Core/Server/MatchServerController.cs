@@ -310,7 +310,9 @@ namespace Core.Server
 
             List<Guid> cards = new List<Guid>();
             player.Cards.CardsIdDeck.ForEach(c => cards.Add(c));
-
+            
+            ModifiersProvider.Provide(match, levelInfo);
+            
             PlayerCards botCards = new PlayerCards(cards);
             match.AddBot(botCards, nameGenerator.Generate());
 
@@ -325,7 +327,6 @@ namespace Core.Server
 
             StartMatch(player);
             
-            ModifiersProvider.Provide(match, levelInfo);
             yield return new WaitForSeconds(1);
             match.Start();
         }

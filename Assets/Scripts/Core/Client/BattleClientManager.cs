@@ -6,6 +6,7 @@ using Core.Cards;
 using System.Linq;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Core.Match;
 using Core.Match.Client;
 using Core.Match.Server;
@@ -437,6 +438,21 @@ namespace Core.Client
 
             Debug.Log("State after UI changes\n" + JsonConvert.SerializeObject(state));
             var cardsPositions = FindObjectsOfType<CardPosition>();
+
+            List<GameObject> cardsToDestroy = new List<GameObject>();
+            foreach (var cp in cardsPositions)
+            {
+                if (cp.card?.card == null || state.DraftedCards.Contains(Guid.Parse(cp.card.card.Id))) 
+                    continue;
+                cardsToDestroy.Add(cp.card.gameObject);
+                cp.card = null;
+            }
+
+            foreach (var card in cardsToDestroy)
+            {
+                Destroy(card);
+            }
+            
             foreach (var id in state.CardsInHandIds!)
             {
                 if (state.DraftedCards.Contains(id) || cardsPositions.Any(c => (c?.card?.card?.Id ?? "") == id.ToString()))

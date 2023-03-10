@@ -25,11 +25,6 @@ namespace Core.Match
         {
             if (server.MatchDetails.CurrentPlayer == this)
             {
-                // Task.Run(async () =>
-                // {
-                //     await Task.Delay(2000);
-                //     MatchServerController.instance.ConcurrentActions.Add(Turn);
-                // });
                 Task.Delay(2500).ContinueWith(_ => MatchServerController.instance.ConcurrentActions.Add(Turn));
             }
         }

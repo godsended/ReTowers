@@ -277,7 +277,7 @@ namespace Core.Match.Server
             ValidateGameState();
         }
 
-        private void NotifyClientsAboutPlayedCard(CardData cardData, string playerId)
+        public void NotifyClientsAboutPlayedCard(CardData cardData, string playerId)
         {
             if (matchState != MatchState.Game)
                 return;

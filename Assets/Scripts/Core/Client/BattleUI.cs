@@ -4,6 +4,8 @@ using Mirror;
 using Core.Contracts;
 using System.Collections;
 using Core.Castle;
+using Core.Client.Bosses;
+using Core.Map;
 using UnityEngine.SceneManagement;
 using Effects;
 
@@ -76,9 +78,11 @@ namespace Core.Client
 
         [Space(10)]
         [Header("Game objects")]
-        public Sprite bossFire;
-        public Sprite bossWater;
-        public Sprite bossEarth;
+        public BossView bossFire;
+        public BossView bossWater;
+        public BossView bossEarth;
+
+        public IBossView BossView { get; set; }
 
         [Space(10)]
         [Header("Height settings")]
@@ -330,30 +334,32 @@ namespace Core.Client
 
         private void Start()
         {
-            SpriteRenderer enemySpriteRenderer = enemyTower.GetComponent<SpriteRenderer>();
-            if (ScensVar.BossType == -10)
+            if (ScensVar.LevelId is 20 or 13 or 6)
             {
-                enemyTower.transform.position = new Vector3(enemyTower.transform.position.x, -1.5f, enemyTower.transform.position.z);
-                enemySpriteRenderer.flipX = true;
-                enemySpriteRenderer.sortingOrder = 1;
-                enemySpriteRenderer.sprite = bossFire;
+                enemyTower.transform.position = new Vector3(enemyTower.transform.position.x, -1.5f,
+                    enemyTower.transform.position.z);
                 enemyWall.active = false;
-            }
-            else if(ScensVar.BossType == -10) 
-            {
-                enemyTower.transform.position = new Vector3(enemyTower.transform.position.x, -1.5f, enemyTower.transform.position.z);
-                enemySpriteRenderer.flipX = true;
-                enemySpriteRenderer.sortingOrder = 1;
-                enemySpriteRenderer.sprite = bossWater;
-                enemyWall.active = false;
-            }
-            else if(ScensVar.BossType == -10) 
-            {
-                enemyTower.transform.position = new Vector3(enemyTower.transform.position.x, -1.5f, enemyTower.transform.position.z);
-                enemySpriteRenderer.flipX = true;
-                enemySpriteRenderer.sortingOrder = 1;
-                enemySpriteRenderer.sprite = bossEarth;
-                enemyWall.active = false;
+                BossView view = null;
+                switch (ScensVar.LevelId)
+                {
+                    case 6:
+                        view = Instantiate(bossEarth);
+                        view.transform.position = new Vector3(5.5f, -2.5f, 0);
+                        break;
+                    case 13:
+                        view = Instantiate(bossWater);
+                        view.transform.position = new Vector3(6.5f, -1.4f, 0);
+                        break;
+                    case 20:
+                        view = Instantiate(bossFire);
+                        view.transform.position = new Vector3(5.5f, 0, 0);
+                        break;
+                }
+
+                if (view != null)
+                {
+                    BossView = view;
+                }
             }
 
             _audioSource = GetComponent<AudioSource>();

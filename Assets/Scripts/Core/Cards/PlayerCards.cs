@@ -22,17 +22,21 @@ namespace Core.Cards
 
         public bool IsHandFilled => CardsIdHand.Count >= CardsInHandLimit;
 
-        public PlayerCards(List<Guid> cards)
+        public PlayerCards(List<Guid> cards, bool removeIncollectibleCards = true)
         {
             CardsIdDeck = new();
             cards.ForEach(guid => CardsIdDeck.Add(guid));
+            if (removeIncollectibleCards)
+                CardsIdDeck.RemoveAll(c => !LibraryCards.GetCard(c).IsCollectible);
             CardsIdHand = new List<Guid>();
             ShuffleCards();
         }
 
-        public PlayerCards(List<Guid> cards, NetworkConnectionToClient connection)
+        public PlayerCards(List<Guid> cards, NetworkConnectionToClient connection, bool removeIncollectibleCards = true)
         {
             CardsIdDeck = cards;
+            if (removeIncollectibleCards)
+                CardsIdDeck.RemoveAll(c => !LibraryCards.GetCard(c).IsCollectible);
             CardsIdHand = new List<Guid>();
 
             _connection = connection;
