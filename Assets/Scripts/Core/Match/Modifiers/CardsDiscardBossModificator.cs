@@ -14,6 +14,9 @@ namespace Core.Match.Modifiers
         private readonly Random random;
 
         private readonly double probability;
+
+        private readonly int cooldown = 3;
+        private int cooldownState = 0;
         
         private readonly Guid cardGuid = Guid.Parse("2e3efd93-628a-48de-b4b2-12ca1d4473c5");
         
@@ -23,12 +26,13 @@ namespace Core.Match.Modifiers
         /// <param name="match">Current match</param>
         /// <param name="player">Player</param>
         /// <param name="probability">Probability, from 0 to 1</param>
-        public CardsDiscardBossModificator(MatchServer match, MatchPlayer player, double probability)
+        public CardsDiscardBossModificator(MatchServer match, MatchPlayer player, double probability, int cooldown = 3)
         {
             this.match = match;
             this.player = player;
             this.probability = probability;
             this.random = new Random(match.GetHashCode() + player.GetHashCode());
+            this.cooldown = cooldown;
             match.OnTurnPassed += OnTurnPassed;
         }
 
@@ -36,10 +40,19 @@ namespace Core.Match.Modifiers
         {
             if (match.MatchDetails.CurrentPlayer == player) return;
             
+            if (cooldownState > 0)
+            {
+                cooldownState--;
+                return;
+            }
+            
             var rand = random.NextDouble();
             rand -= (int) rand;
             if (rand < probability)
+            {
                 Discard();
+                cooldownState = cooldown;
+            }
         }
 
         private void Discard()

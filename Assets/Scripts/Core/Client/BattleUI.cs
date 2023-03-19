@@ -338,7 +338,9 @@ namespace Core.Client
             {
                 enemyTower.transform.position = new Vector3(enemyTower.transform.position.x, -1.5f,
                     enemyTower.transform.position.z);
-                enemyWall.active = false;
+                enemyWall.SetActive(false);
+                enemyTower.SetActive(false);
+                
                 BossView view = null;
                 switch (ScensVar.LevelId)
                 {

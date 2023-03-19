@@ -25,8 +25,8 @@ namespace Core.Match.Modifiers.Providers
 
                     MatchCastleAddition myAddition0 = new()
                     {
-                        TowerAddition = 7,
-                        WallAddition = 14,
+                        TowerAddition = 10,
+                        WallAddition = 10,
                         ResourcesAddition = new[]
                         {
                             new Resource("Resource_1", 0, 2),

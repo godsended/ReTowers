@@ -14,6 +14,9 @@ namespace Core.Match.Modifiers
 
         private readonly double probability;
         
+        private readonly int cooldown = 3;
+        private int cooldownState = 0;
+        
         private readonly Guid cardGuid = Guid.Parse("a58150b9-c2cb-45f4-b32b-bdf9c48f740a");
         
         /// <summary>
@@ -22,12 +25,13 @@ namespace Core.Match.Modifiers
         /// <param name="match">Current match</param>
         /// <param name="player">Player</param>
         /// <param name="probability">Probability, from 0 to 1</param>
-        public HealFreezeBossModificator(MatchServer match, MatchPlayer player, double probability)
+        public HealFreezeBossModificator(MatchServer match, MatchPlayer player, double probability, int cooldown = 3)
         {
             this.match = match;
             this.player = player;
             this.probability = probability;
             this.random = new Random(match.GetHashCode() + player.GetHashCode());
+            this.cooldown = cooldown;
             match.OnTurnPassed += OnTurnPassed;
         }
 
@@ -35,10 +39,19 @@ namespace Core.Match.Modifiers
         {
             if (match.MatchDetails.CurrentPlayer == player) return;
             
+            if (cooldownState > 0)
+            {
+                cooldownState--;
+                return;
+            }
+            
             var rand = random.NextDouble();
             rand -= (int) rand;
             if (rand < probability)
+            {
                 FreezeHeal();
+                cooldownState = cooldown;
+            }
         }
 
         private void FreezeHeal()

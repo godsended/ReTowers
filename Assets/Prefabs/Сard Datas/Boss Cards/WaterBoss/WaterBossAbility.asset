@@ -18,6 +18,7 @@ MonoBehaviour:
   Cost: []
   Effects:
   - {fileID: 11400000, guid: 52f3568a91e7f4e7ea804aaf75a44f0f, type: 2}
+  - {fileID: 11400000, guid: dc011ebf0f3fc476abb967b5179613fb, type: 2}
   SaveTurn: 0
   NonDiscard: 0
   Description: 

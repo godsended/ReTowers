@@ -10,11 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 193660, guid: 618aac7698c7b86448d598d348052383, type: 3}
       propertyPath: m_Name
-      value: ShFX_Snow Heavy (loop,collision) Variant
+      value: ShFX_Snow Heavy Boss
       objectReference: {fileID: 0}
     - target: {fileID: 421326, guid: 618aac7698c7b86448d598d348052383, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 421326, guid: 618aac7698c7b86448d598d348052383, type: 3}
       propertyPath: m_LocalScale.x
@@ -26,11 +26,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 421326, guid: 618aac7698c7b86448d598d348052383, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.47000915
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 421326, guid: 618aac7698c7b86448d598d348052383, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.4582043
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 421326, guid: 618aac7698c7b86448d598d348052383, type: 3}
       propertyPath: m_LocalPosition.z
@@ -95,6 +95,14 @@ PrefabInstance:
     - target: {fileID: 19873058, guid: 618aac7698c7b86448d598d348052383, type: 3}
       propertyPath: ShapeModule.m_Position.y
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19873058, guid: 618aac7698c7b86448d598d348052383, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 19873058, guid: 618aac7698c7b86448d598d348052383, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.07
       objectReference: {fileID: 0}
     - target: {fileID: 19873058, guid: 618aac7698c7b86448d598d348052383, type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar

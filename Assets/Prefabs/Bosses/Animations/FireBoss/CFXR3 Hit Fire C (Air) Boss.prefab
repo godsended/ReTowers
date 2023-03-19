@@ -4834,7 +4834,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 9fd7b93f5b2bb4340b23ceb8bf5f8ad9, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4913,6 +4912,11 @@ PrefabInstance:
       propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 2504214343101900871, guid: 3ed0d324122d7b24eaec75c55c74aafc,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2504214343621411456, guid: 3ed0d324122d7b24eaec75c55c74aafc,
         type: 3}
       propertyPath: UVModule.tilesX
@@ -4930,8 +4934,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2504214343621411456, guid: 3ed0d324122d7b24eaec75c55c74aafc,
         type: 3}
+      propertyPath: ShapeModule.m_Scale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2504214343621411456, guid: 3ed0d324122d7b24eaec75c55c74aafc,
+        type: 3}
+      propertyPath: ShapeModule.m_Scale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2504214343621411456, guid: 3ed0d324122d7b24eaec75c55c74aafc,
+        type: 3}
+      propertyPath: ShapeModule.m_Scale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2504214343621411456, guid: 3ed0d324122d7b24eaec75c55c74aafc,
+        type: 3}
       propertyPath: ShapeModule.radius.value
-      value: 0.2
+      value: 0.41
+      objectReference: {fileID: 0}
+    - target: {fileID: 2504214343621411456, guid: 3ed0d324122d7b24eaec75c55c74aafc,
+        type: 3}
+      propertyPath: InitialModule.maxNumParticles
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 2504214343621411456, guid: 3ed0d324122d7b24eaec75c55c74aafc,
         type: 3}
@@ -4942,6 +4966,11 @@ PrefabInstance:
         type: 3}
       propertyPath: InitialModule.startRotation.scalar
       value: 6.283185
+      objectReference: {fileID: 0}
+    - target: {fileID: 2504214343621411456, guid: 3ed0d324122d7b24eaec75c55c74aafc,
+        type: 3}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2504214343621411456, guid: 3ed0d324122d7b24eaec75c55c74aafc,
         type: 3}
@@ -4957,6 +4986,11 @@ PrefabInstance:
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
       value: 0.65699995
+      objectReference: {fileID: 0}
+    - target: {fileID: 2504214343621411456, guid: 3ed0d324122d7b24eaec75c55c74aafc,
+        type: 3}
+      propertyPath: InitialModule.gravityModifier.scalar
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2504214343621411456, guid: 3ed0d324122d7b24eaec75c55c74aafc,
         type: 3}
@@ -5070,6 +5104,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2504214343621411457, guid: 3ed0d324122d7b24eaec75c55c74aafc,
         type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2504214343621411457, guid: 3ed0d324122d7b24eaec75c55c74aafc,
+        type: 3}
       propertyPath: m_UseCustomVertexStreams
       value: 0
       objectReference: {fileID: 0}
@@ -5157,6 +5196,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CFXR3 Hit Fire C (Air) Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 4741991464754137355, guid: 3ed0d324122d7b24eaec75c55c74aafc,
+        type: 3}
+      propertyPath: cameraShake.enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4741991464754137355, guid: 3ed0d324122d7b24eaec75c55c74aafc,
         type: 3}
