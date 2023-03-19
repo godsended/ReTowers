@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Timers;
 using Core.Cards;
 using Core.Cards.Effects;
@@ -319,7 +320,8 @@ namespace Core.Match.Server
             Debug.Log($"Fatigue is damaging for {MatchDetails.Fatigue.Damage}");
             foreach (var player in MatchDetails.Players)
             {
-                bool notDamagePlayer = FatigueFilter?.GetInvocationList().All(predicate => !((Predicate<MatchPlayer>) predicate)(player)) ?? false;
+                bool notDamagePlayer = FatigueFilter?.GetInvocationList()
+                    .All(predicate => !((Predicate<MatchPlayer>) predicate)(player)) ?? false;
 
                 if (!notDamagePlayer)
                 {
@@ -328,11 +330,15 @@ namespace Core.Match.Server
                     OnFatigueDamaged?.Invoke(this, EventArgs.Empty);
                 }
 
-                player.Connection?.Send(new FatigueDto()
+                MatchServerController.instance.ConcurrentActions.Add(() =>
                 {
-                    PlayerId = Guid.Empty,
-                    Damage = Math.Min(MatchDetails.Fatigue.Damage + MatchDetails.Fatigue.Income,
-                        MatchDetails.Fatigue.MaxDamage)
+                    Task.Delay(1000).ContinueWith(_ =>
+                        player.Connection?.Send(new FatigueDto()
+                        {
+                            PlayerId = Guid.Empty,
+                            Damage = Math.Min(MatchDetails.Fatigue.Damage + MatchDetails.Fatigue.Income,
+                                MatchDetails.Fatigue.MaxDamage)
+                        }));
                 });
             }
         }
