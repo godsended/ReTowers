@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 881692c7-ffcf-4ff1-b97e-d2c7c69b3b54
   Name: ReinforcedWall
-  CardImage: {fileID: 21300000, guid: be0b1b1f9865f4e5cb8fd8fe35ca052e, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 28bcba5a664994a9eb23022d27fe6acf, type: 3}
   Cost:
   - Name: Resource_3
     Value: 27
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 94
   Rang: 3
+  IsCollectible: 1

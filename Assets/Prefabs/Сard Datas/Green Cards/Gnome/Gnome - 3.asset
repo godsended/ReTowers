@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 60a8d016-0cc2-432a-b725-41e6c387cdfe
   Name: Gnome
-  CardImage: {fileID: 21300000, guid: 4516b4323559e421fbe5774f8b98e562, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: cbdba14f67a494ba6ac872b0f4ff3204, type: 3}
   Cost:
   - Name: Resource_1
     Value: 5
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 43
   Rang: 2
+  IsCollectible: 1

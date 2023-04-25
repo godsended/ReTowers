@@ -1,3 +1,5 @@
+#if !UNITY_ANDROID
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -56,13 +58,13 @@ namespace Core.Match.Modifiers
 
         public int WallAddition;
 
-        public IEnumerable<Resource> ResourcesAddition;
+        public IEnumerable<BattleResource> ResourcesAddition;
         
         public static readonly MatchCastleAddition Empty = new()
         {
             TowerAddition = 0,
             WallAddition = 0,
-            ResourcesAddition = Array.Empty<Resource>()
+            ResourcesAddition = Array.Empty<BattleResource>()
         };
 
         public void ApplyAddition(CastleEntity castle)
@@ -80,3 +82,5 @@ namespace Core.Match.Modifiers
         }
     }
 }
+
+#endif

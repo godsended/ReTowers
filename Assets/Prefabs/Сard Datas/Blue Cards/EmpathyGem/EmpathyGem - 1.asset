@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 8158f89e-43cc-4075-b6af-994a37ba7164
   Name: EmpathyGem
-  CardImage: {fileID: 21300000, guid: 6d45afe6445c84c2295c7f41fadbabb3, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 43c67719a0a6c4968850e37cb70fa215, type: 3}
   Cost:
   - Name: Resource_2
     Value: 14
@@ -25,7 +26,8 @@ MonoBehaviour:
   SaveTurn: 0
   NonDiscard: 0
   Description: 
-  InDeck: 0
-  Count: 0
+  InDeck: 1
+  Count: 1
   Type: 12
   Rang: 0
+  IsCollectible: 1

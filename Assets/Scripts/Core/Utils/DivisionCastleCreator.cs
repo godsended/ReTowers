@@ -74,7 +74,7 @@ namespace Core.Utils
             return castleEntity;
         }
 
-        private List<Resource> CreateResourcesList()
+        private List<BattleResource> CreateResourcesList()
         {
             int income, value;
             switch (division)
@@ -133,11 +133,11 @@ namespace Core.Utils
 
             value -= income;
             
-            return new List<Resource>()
+            return new List<BattleResource>()
             {
-                new Resource("Resource_1", value, income),
-                new Resource("Resource_2", value, income),
-                new Resource("Resource_3", value, income)
+                new BattleResource("Resource_1", value, income),
+                new BattleResource("Resource_2", value, income),
+                new BattleResource("Resource_3", value, income)
             };
         }
     }

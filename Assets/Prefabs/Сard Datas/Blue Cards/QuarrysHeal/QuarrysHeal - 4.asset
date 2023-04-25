@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: ff6ffc4d-45db-49c0-9b5e-ef4990deebc0
   Name: QuarrysHeal
-  CardImage: {fileID: 21300000, guid: 1d85017bfdec74b6c9da89fa9fbfb75d, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 4bb2d6bd1445f43f4873861ded864b9e, type: 3}
   Cost:
   - Name: Resource_2
     Value: 14
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 25
   Rang: 3
+  IsCollectible: 1

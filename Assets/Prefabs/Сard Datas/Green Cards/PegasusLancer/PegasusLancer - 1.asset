@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 5c563c78-bfe1-4e6e-be31-b2a6285b4dde
   Name: PegasusLancer
-  CardImage: {fileID: 21300000, guid: 7a740160eedff4afdbb531775e02c437, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 5f5029dd7f99947a6a2b9a340a8a8299, type: 3}
   Cost:
   - Name: Resource_1
     Value: 18
@@ -24,7 +25,8 @@ MonoBehaviour:
   SaveTurn: 0
   NonDiscard: 0
   Description: 
-  InDeck: 0
-  Count: 0
+  InDeck: 1
+  Count: 1
   Type: 53
   Rang: 0
+  IsCollectible: 1

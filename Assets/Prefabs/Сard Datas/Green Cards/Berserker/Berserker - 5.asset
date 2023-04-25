@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 3551be38-f055-4f28-a80a-8ae761031c09
   Name: Berserker
-  CardImage: {fileID: 21300000, guid: 65bc6b52731f64ed8a76c035b3bbbb18, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 419a506d6231a41faab14e8fde8ccc54, type: 3}
   Cost:
   - Name: Resource_1
     Value: 21
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 35
   Rang: 4
+  IsCollectible: 1

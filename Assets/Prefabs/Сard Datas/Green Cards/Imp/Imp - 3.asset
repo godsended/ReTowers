@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: c1281e67-5278-41a6-9d10-c978b8dbd832
   Name: Imp
-  CardImage: {fileID: 21300000, guid: ec84b7769eec142f296a796e8ac3e5ef, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 2c2f1cd609917477589acf82f92dad0a, type: 3}
   Cost:
   - Name: Resource_1
     Value: 12
@@ -34,3 +35,4 @@ MonoBehaviour:
   Count: 0
   Type: 46
   Rang: 2
+  IsCollectible: 1

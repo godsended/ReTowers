@@ -4,6 +4,7 @@ using Core.Server;
 using System.Collections;
 using System.Collections.Generic;
 using Core.Match;
+using Core.Utils;
 using UnityEngine;
 
 namespace Core.Cards.Effects
@@ -20,23 +21,34 @@ namespace Core.Cards.Effects
 
         public override void Execute(MatchPlayer usedPlayer, MatchPlayer enemyPlayer)
         {
-            Resource usedPlayerResource = usedPlayer.Castle.GetResource(nameResource);
-            Resource enemyPlayerResource = enemyPlayer.Castle.GetResource(nameResource);
+            BattleResource usedPlayerBattleResource = usedPlayer.Castle.GetResource(nameResource);
+            BattleResource enemyPlayerBattleResource = enemyPlayer.Castle.GetResource(nameResource);
 
-            if (usedPlayerResource.Income > enemyPlayerResource.Income)
+            if (usedPlayerBattleResource.Income > enemyPlayerBattleResource.Income)
                 trueEffects.ForEach(e => e.Execute(usedPlayer, enemyPlayer));
             else
                 falseEffects.ForEach(e => e.Execute(usedPlayer, enemyPlayer));
         }
+        
+        public override string ToString()
+        {
+            var trueEf = "";
+            var elseEf = "";
+            trueEffects.ForEach(e => trueEf += e + "\n");
+            falseEffects.ForEach(e => elseEf += e + "\n");
+            return $"If {GetPrettyResourceName()} > enemy {GetPrettyResourceName()}, {trueEf}Else {elseEf}";
+        }
+        
+        private string GetPrettyResourceName() => ResourcesNamePrettier.GetIncomePrettyName(nameResource);
 
         public override IEnumerator Animation(CardObject cardObject, bool isSender)
         {
-            Resource myPlayerResource = BattleClientManager.GetMyData().Castle.GetResource(nameResource);
-            Resource enemyPlayerResource = BattleClientManager.GetEnemyData().Castle.GetResource(nameResource);
+            BattleResource myPlayerBattleResource = BattleClientManager.GetMyData().Castle.GetResource(nameResource);
+            BattleResource enemyPlayerBattleResource = BattleClientManager.GetEnemyData().Castle.GetResource(nameResource);
 
             if (isSender)
             {
-                if (myPlayerResource.Income > enemyPlayerResource.Income)
+                if (myPlayerBattleResource.Income > enemyPlayerBattleResource.Income)
                 {
                     foreach (Effect effect in trueEffects)
                         yield return cardObject.StartCoroutine(effect.Animation(cardObject, isSender));
@@ -49,7 +61,7 @@ namespace Core.Cards.Effects
             }
             else
             {
-                if (myPlayerResource.Income < enemyPlayerResource.Income)
+                if (myPlayerBattleResource.Income < enemyPlayerBattleResource.Income)
                 {
                     foreach (Effect effect in trueEffects)
                         yield return cardObject.StartCoroutine(effect.Animation(cardObject, isSender));

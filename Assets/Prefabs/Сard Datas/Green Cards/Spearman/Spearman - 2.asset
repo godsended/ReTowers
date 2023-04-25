@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 2bd8b299-81fd-462a-b497-4223c26b69cc
   Name: Spearman
-  CardImage: {fileID: 21300000, guid: 9b220b97dc4ad4b9f80ff371338c5c72, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: e4b6fdf8aa2934419b23aa9b66c05575, type: 3}
   Cost:
   - Name: Resource_1
     Value: 3
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 58
   Rang: 1
+  IsCollectible: 1

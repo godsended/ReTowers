@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 8b55d35b-5f27-40e2-a91d-986843307eeb
   Name: DragonsEye
-  CardImage: {fileID: 21300000, guid: 9ec4e074673284ec99a6f04315c2c8cd, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 44c63bc4f38184b5daf4b1ce5a7ed5aa, type: 3}
   Cost:
   - Name: Resource_2
     Value: 21
@@ -24,7 +25,8 @@ MonoBehaviour:
   SaveTurn: 0
   NonDiscard: 0
   Description: 
-  InDeck: 0
-  Count: 0
+  InDeck: 1
+  Count: 1
   Type: 10
   Rang: 0
+  IsCollectible: 1

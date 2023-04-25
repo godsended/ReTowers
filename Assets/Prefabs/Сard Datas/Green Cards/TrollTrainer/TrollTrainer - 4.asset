@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: b7e1863a-7c6c-4a8b-bdd5-82947e2bf214
   Name: TrollTrainer
-  CardImage: {fileID: 21300000, guid: 99896547d8b2c4df1b7777dffe4e6fc1, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: e414222919e2b4fceb0557ae502e0711, type: 3}
   Cost:
   - Name: Resource_1
     Value: 26
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 64
   Rang: 3
+  IsCollectible: 1

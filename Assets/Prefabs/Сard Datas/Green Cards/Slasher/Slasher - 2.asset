@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: eb5bb051-c004-45a6-b74b-56c95e367b2a
   Name: Slasher
-  CardImage: {fileID: 21300000, guid: fda88d00011874729a316949da963c34, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 517584996381d4d1189eb8d2ceb9f75e, type: 3}
   Cost:
   - Name: Resource_1
     Value: 8
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 57
   Rang: 1
+  IsCollectible: 1

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 9cf8f7f1-a7d8-4fe5-8334-8a33e2b9da1e
   Name: FocusedDesign
-  CardImage: {fileID: 21300000, guid: 307e7c2eeb882482581e6d96f03a271c, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: a9645465e9b1141209a4aaa191368836, type: 3}
   Cost:
   - Name: Resource_3
     Value: 35
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 81
   Rang: 2
+  IsCollectible: 1

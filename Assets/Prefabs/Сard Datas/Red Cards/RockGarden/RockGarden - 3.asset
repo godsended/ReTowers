@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: b3a0d56d-7e13-4215-b4f8-baa9da754229
   Name: RockGarden
-  CardImage: {fileID: 21300000, guid: 162efff7cc30d4d2d947dd345bf6a405, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 23330beb58ee341f59ed6c258356a83d, type: 3}
   Cost:
   - Name: Resource_3
     Value: 3
@@ -30,3 +31,4 @@ MonoBehaviour:
   Count: 0
   Type: 95
   Rang: 2
+  IsCollectible: 1

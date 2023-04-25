@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: c4e4b956-fdb8-4ec4-b22e-ba23c139bbd7
   Name: Dragon
-  CardImage: {fileID: 21300000, guid: ded7e660c36a947489eef0acdb5df48f, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 414a0723a60eb4da1a50c1b42892e79d, type: 3}
   Cost:
   - Name: Resource_1
     Value: 38
@@ -30,3 +31,4 @@ MonoBehaviour:
   Count: 0
   Type: 37
   Rang: 1
+  IsCollectible: 1

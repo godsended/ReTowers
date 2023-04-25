@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 2fadb81a-ff0d-444a-bad3-4ddc2ad2aec2
   Name: Apprentice
-  CardImage: {fileID: 21300000, guid: 6d4e7be974df64a42930ccde4c27bc65, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: d5600e9bfb0134e71be6e36c4d6fa3d6, type: 3}
   Cost:
   - Name: Resource_2
     Value: 12
@@ -30,3 +31,4 @@ MonoBehaviour:
   Count: 0
   Type: 2
   Rang: 2
+  IsCollectible: 1

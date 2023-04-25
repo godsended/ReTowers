@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: cd4cc6bf-a2b8-4dfc-bc7c-3857295df668
   Name: HarmonicVibe
-  CardImage: {fileID: 21300000, guid: 1c390bfb560a04bf7884b3137c00ab01, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 5a43884ebf7fc40e3bca36bc56a51295, type: 3}
   Cost:
   - Name: Resource_2
     Value: 26
@@ -30,3 +31,4 @@ MonoBehaviour:
   Count: 0
   Type: 16
   Rang: 3
+  IsCollectible: 1

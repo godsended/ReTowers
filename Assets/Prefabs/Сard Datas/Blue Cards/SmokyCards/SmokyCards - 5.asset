@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 326994fc-a83f-4903-84e6-f7ffd6031222
   Name: SmokyCards
-  CardImage: {fileID: 21300000, guid: 36ee63cc4d81843349c4c958b4454edb, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 5d86f4c58bdb641bb9230bdf157f1fa2, type: 3}
   Cost:
   - Name: Resource_2
     Value: 12
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 32
   Rang: 4
+  IsCollectible: 1

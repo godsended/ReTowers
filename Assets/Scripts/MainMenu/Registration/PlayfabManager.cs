@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Core.Client;
 using Core.Contracts;
+using Core.Economics.Client;
 using Mirror;
 using PlayFab;
 using PlayFab.ClientModels;
@@ -218,10 +219,10 @@ namespace MainMenu.Registration
             
             NetworkClient.Send(new AuthDto
             {
-                Login = result.Username,
+                Login = result.PlayFabId,
                 Name = result.Username,
                 IsGuest = false,
-                LastLoginTime = DateTime.MinValue.ToString()
+                LastLoginTime = DateTime.MinValue.ToString(),
             });
             SendLeaderboard(0);
             SendEnergy(20);  

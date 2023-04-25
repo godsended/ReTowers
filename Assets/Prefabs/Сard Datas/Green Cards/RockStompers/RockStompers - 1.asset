@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 7da0be01-493f-4409-8c85-51caaa860171
   Name: RockStompers
-  CardImage: {fileID: 21300000, guid: bf8294f4ad3344258b43754fd93e7afa, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 83f6490c219c74eb5ba1c3c3d34e420e, type: 3}
   Cost:
   - Name: Resource_1
     Value: 11
@@ -25,7 +26,8 @@ MonoBehaviour:
   SaveTurn: 0
   NonDiscard: 0
   Description: 
-  InDeck: 0
-  Count: 0
+  InDeck: 1
+  Count: 1
   Type: 55
   Rang: 0
+  IsCollectible: 1

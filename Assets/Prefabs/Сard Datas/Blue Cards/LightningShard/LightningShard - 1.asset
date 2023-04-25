@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 5f931d09-a6c6-4831-ad78-d26eebaddf92
   Name: LightningShard
-  CardImage: {fileID: 21300000, guid: 8710d3d2a1ce04266982f5b0c3475d4d, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 337ecdf8fc2834aa8bdf78310e8378a1, type: 3}
   Cost:
   - Name: Resource_2
     Value: 11
@@ -24,7 +25,8 @@ MonoBehaviour:
   SaveTurn: 0
   NonDiscard: 0
   Description: 
-  InDeck: 0
-  Count: 0
+  InDeck: 1
+  Count: 1
   Type: 18
   Rang: 0
+  IsCollectible: 1

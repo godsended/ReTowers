@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: d7ee5c3e-a937-4f6f-875a-8a06439d6b22
   Name: MoodyGoblins
-  CardImage: {fileID: 21300000, guid: 29de90eed930c48ba8000d93b04897a9, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: b973e314ff87246a8af124f604181a36, type: 3}
   Cost:
   - Name: Resource_1
     Value: 3
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 50
   Rang: 2
+  IsCollectible: 1

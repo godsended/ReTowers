@@ -14,10 +14,12 @@ namespace Core.Cards
         public string Id;
         [Tooltip("Name card")]
         public string Name;
+        [Tooltip("Card text")] 
+        public string Text;
         [Tooltip("Image card")]
         public Sprite CardImage;
         [Tooltip("Cost")]
-        public List<Resource> Cost;
+        public List<BattleResource> Cost;
         [Tooltip("Effects on card")]
         public List<Effect> Effects;
         [Tooltip("Effect on card: Play Again")]     

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 21cbe86d-29a0-46fd-8081-82dff4dfc3a7
   Name: Innovations
-  CardImage: {fileID: 21300000, guid: 567b95b7045be48b984bb49b4fed06cd, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: fcfcffbfc4701416f8d27b45f683da89, type: 3}
   Cost:
   - Name: Resource_3
     Value: 5
@@ -30,3 +31,4 @@ MonoBehaviour:
   Count: 0
   Type: 87
   Rang: 2
+  IsCollectible: 1

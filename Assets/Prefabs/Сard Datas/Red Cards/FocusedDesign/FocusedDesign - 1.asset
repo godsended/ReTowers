@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 821e2130-9e32-446f-b22b-f4d209075d12
   Name: FocusedDesign
-  CardImage: {fileID: 21300000, guid: 603472c556a134ceebe71082c7d3e260, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: a9645465e9b1141209a4aaa191368836, type: 3}
   Cost:
   - Name: Resource_3
     Value: 15
@@ -25,7 +26,8 @@ MonoBehaviour:
   SaveTurn: 0
   NonDiscard: 0
   Description: 
-  InDeck: 0
-  Count: 0
+  InDeck: 1
+  Count: 1
   Type: 81
   Rang: 0
+  IsCollectible: 1

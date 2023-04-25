@@ -9,19 +9,19 @@ namespace Core.Castle
     {
         public Tower Tower { get; private set; }
         public Wall Wall { get; private set; }
-        public List<Resource> Resources { get; private set; }
+        public List<BattleResource> Resources { get; private set; }
 
         [JsonConstructor]
         public CastleEntity([CanBeNull] Tower tower = null, [CanBeNull] Wall wall = null, 
-            [CanBeNull] List<Resource> resources = null)
+            [CanBeNull] List<BattleResource> resources = null)
         {
             this.Tower = tower ?? new Tower(0, 0);
             this.Wall = wall ?? new Wall(0, 0);
-            Resources = resources ?? new List<Resource>()
+            Resources = resources ?? new List<BattleResource>()
             {
-                new Resource("Resource_1"),
-                new Resource("Resource_2"),
-                new Resource("Resource_3")
+                new BattleResource("Resource_1"),
+                new BattleResource("Resource_2"),
+                new BattleResource("Resource_3")
             };
         }
 
@@ -29,15 +29,15 @@ namespace Core.Castle
         {
             Tower = new Tower(castle.Tower.MaxHealth, castle.Tower.Health);
             Wall = new Wall(castle.Wall.MaxHealth, castle.Wall.Health);
-            Resources = new List<Resource>();
+            Resources = new List<BattleResource>();
             foreach (var res in castle.Resources)
             {
-                Resource newRes = new Resource(res.Name, res.Value, res.Income);
+                BattleResource newRes = new BattleResource(res.Name, res.Value, res.Income);
                 Resources.Add(newRes);
             }
         }
 
-        public Resource GetResource(string name)
+        public BattleResource GetResource(string name)
         {
             return Resources.FirstOrDefault(r => r.Name == name);
         }

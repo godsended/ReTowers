@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 678a13e3-94eb-42b7-bce9-547158d27182
   Name: Sanctuary
-  CardImage: {fileID: 21300000, guid: 5e6e063b774b4471e8d9482ac1b34173, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: a35c579394c044ddcae4b57ea3a2dbbc, type: 3}
   Cost:
   - Name: Resource_2
     Value: 15
@@ -30,3 +31,4 @@ MonoBehaviour:
   Count: 0
   Type: 29
   Rang: 3
+  IsCollectible: 1

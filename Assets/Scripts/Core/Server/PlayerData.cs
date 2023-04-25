@@ -1,3 +1,5 @@
+#if !UNITY_ANDROID
+
 using Core.Cards;
 using Core.Castle;
 using Mirror;
@@ -32,3 +34,5 @@ namespace Core.Server
         public MapProgress MapProgress { get; set; }
     }
 }
+
+#endif

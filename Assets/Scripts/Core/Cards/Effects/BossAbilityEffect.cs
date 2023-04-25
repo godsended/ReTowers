@@ -18,5 +18,10 @@ namespace Core.Cards.Effects
             BattleUI.Instance.BossView.PlayCastAnimation();
             yield break;
         }
+        
+        public override string ToString()
+        {
+            return "Boss ability";
+        }
     }
 }

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: cc6dc480-4160-4a5e-a384-ce4a4f97c056
   Name: RabidSheep
-  CardImage: {fileID: 21300000, guid: 7c2e7caf8d5ba48bcb31c1ae665a003a, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 943c112c567e7487d8e613857bb2ac15, type: 3}
   Cost:
   - Name: Resource_1
     Value: 21
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 54
   Rang: 3
+  IsCollectible: 1

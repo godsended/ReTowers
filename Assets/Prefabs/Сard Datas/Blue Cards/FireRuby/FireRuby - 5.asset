@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 41228531-a34d-4eee-87b4-51069e2efe26
   Name: FireRuby
-  CardImage: {fileID: 21300000, guid: 46714d2a53e904dd08e1de9896ae9df3, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: d9b5baa84c6a3448abee8b02f08ad7d9, type: 3}
   Cost:
   - Name: Resource_2
     Value: 68
@@ -26,6 +27,7 @@ MonoBehaviour:
   NonDiscard: 0
   Description: 
   InDeck: 0
-  Count: 1
+  Count: 0
   Type: 13
   Rang: 4
+  IsCollectible: 1

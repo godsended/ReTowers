@@ -1,3 +1,5 @@
+#if !UNITY_ANDROID
+
 using Core.Contracts;
 using Core.Logging;
 using Mirror;
@@ -401,6 +403,7 @@ namespace Core.Server
         private void HandleSearchMatchRequest(NetworkConnectionToClient connection, RequestMatchDto requestMatchDto)
         {
             PlayerData playerData = MainServer.GetPlayerData(requestMatchDto.AccountId);
+            Debug.Log("Match request accepted");
 
             if (playerData != null)
             {
@@ -410,6 +413,7 @@ namespace Core.Server
                         ServerPlayfabManager.instance.GetUserData(playerData, false);
                         break;
                     case MatchRequestType.FindingBotMatch:
+                        Debug.Log($"Bot match request accepted\n {JsonConvert.SerializeObject(playerData)}");
                         ServerPlayfabManager.instance.GetUserData(playerData, true, requestMatchDto.LevelId);
                         break;
                     case MatchRequestType.CancelFindingMatch:
@@ -446,3 +450,5 @@ namespace Core.Server
         }
     }
 }
+
+#endif

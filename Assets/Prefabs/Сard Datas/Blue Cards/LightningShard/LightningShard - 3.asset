@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 938af236-56af-4edc-a4ae-baf8bb65b7b0
   Name: LightningShard
-  CardImage: {fileID: 21300000, guid: 17c510428382343a9a1fdd3c2c4d4a44, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 337ecdf8fc2834aa8bdf78310e8378a1, type: 3}
   Cost:
   - Name: Resource_2
     Value: 26
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 18
   Rang: 2
+  IsCollectible: 1

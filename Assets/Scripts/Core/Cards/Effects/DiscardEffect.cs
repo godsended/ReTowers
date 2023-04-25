@@ -12,6 +12,11 @@ namespace Core.Cards.Effects
         public override void Execute(MatchPlayer usedPlayer, MatchPlayer enemyPlayer)
         {
         }
+        
+        public override string ToString()
+        {
+            return "Discard 1 card";
+        }
 
         public override IEnumerator Animation(CardObject cardObject, bool isSender)
         {

@@ -3,6 +3,7 @@ using Core.Server;
 using System.Collections;
 using System.Collections.Generic;
 using Core.Match;
+using Core.Utils;
 using UnityEngine;
 
 namespace Core.Cards.Effects.CustomEffects
@@ -23,7 +24,16 @@ namespace Core.Cards.Effects.CustomEffects
             if (usedPlayerResource.Income < enemyPlayerResource.Income)
                 trueEffects.ForEach(e => e.Execute(usedPlayer, enemyPlayer));
         }
-
+        
+        public override string ToString()
+        {
+            var trueEf = "";
+            trueEffects.ForEach(e => trueEf += e + "\n");
+            return $"If {GetPrettyResourceName()} < enemy {GetPrettyResourceName()}, {trueEf}";
+        }
+        
+        private string GetPrettyResourceName() => ResourcesNamePrettier.GetIncomePrettyName(nameResource);
+        
         public override IEnumerator Animation(CardObject cardObject, bool isSender)
         {
             var myPlayerResource = BattleClientManager.GetMyData().Castle.GetResource(nameResource);

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: b695f75d-490d-4c7a-b0cb-54b62c4e84fd
   Name: ForcedLabour
-  CardImage: {fileID: 21300000, guid: 5107a309ed0c84a8ea571b2315d90c86, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 8a0754db5abc74e3f96d62069267510f, type: 3}
   Cost:
   - Name: Resource_3
     Value: 7
@@ -25,7 +26,8 @@ MonoBehaviour:
   SaveTurn: 0
   NonDiscard: 0
   Description: 
-  InDeck: 0
-  Count: 0
+  InDeck: 1
+  Count: 1
   Type: 82
   Rang: 0
+  IsCollectible: 1

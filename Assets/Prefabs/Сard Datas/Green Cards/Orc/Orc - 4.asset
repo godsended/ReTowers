@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: b8fc3cb2-29d7-4518-9426-e4eefcc27601
   Name: Orc
-  CardImage: {fileID: 21300000, guid: b4beb9fbd96e4407987b687b744dac96, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 93e03bd3f297741acba7d7bbffa08063, type: 3}
   Cost:
   - Name: Resource_1
     Value: 12
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 52
   Rang: 3
+  IsCollectible: 1

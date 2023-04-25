@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 05d1efe7-1774-439c-81bc-ee2965178f0d
   Name: NewEquipment
-  CardImage: {fileID: 21300000, guid: 6006d56ceb1e749a4b6b3a528ea086ba, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 871017bb1811d4fb197940788932599b, type: 3}
   Cost:
   - Name: Resource_3
     Value: 32
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 92
   Rang: 4
+  IsCollectible: 1

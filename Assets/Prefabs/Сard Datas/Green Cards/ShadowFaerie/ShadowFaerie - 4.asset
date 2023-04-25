@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: ca586313-5e57-4b4c-af1d-2a3769330dbc
   Name: ShadowFaerie
-  CardImage: {fileID: 21300000, guid: b94bbfceea61c4ab1aceb48af6e212fa, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: b4a1160468e724e5f9dfd1e9de64f12a, type: 3}
   Cost:
   - Name: Resource_1
     Value: 21
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 56
   Rang: 3
+  IsCollectible: 1

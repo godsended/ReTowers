@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 9b023887-5e55-40ef-bfb7-1f1a09cdfec6
   Name: FireRuby
-  CardImage: {fileID: 21300000, guid: 33965d4f122174fda9725e7f1ebdfe66, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: d9b5baa84c6a3448abee8b02f08ad7d9, type: 3}
   Cost:
   - Name: Resource_2
     Value: 45
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 13
   Rang: 3
+  IsCollectible: 1

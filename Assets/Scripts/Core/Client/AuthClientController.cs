@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Mirror;
 using Core.Contracts;
@@ -15,10 +16,14 @@ namespace Core.Client
             Application.Quit();
         }
 
+        private void Awake()
+        {
+            authSuccessEvent = new UnityEvent();
+        }
+
         private void Start()
         {
             instance = this;
-            authSuccessEvent = new UnityEvent();
 
             NetworkClient.RegisterHandler<AccountDto>(HandleResponceAuth, false);
         }

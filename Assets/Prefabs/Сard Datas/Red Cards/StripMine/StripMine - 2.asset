@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 2546e0d6-5358-4cab-92e9-5139fbf683aa
   Name: StripMine
-  CardImage: {fileID: 21300000, guid: 910e3bc6df30849899aae9b17b55dd26, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: f4029ab7aa90a457fa3d6d15b1881248, type: 3}
   Cost:
   - Name: Resource_3
     Value: 0
@@ -30,3 +31,4 @@ MonoBehaviour:
   Count: 0
   Type: 99
   Rang: 1
+  IsCollectible: 1

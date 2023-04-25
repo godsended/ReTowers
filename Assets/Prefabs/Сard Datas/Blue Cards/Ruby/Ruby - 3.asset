@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: a444a2d1-f8fa-4314-84b9-7979ef7a2604
   Name: Ruby
-  CardImage: {fileID: 21300000, guid: 41376cdbe201b4cb99157263a43558ba, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: e05e79d87478a41119f9b5e9cc2d34a7, type: 3}
   Cost:
   - Name: Resource_2
     Value: 8
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 28
   Rang: 2
+  IsCollectible: 1

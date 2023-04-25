@@ -59,6 +59,8 @@ namespace Core.Client
         {
             instance = this;
 
+            Application.targetFrameRate = 0;
+
             _gameLogger = new ConsoleLogger(new List<LogTypeMessage>
             {
                 LogTypeMessage.Info,

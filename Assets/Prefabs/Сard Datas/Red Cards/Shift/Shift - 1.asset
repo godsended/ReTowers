@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 6755f15f-ae2e-4f2d-a4ca-c85e3142b835
   Name: Shift
-  CardImage: {fileID: 21300000, guid: 8d76e9fbdf1ea443f88b202368670281, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: ae70f6a4da73f42b499b6639455ee07b, type: 3}
   Cost:
   - Name: Resource_3
     Value: 17
@@ -24,7 +25,8 @@ MonoBehaviour:
   SaveTurn: 0
   NonDiscard: 0
   Description: 
-  InDeck: 0
+  InDeck: 1
   Count: 1
   Type: 98
   Rang: 0
+  IsCollectible: 1

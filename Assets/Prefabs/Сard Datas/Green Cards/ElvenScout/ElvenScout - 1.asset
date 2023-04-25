@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: a1606f55-25e4-41ca-a2b6-646ebab585f1
   Name: ElvenScout
-  CardImage: {fileID: 21300000, guid: b7c09b13a52df48159f356f69441b1e2, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 0027b40adc03e40c0ad0f4ad203cfe6d, type: 3}
   Cost:
   - Name: Resource_1
     Value: 2
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 1
   Type: 40
   Rang: 0
+  IsCollectible: 1

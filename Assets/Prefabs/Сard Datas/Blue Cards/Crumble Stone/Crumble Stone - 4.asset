@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 69107a80-0bc5-4062-8066-07114aac0db9
   Name: Crumble Stone
-  CardImage: {fileID: 21300000, guid: 50d9eda64871d42aea79d0e099bbee1f, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 2883bfa4e94234ec6a1dc26d46b483e5, type: 3}
   Cost:
   - Name: Resource_2
     Value: 26
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 4
   Rang: 3
+  IsCollectible: 1

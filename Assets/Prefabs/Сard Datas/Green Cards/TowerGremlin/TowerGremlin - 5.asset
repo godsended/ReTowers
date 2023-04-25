@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 2c661280-6397-4ecd-aacd-eb5aafd3141d
   Name: TowerGremlin
-  CardImage: {fileID: 21300000, guid: b9fb80af052f34d0a8487c9ce56f57dc, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 2696fb3f3d2cf42a3954228969b03096, type: 3}
   Cost:
   - Name: Resource_1
     Value: 41
@@ -30,3 +31,4 @@ MonoBehaviour:
   Count: 0
   Type: 63
   Rang: 4
+  IsCollectible: 1

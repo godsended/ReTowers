@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 1dc0de0a-f568-47bc-a1fb-56466464c372
   Name: Rainbow
-  CardImage: {fileID: 21300000, guid: 81b74879131864fc683d25fb492f211f, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: a67d70777cfda4d5f92851c33e9e36f8, type: 3}
   Cost:
   - Name: Resource_2
     Value: 0
@@ -27,6 +28,7 @@ MonoBehaviour:
   NonDiscard: 0
   Description: 
   InDeck: 0
-  Count: 1
+  Count: 0
   Type: 27
   Rang: 2
+  IsCollectible: 1

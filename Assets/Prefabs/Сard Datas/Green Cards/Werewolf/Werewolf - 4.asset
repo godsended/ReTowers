@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 93e844c5-1bc4-43bf-8267-5c040752e9a0
   Name: Werewolf
-  CardImage: {fileID: 21300000, guid: 2db4a9e55f93d4ae194a5ae6b61804e3, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 78256eb21fba247429f1622b0885b623, type: 3}
   Cost:
   - Name: Resource_1
     Value: 32
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 68
   Rang: 3
+  IsCollectible: 1

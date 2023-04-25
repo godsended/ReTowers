@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: deed39fd-9460-4293-97ee-4922bfd63f80
   Name: Foundations
-  CardImage: {fileID: 21300000, guid: f7b3a4572b4fb4484a0bbbdf1ef5007e, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 24211ebd4acf842edb744a46039c1318, type: 3}
   Cost:
   - Name: Resource_3
     Value: 12
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 83
   Rang: 3
+  IsCollectible: 1

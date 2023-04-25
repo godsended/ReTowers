@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: fe7b2273-9074-44f8-8c5f-397d10e8b9ed
   Name: Miners
-  CardImage: {fileID: 21300000, guid: f60d21f0b8af145279b4d191de09364f, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 19cdcf2701eb24422abcaf66e5d0e3cc, type: 3}
   Cost:
   - Name: Resource_3
     Value: 5
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 89
   Rang: 1
+  IsCollectible: 1

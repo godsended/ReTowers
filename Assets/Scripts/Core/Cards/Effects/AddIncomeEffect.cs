@@ -3,6 +3,7 @@ using Core.Castle;
 using Core.Server;
 using System.Collections;
 using Core.Match;
+using Core.Utils;
 using UnityEngine;
 
 namespace Core.Cards.Effects
@@ -25,37 +26,14 @@ namespace Core.Cards.Effects
 
         public override IEnumerator Animation(CardObject cardObject, bool isSender)
         {
-            // if (isSelfAdd)
-            // {
-            //     if (isSender)
-            //     {
-            //         BattleUI.AddMyResourceIncome(nameResource, income);
-            //
-            //         yield return new WaitForSeconds(0.2f);
-            //     }
-            //     else
-            //     {
-            //         BattleUI.AddEnemyResourceIncome(nameResource, income);
-            //
-            //         yield return new WaitForSeconds(0.2f);
-            //     }
-            // }
-            // else
-            // {
-            //     if (isSender)
-            //     {
-            //         BattleUI.AddEnemyResourceIncome(nameResource, income);
-            //
-            //         yield return new WaitForSeconds(0.2f);
-            //     }
-            //     else
-            //     {
-            //         BattleUI.AddMyResourceIncome(nameResource, income);
-            //
-            //         yield return new WaitForSeconds(0.2f);
-            //     }
-            // }
             yield break;
         }
+
+        public override string ToString()
+        {
+            return $"+{income} {GetPrettyResourceName()}" + (!isSelfAdd ? " to enemy" : "");
+        }
+
+        private string GetPrettyResourceName() => ResourcesNamePrettier.GetIncomePrettyName(nameResource);
     }
 }

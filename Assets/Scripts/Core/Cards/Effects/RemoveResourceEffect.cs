@@ -3,11 +3,12 @@ using Core.Client;
 using Core.Server;
 using System.Collections;
 using Core.Match;
+using Core.Utils;
 using UnityEngine;
 
 namespace Core.Cards.Effects
 {
-    [CreateAssetMenu(fileName = "New Effect", menuName = "Effects/Create new Effect Remove Resource", order = 51)]
+    [CreateAssetMenu(fileName = "New Effect", menuName = "Effects/Create new Effect Remove BattleResource", order = 51)]
     public class RemoveResourceEffect : Effect
     {
         public string nameResource;
@@ -22,6 +23,13 @@ namespace Core.Cards.Effects
 
             castle.GetResource(nameResource).RemoveResource(value);
         }
+        
+        public override string ToString()
+        {
+            return $"-{value}{(!isSelfRemove ? " enemy" : "")} {GetPrettyResourceName()}";
+        }
+        
+        private string GetPrettyResourceName() => ResourcesNamePrettier.GetResourcePrettyName(nameResource);
 
         public override IEnumerator Animation(CardObject cardObject, bool isSender)
         {

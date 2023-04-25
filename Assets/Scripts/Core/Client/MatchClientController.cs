@@ -8,6 +8,7 @@ using Core.Cards;
 using Core.Castle;
 using Core.Match;
 using Core.Match.Client;
+using Core.Utils;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -49,7 +50,7 @@ namespace Core.Client
                     case MatchRequestType.FindingMatch:
                         PlayfabManager.TakeAwayEnergy(1);
                         BattleClientManager.ResetBattleClient();
-                        SceneManager.LoadScene(battleScene);
+                        GameScenesManager.LoadBattleScene();
                         break;
                     case MatchRequestType.WinMatch:
                         WinOnPoint();
@@ -76,13 +77,13 @@ namespace Core.Client
 
         private void WinOnPoint()
         {
-            if (ScensVar.LevelId != -1)
-            {
-                char[] data = PlayerPrefs.GetString("Points").ToCharArray();
-                data[ScensVar.LevelId] = '1';
-                PlayerPrefs.SetString("Points", new string(data));
-                PlayerPrefs.Save();
-            }
+            // if (ScensVar.LevelId != -1)
+            // {
+            //     char[] data = PlayerPrefs.GetString("Points").ToCharArray();
+            //     data[ScensVar.LevelId] = '1';
+            //     PlayerPrefs.SetString("Points", new string(data));
+            //     PlayerPrefs.Save();
+            // }
         }
 
         public static void EndTurn()
@@ -251,7 +252,7 @@ namespace Core.Client
 
         private void HandleLoadBattleScene(LoadBattleSceneDto dto)
         {
-            SceneManager.LoadScene(battleScene);
+            GameScenesManager.LoadBattleScene();
         }
     }
 }

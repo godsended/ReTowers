@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 8c75e746-e7bd-4663-9111-a3df51b6d3e2
   Name: Bag of Baubles
-  CardImage: {fileID: 21300000, guid: c804997c4420249809d4b17d40f5f3d8, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: f4a6b000692504c4bbf957d63273c9cb, type: 3}
   Cost:
   - Name: Resource_2
     Value: 0
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 3
   Rang: 2
+  IsCollectible: 1

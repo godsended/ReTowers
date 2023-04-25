@@ -23,6 +23,15 @@ namespace Core.Cards.Effects.CustomEffects
             else
                 falseEffects.ForEach(e => e.Execute(enemyPlayer, usedPlayer));
         }
+        
+        public override string ToString()
+        {
+            var trueEf = "";
+            var elseEf = "";
+            trueEffects.ForEach(e => trueEf += e + "\n");
+            falseEffects.ForEach(e => elseEf += e + "\n");
+            return $"Player(s) w/lowest wall are, {trueEf}";
+        }
 
         public override IEnumerator Animation(CardObject cardObject, bool isSender)
         {

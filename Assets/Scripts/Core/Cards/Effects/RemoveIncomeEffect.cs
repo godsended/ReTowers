@@ -3,6 +3,7 @@ using Core.Client;
 using Core.Server;
 using System.Collections;
 using Core.Match;
+using Core.Utils;
 using UnityEngine;
 
 namespace Core.Cards.Effects
@@ -22,6 +23,13 @@ namespace Core.Cards.Effects
 
             castle.GetResource(nameResource).RemoveIncome(income);
         }
+        
+        public override string ToString()
+        {
+            return $"-{income}{(!isSelfRemove ? " enemy" : "")} {GetPrettyResourceName()}";
+        }
+        
+        private string GetPrettyResourceName() => ResourcesNamePrettier.GetIncomePrettyName(nameResource);
 
         public override IEnumerator Animation(CardObject cardObject, bool isSender)
         {

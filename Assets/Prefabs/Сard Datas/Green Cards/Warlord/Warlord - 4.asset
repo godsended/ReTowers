@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: c8ef9c8c-5a6e-4433-9c97-626e1d4b9a4c
   Name: Warlord
-  CardImage: {fileID: 21300000, guid: 365c149966d8342719dc7332075a1468, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 9dadde80ea06b4d4dae27662338a2098, type: 3}
   Cost:
   - Name: Resource_1
     Value: 45
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 906
   Rang: 3
+  IsCollectible: 1

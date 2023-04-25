@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 50b81c1e-df7e-4a2e-9f4e-5058ebdb3808
   Name: Quartz
-  CardImage: {fileID: 21300000, guid: 00d9ecedcf9eb412693f2b7ff6421d7d, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 9e803723c73654c37b84f8eb784b5073, type: 3}
   Cost:
   - Name: Resource_2
     Value: 2
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 26
   Rang: 1
+  IsCollectible: 1

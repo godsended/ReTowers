@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 922cc611-68c2-46e6-a790-a6a4a6793ddb
   Name: LuckyCashe
-  CardImage: {fileID: 21300000, guid: e5b6185fa49094ea1b9071c3b8f6abb0, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: c6941ec5af06a4f0883546f941c707b9, type: 3}
   Cost:
   - Name: Resource_3
     Value: 0
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 88
   Rang: 2
+  IsCollectible: 1

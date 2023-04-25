@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 70c24907-40bd-4792-845e-879a20a7ae7a
   Name: MondoWall
-  CardImage: {fileID: 21300000, guid: 0a633770f30184a42a11f608e5175e98, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 70dbe3b2a969346eca06cdfff736ac4b, type: 3}
   Cost:
   - Name: Resource_3
     Value: 13
@@ -24,7 +25,8 @@ MonoBehaviour:
   SaveTurn: 0
   NonDiscard: 0
   Description: 
-  InDeck: 0
-  Count: 0
+  InDeck: 1
+  Count: 1
   Type: 90
   Rang: 0
+  IsCollectible: 1

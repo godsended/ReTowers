@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 0f9f6475-fd22-4d55-ad5f-2457a3b08b9a
   Name: Faerie
-  CardImage: {fileID: 21300000, guid: 3c58a0c4c36a345fd833bed611dd4fa1, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 9b298e9cd4a0a40018efaff09bdc35e7, type: 3}
   Cost:
   - Name: Resource_1
     Value: 2
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 41
   Rang: 1
+  IsCollectible: 1

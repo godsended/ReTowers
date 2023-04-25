@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: e98685df-489d-455e-b4a5-862a10e469fa
   Name: FloodWater
-  CardImage: {fileID: 21300000, guid: 3e6f68ae94eac4a23920f6d11342412b, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: ac38fc6c89e334b2b85e3b56c9cc981a, type: 3}
   Cost:
   - Name: Resource_3
     Value: 6
@@ -24,7 +25,8 @@ MonoBehaviour:
   SaveTurn: 0
   NonDiscard: 0
   Description: 
-  InDeck: 0
-  Count: 0
+  InDeck: 1
+  Count: 1
   Type: 80
   Rang: 0
+  IsCollectible: 1

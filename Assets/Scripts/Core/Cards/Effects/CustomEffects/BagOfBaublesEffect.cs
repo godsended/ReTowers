@@ -23,6 +23,15 @@ namespace Core.Cards.Effects
                 falseEffects.ForEach(e => e.Execute(usedPlayer, enemyPlayer));
         }
 
+        public override string ToString()
+        {
+            var trueEf = "";
+            var elseEf = "";
+            trueEffects.ForEach(e => trueEf += e + "\n");
+            falseEffects.ForEach(e => elseEf += e + "\n");
+            return $"If tower < enemy tower, {trueEf}Else {elseEf}";
+        }
+
         public override IEnumerator Animation(CardObject cardObject, bool isSender)
         {
             if (isSender)

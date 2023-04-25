@@ -1,3 +1,5 @@
+#if !UNITY_ANDROID
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +36,10 @@ namespace Core.Match.Server
         public event EventHandler OnFatigueDamaged;
 
         public event EventHandler BeforeFatigueDamaged;
+
+        public delegate void PlayerLeavedHandler(MatchPlayer player, bool isWin);
+
+        public event PlayerLeavedHandler OnPlayerLeaved;
 
         public Predicate<MatchPlayer> FatigueFilter;
 
@@ -330,16 +336,16 @@ namespace Core.Match.Server
                     OnFatigueDamaged?.Invoke(this, EventArgs.Empty);
                 }
 
-                MatchServerController.instance.ConcurrentActions.Add(() =>
-                {
-                    Task.Delay(1000).ContinueWith(_ =>
+                Task.Delay(1000).ContinueWith(_ =>
+                    MatchServerController.instance.ConcurrentActions.Add(() =>
+                    {
                         player.Connection?.Send(new FatigueDto()
                         {
                             PlayerId = Guid.Empty,
                             Damage = Math.Min(MatchDetails.Fatigue.Damage + MatchDetails.Fatigue.Income,
                                 MatchDetails.Fatigue.MaxDamage)
-                        }));
-                });
+                        });
+                    }));
             }
         }
 
@@ -436,6 +442,7 @@ namespace Core.Match.Server
 
         private void ApplyAfterGameStatistics(MatchPlayer player, bool isWin)
         {
+            OnPlayerLeaved?.Invoke(player, isWin);
             if (isWin)
             {
                 if (MatchDetails.LevelInfo != null && MatchDetails.MapProgress != null &&
@@ -456,3 +463,5 @@ namespace Core.Match.Server
         Ended,
     }
 }
+
+#endif

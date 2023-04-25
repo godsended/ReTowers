@@ -1,3 +1,4 @@
+using Core.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,6 +11,6 @@ public class TakeEnergyOnClick : MonoBehaviour
     
     public void LoadSceneBattle() 
     {
-        SceneManager.LoadScene("Battle");
+        GameScenesManager.LoadBattleScene();
     } 
 }

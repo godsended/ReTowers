@@ -1,3 +1,5 @@
+#if !UNITY_ANDROID
+
 namespace Core.Match.Server
 {
     public partial class MatchServer
@@ -16,3 +18,5 @@ namespace Core.Match.Server
         }
     }
 }
+
+#endif

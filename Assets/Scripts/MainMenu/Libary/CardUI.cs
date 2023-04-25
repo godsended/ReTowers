@@ -4,9 +4,13 @@ using Core.Cards;
 
 namespace MainMenu.Library
 {
-    public class CardUI : MonoBehaviour
+    public class CardUI : MonoBehaviour, ICardConfigurableObject
     {
-        [SerializeField] private Image cardImage;
+        [SerializeField] private Image cardBackgroundImage;
+        [SerializeField] private Image cardForegroundImage;
+        [SerializeField] private Text descriptionText;
+        [SerializeField] private Text titleText;
+        [SerializeField] private Text costText;
         [SerializeField] private CardMenu menu;
         [SerializeField] private GameObject isDoubleCard;
 
@@ -22,7 +26,7 @@ namespace MainMenu.Library
             menu = cardMenu;
 
             _curCardData = newCardData;
-            cardImage.sprite = _curCardData.CardImage;
+            CardObjectsConfigurator.Configure(this, _curCardData);
 
             UpdateCardUI();
         }
@@ -64,7 +68,7 @@ namespace MainMenu.Library
                     _curCardData = item;
                     _curCardData.InDeck = true;
                     ShowLibary.AddToWeight(item);
-                    cardImage.sprite = item.CardImage;
+                    CardObjectsConfigurator.Configure(this, _curCardData);
                     UpdateCardUI();
                     break;
                 }
@@ -72,6 +76,36 @@ namespace MainMenu.Library
 
             menu.SetCard(this);
             LibraryCards.UpdateCardsInDataBase();
+        }
+
+        public void SetBackgroundImageSprite(Sprite sprite)
+        {
+            cardBackgroundImage.sprite = sprite;
+        }
+
+        public void SetForegroundImageSprite(Sprite sprite)
+        {
+            cardForegroundImage.sprite = sprite;
+        }
+
+        public void SetTitle(string text)
+        {
+            titleText.text = text;
+        }
+        
+        public void SetCostText(string text)
+        {
+            costText.text = text;
+        }
+
+        public void SetDescription(string description)
+        {
+            descriptionText.text = description;
+        }
+
+        public void SetBackgroundImageColor(Color color)
+        {
+            cardBackgroundImage.color = color;
         }
     }
 }

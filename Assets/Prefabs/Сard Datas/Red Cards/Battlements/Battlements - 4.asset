@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: cbfea38b-cc88-45d8-9d7b-8326e7c454b0
   Name: Battlements
-  CardImage: {fileID: 21300000, guid: f1f3e882c864c4d329ecb2bb2be3bf35, type: 3}
+  Text: +26 Wall 21 damage to enemy
+  CardImage: {fileID: 21300000, guid: e615e500cb1364a8c9fb77311eba8122, type: 3}
   Cost:
   - Name: Resource_3
     Value: 48
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 14235345
   Rang: 3
+  IsCollectible: 1

@@ -1,3 +1,5 @@
+#if !UNITY_ANDROID
+
 using Core.Contracts;
 using Mirror;
 using System;
@@ -56,3 +58,5 @@ namespace Core.Server
         }
     }
 }
+
+#endif

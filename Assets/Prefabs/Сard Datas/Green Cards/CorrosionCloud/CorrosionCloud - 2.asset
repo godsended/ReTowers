@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: e267f825-c394-4f69-b630-38587c78e957
   Name: CorrosionCloud
-  CardImage: {fileID: 21300000, guid: 38a25fbec6c214fc5a9a237b5dda80a1, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 7bfb3ca7649234fa1ac7529d025bd8e9, type: 3}
   Cost:
   - Name: Resource_1
     Value: 17
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 36
   Rang: 1
+  IsCollectible: 1

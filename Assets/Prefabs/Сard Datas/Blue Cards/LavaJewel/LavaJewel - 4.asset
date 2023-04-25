@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: ad7d039c-8b5d-40de-b7d5-7ecb4e21a511
   Name: LavaJewel
-  CardImage: {fileID: 21300000, guid: c2b8cc313d54d415db524e4636a347e7, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: a32a9687037e849508b6a5920d655fe1, type: 3}
   Cost:
   - Name: Resource_2
     Value: 59
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 17
   Rang: 3
+  IsCollectible: 1

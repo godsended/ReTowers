@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: d352bfc1-c744-4c09-ae94-4034dfd713f9
   Name: BasicWall
-  CardImage: {fileID: 21300000, guid: f732e1f3feb0e4df6ab09aec87f54906, type: 3}
+  Text: +12 Wall
+  CardImage: {fileID: 21300000, guid: dd351075be5154c0ea3216eccc28fdc8, type: 3}
   Cost:
   - Name: Resource_3
     Value: 8
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 456563
   Rang: 3
+  IsCollectible: 1

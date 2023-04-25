@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 8efad048-c03e-4354-90f6-257f33903cd5
   Name: CrystalRocks
-  CardImage: {fileID: 21300000, guid: f5cf6ed5bdb714379881fde62e9ae816, type: 3}
+  Text: +39 Wall gain 39 gems
+  CardImage: {fileID: 21300000, guid: 1d0399a41e2b64626a6e57120644e41e, type: 3}
   Cost:
   - Name: Resource_3
     Value: 48
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 76
   Rang: 4
+  IsCollectible: 1

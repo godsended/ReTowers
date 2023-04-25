@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 0604c7d4-df8c-495e-a9b3-44cb4a32b9a6
   Name: Collapse
-  CardImage: {fileID: 21300000, guid: 039b2713b6d18485ba8636c87ffb6551, type: 3}
+  Text: -5 Enemy quarry
+  CardImage: {fileID: 21300000, guid: e66b37c9afcb744a7a99965a522123dd, type: 3}
   Cost:
   - Name: Resource_3
     Value: 14
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 74
   Rang: 3
+  IsCollectible: 1

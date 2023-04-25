@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: f56ddcac-eb63-480f-a5dc-b60e2b694cf4
   Name: ElvenArcher
-  CardImage: {fileID: 21300000, guid: be007fdb66f2f4d05a9837f399a0ec0a, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 38722da8d1c0247008d61ed41f180a76, type: 3}
   Cost:
   - Name: Resource_1
     Value: 53
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 39
   Rang: 4
+  IsCollectible: 1

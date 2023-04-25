@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: a219abf2-37f1-47d6-9fdd-9e85cbe46769
   Name: PhaseJewel
-  CardImage: {fileID: 21300000, guid: 7f03f5df839004b5686b0149d39d1644, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: f48dcb269bfcb489d90f674a53ea66be, type: 3}
   Cost:
   - Name: Resource_2
     Value: 18
@@ -26,7 +27,8 @@ MonoBehaviour:
   SaveTurn: 0
   NonDiscard: 0
   Description: 
-  InDeck: 0
+  InDeck: 1
   Count: 1
   Type: 22
   Rang: 0
+  IsCollectible: 1

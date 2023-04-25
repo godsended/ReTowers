@@ -14,7 +14,7 @@ namespace Core.Cards
 {
     public class CardObject : MonoBehaviour, IPointerEnterHandler,
         IPointerExitHandler, IBeginDragHandler,
-        IEndDragHandler, IDragHandler, IPointerClickHandler
+        IEndDragHandler, IDragHandler, IPointerClickHandler, ICardConfigurableObject
     {
         public static bool IsCardGrab;
         public static bool IsDiscardMode;
@@ -55,6 +55,12 @@ namespace Core.Cards
         private GameObject _spawnEnemyCardPosition;
         private CardPosition _cardPosition;
         private AudioSource _audioSource;
+
+        [SerializeField] private Text cardTitleText;
+        [SerializeField] private Text cardDescriptionText;
+        [SerializeField] private Image cardImage;
+        [SerializeField] private Text costText;
+        
 
         #endregion
 
@@ -202,7 +208,7 @@ namespace Core.Cards
 
         public bool HasResources()
         {
-            foreach (Resource resource in card.Cost)
+            foreach (BattleResource resource in card.Cost)
             {
                 int countResource = BattleClientManager.GetMyData().Castle.Resources
                     .FirstOrDefault(r => r.Name == resource.Name).Value;
@@ -254,7 +260,7 @@ namespace Core.Cards
 
             yield return new WaitForEndOfFrame();
 
-            // foreach (Resource resource in card.Cost)
+            // foreach (BattleResource resource in card.Cost)
             //     BattleUI.RemoveMyResourceValue(resource.Name, resource.Value);
 
             _cardPosition.card = null;
@@ -314,10 +320,10 @@ namespace Core.Cards
         {
             yield return new WaitForEndOfFrame();
 
-            // foreach (Resource resource in card.Cost)
+            // foreach (BattleResource resource in card.Cost)
             //     BattleUI.RemoveEnemyResourceValue(resource.Name, resource.Value);
 
-            _tableTopImage.sprite = card.CardImage;
+            CardObjectsConfigurator.Configure(this, card);
             _tableTopImage.raycastTarget = false;
             targetTransformPosition = _mainAnimationPosition.GetComponent<RectTransform>();
 
@@ -363,7 +369,7 @@ namespace Core.Cards
         {
             yield return new WaitForEndOfFrame();
 
-            _tableTopImage.sprite = card.CardImage;
+            CardObjectsConfigurator.Configure(this, card);
             _cardPosition = FindObjectsOfType<CardPosition>().FirstOrDefault(p => p.card == null);
 
             if (_cardPosition == null)
@@ -441,6 +447,31 @@ namespace Core.Cards
         public void Destroy()
         {
             Destroy(gameObject);
+        }
+
+        public void SetBackgroundImageSprite(Sprite sprite)
+        {
+            _tableTopImage.sprite = sprite;
+        }
+
+        public void SetForegroundImageSprite(Sprite sprite)
+        {
+            cardImage.sprite = sprite;
+        }
+
+        public void SetTitle(string text)
+        {
+            cardTitleText.text = text;
+        }
+        
+        public void SetCostText(string text)
+        {
+            costText.text = text;
+        }
+
+        public void SetDescription(string description)
+        {
+            cardDescriptionText.text = description;
         }
     }
 }

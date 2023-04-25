@@ -14,6 +14,11 @@ namespace Core.Cards.Effects
         {
             
         }
+        
+        public override string ToString()
+        {
+            return "";
+        }
 
         public override IEnumerator Animation(CardObject cardObject, bool isSender)
         {

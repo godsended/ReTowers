@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 43d2cc85-aae6-4ed1-8c65-84f789149fba
   Name: MotherLode
-  CardImage: {fileID: 21300000, guid: 809e2980a14aa4dfcbd4b703541ccd5b, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 3897ea44b7ede4d5ca645becb0034110, type: 3}
   Cost:
   - Name: Resource_3
     Value: 21
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 91
   Rang: 4
+  IsCollectible: 1

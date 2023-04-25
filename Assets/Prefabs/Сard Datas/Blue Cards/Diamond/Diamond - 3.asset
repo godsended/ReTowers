@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: ea10f0bb-7abf-43a9-a82f-a02ef0a6199f
   Name: Diamond
-  CardImage: {fileID: 21300000, guid: 11c381012c7754dff8673c53c7b032e0, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: b6608c5e44c604571a0e0d02eaddb413, type: 3}
   Cost:
   - Name: Resource_2
     Value: 36
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 8
   Rang: 2
+  IsCollectible: 1

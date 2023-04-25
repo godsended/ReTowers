@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 5072ed9a-50c2-4d5e-95aa-0a581c6f38f4
   Name: Emerald
-  CardImage: {fileID: 21300000, guid: 042e7eaf8c4d54fce829d8fa6f67aeb2, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 8fa8fdafef70342f09b7469e45955ef0, type: 3}
   Cost:
   - Name: Resource_2
     Value: 32
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 11
   Rang: 4
+  IsCollectible: 1

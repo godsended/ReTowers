@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 9ae69551-4f77-4440-b5d5-8766d3054ff5
   Name: Lodestone
-  CardImage: {fileID: 21300000, guid: 92486c91f43274387925c789186cea6d, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 291558e45572c499b9571c565cd31a73, type: 3}
   Cost:
   - Name: Resource_2
     Value: 8
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 19
   Rang: 1
+  IsCollectible: 1

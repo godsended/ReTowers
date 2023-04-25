@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: ccd919e8-f1d9-41ed-9b80-92a44087267d
   Name: DwarvenMiners
-  CardImage: {fileID: 21300000, guid: 3ee19e39b3a7b40fba0be40f56f2c9dc, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: c1a8e0c2e398b40e18daeae94a4a0efe, type: 3}
   Cost:
   - Name: Resource_3
     Value: 17
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 78
   Rang: 2
+  IsCollectible: 1

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 48ab8cf1-d04f-4340-ad82-2caa98e6c537
   Name: GoblinMob
-  CardImage: {fileID: 21300000, guid: d748e43fbeaa74bd49c6f040b18268ca, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 41b51120b094449ada190d49535247ec, type: 3}
   Cost:
   - Name: Resource_1
     Value: 5
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 45
   Rang: 1
+  IsCollectible: 1

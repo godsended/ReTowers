@@ -1,3 +1,5 @@
+#if !UNITY_ANDROID
+
 using Core.Cards;
 using UnityEngine;
 using Mirror;
@@ -51,3 +53,5 @@ namespace Core.Server
         }
     }
 }
+
+#endif

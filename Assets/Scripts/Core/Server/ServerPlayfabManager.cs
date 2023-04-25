@@ -1,3 +1,5 @@
+#if !UNITY_ANDROID
+
 using System.Collections.Generic;
 using UnityEngine;
 using PlayFab.ServerModels;
@@ -136,6 +138,7 @@ namespace Core.Server
 
         private void OnPlayerDataRecievedInBotMatch(GetUserDataResult result)
         {
+            Debug.Log("Bot match request playfab data accepted");
             foreach (var player in players)
             {
                 if (player.PlayFabId != result.PlayFabId) continue;
@@ -175,3 +178,5 @@ namespace Core.Server
         }
     }
 }
+
+#endif

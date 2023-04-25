@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: f1cef409-7fd1-4ca8-93d5-159c93141000
   Name: Vampire
-  CardImage: {fileID: 21300000, guid: a415445682d8248bc9ef9b42669d22f8, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 74a598cc1eab544189a948686b3f6295, type: 3}
   Cost:
   - Name: Resource_1
     Value: 89
@@ -30,3 +31,4 @@ MonoBehaviour:
   Count: 0
   Type: 66
   Rang: 4
+  IsCollectible: 1

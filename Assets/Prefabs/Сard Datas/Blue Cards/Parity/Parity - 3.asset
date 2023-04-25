@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 9985c243-ff90-4268-8888-9bc563509011
   Name: Parity
-  CardImage: {fileID: 21300000, guid: 2935f25b70f194cdab8e21f4ee11d9bd, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 69a0a99d1b3fd4eff8b8da858772be4d, type: 3}
   Cost:
   - Name: Resource_2
     Value: 17
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 20
   Rang: 2
+  IsCollectible: 1

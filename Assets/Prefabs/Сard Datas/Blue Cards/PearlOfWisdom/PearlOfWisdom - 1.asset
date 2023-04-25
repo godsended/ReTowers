@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: d95e19dc-fe2a-4546-b043-d6c472d18a73
   Name: PearlOfWisdom
-  CardImage: {fileID: 21300000, guid: 906160a5e53b342998b9c2364dd8b6c1, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 9157c7cc9fff64cf39f964f48c231a16, type: 3}
   Cost:
   - Name: Resource_2
     Value: 9
@@ -25,7 +26,8 @@ MonoBehaviour:
   SaveTurn: 0
   NonDiscard: 0
   Description: 
-  InDeck: 0
-  Count: 0
+  InDeck: 1
+  Count: 1
   Type: 21
   Rang: 0
+  IsCollectible: 1

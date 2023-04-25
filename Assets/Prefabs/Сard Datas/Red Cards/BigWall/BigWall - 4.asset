@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: da13d20e-a0bb-4d47-a473-a589c130d805
   Name: BigWall
-  CardImage: {fileID: 21300000, guid: f01d9fe106ed0478db0758cf438d1327, type: 3}
+  Text: +21 Wall
+  CardImage: {fileID: 21300000, guid: 27b1fa21c74844c9e926da1b3ef5fc03, type: 3}
   Cost:
   - Name: Resource_3
     Value: 18
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 4532451
   Rang: 3
+  IsCollectible: 1

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: e2f9f6b8-e098-4d30-a46e-3790bd38eee5
   Name: DragonsHeart
-  CardImage: {fileID: 21300000, guid: 1882084ae70c143d78a2be1421a5d9b2, type: 3}
+  Text: +68 Wall +27 Tower
+  CardImage: {fileID: 21300000, guid: d531a4957f5b6409f9cda1f8b94e738d, type: 3}
   Cost:
   - Name: Resource_3
     Value: 81
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 77
   Rang: 3
+  IsCollectible: 1

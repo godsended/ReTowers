@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using Core;
 using Core.Castle;
 using Core.Contracts;
+using Core.Economics;
 using Core.Map;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -219,6 +221,23 @@ namespace Mirror.Extensions
             {
                 MatchId = reader.ReadString(),
                 RequestId = reader.ReadString(),
+            };
+        }
+
+        public static void WriteWalletDto(this NetworkWriter writer, WalletDto dto)
+        {
+            writer.WriteString(dto.PlayFabId);
+            writer.WriteString(JsonConvert.SerializeObject(dto.Balance));
+            writer.WriteInt((int)dto.RequestType);
+        }
+
+        public static WalletDto ReadWalletDto(this NetworkReader reaader)
+        {
+            return new WalletDto()
+            {
+                PlayFabId = reaader.ReadString(),
+                Balance = JsonConvert.DeserializeObject<Dictionary<string, Currency>>(reaader.ReadString()),
+                RequestType = (WalletRequestType)reaader.ReadInt()
             };
         }
     }

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: faaac92f-2f26-487a-89cc-9c31b690ad17
   Name: CrystalShield
-  CardImage: {fileID: 21300000, guid: 011def06d314c406181eece361c8d48d, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 80a46902bef794bb89756da9da76b7dd, type: 3}
   Cost:
   - Name: Resource_2
     Value: 41
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 7
   Rang: 3
+  IsCollectible: 1

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 78754ace-1bb1-4d16-994c-a9aaf70eecfa
   Name: Earthquake
-  CardImage: {fileID: 21300000, guid: d75104af996854e6fa2c5d103d8d83ce, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: c0016dfdd465242f598591bec4ec0888, type: 3}
   Cost:
   - Name: Resource_3
     Value: 0
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 79
   Rang: 4
+  IsCollectible: 1

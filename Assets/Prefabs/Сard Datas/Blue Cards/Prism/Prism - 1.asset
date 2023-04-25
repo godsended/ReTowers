@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 37b555a6-1e7a-40f8-8f75-25c9a0fd9643
   Name: Prism
-  CardImage: {fileID: 21300000, guid: ef86b86591b70404c80b9bf6f8e71e71, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: df023f15f4e4f41f6b1651f15111444e, type: 3}
   Cost:
   - Name: Resource_2
     Value: 2
@@ -24,7 +25,8 @@ MonoBehaviour:
   SaveTurn: 1
   NonDiscard: 0
   Description: 
-  InDeck: 0
-  Count: 0
+  InDeck: 1
+  Count: 1
   Type: 24
   Rang: 0
+  IsCollectible: 1

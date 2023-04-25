@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: c9908948-2d2d-402c-bbd8-fc5c722f88fa
   Name: Dwarves
-  CardImage: {fileID: 21300000, guid: e7f59e41867b74d5ca0ddd31d58c83fb, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 8e0973548b1564f4c95445bbae222579, type: 3}
   Cost:
   - Name: Resource_1
     Value: 5
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 1
   Type: 38
   Rang: 0
+  IsCollectible: 1

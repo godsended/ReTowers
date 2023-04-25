@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: f24b2ed4-a1e5-4b9a-8308-1dfc3fcd6588
   Name: Imp
-  CardImage: {fileID: 21300000, guid: ac6d1bcd650c341b1a8bb90ab10f3df4, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 2c2f1cd609917477589acf82f92dad0a, type: 3}
   Cost:
   - Name: Resource_1
     Value: 5
@@ -30,7 +31,8 @@ MonoBehaviour:
   SaveTurn: 0
   NonDiscard: 0
   Description: 
-  InDeck: 0
-  Count: 0
+  InDeck: 1
+  Count: 1
   Type: 46
   Rang: 0
+  IsCollectible: 1

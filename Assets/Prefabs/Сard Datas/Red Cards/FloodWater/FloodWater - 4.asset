@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 866b90d8-b37d-4bc1-95b9-c6e85ad92caf
   Name: FloodWater
-  CardImage: {fileID: 21300000, guid: dd73892ee0f4b4f2cafba473a6a4d4a6, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: ac38fc6c89e334b2b85e3b56c9cc981a, type: 3}
   Cost:
   - Name: Resource_3
     Value: 21
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 80
   Rang: 3
+  IsCollectible: 1

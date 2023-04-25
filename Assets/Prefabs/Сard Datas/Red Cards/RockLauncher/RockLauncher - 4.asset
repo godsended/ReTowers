@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 294634cc-f5cd-4f0c-b288-ea339ec1257e
   Name: RockLauncher
-  CardImage: {fileID: 21300000, guid: a07b455f9012745c4afc47832fd527f6, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 09a556d04699e468cb89c5a1788e3e96, type: 3}
   Cost:
   - Name: Resource_3
     Value: 62
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 96
   Rang: 3
+  IsCollectible: 1

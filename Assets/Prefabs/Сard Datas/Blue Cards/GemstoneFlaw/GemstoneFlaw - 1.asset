@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 4bba0562-3092-488b-989c-ec4f31d93e0c
   Name: GemstoneFlaw
-  CardImage: {fileID: 21300000, guid: 1ce5d856c21f6436093fbc676a4a197b, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 06c72f9e3110c481c9568cb2a64f6a72, type: 3}
   Cost:
   - Name: Resource_2
     Value: 2
@@ -24,7 +25,8 @@ MonoBehaviour:
   SaveTurn: 0
   NonDiscard: 0
   Description: 
-  InDeck: 0
-  Count: 0
+  InDeck: 1
+  Count: 1
   Type: 15
   Rang: 0
+  IsCollectible: 1

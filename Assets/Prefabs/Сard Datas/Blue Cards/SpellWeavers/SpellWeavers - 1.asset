@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: a618541f-f669-45a2-b73f-ad423d727bc5
   Name: SpellWeavers
-  CardImage: {fileID: 21300000, guid: 8fe3dc1f6f32e464da97bcb6e5a822de, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 1458edce350e54635a12535041b64e35, type: 3}
   Cost:
   - Name: Resource_2
     Value: 3
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 1
   Type: 34
   Rang: 0
+  IsCollectible: 1

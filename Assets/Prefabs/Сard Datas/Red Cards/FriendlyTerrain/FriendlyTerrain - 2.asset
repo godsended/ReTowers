@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: c7f0c7b8-20e1-4d5d-8141-7ad5469510de
   Name: FriendlyTerrain
-  CardImage: {fileID: 21300000, guid: 48650b36d14cc46648ec263ff8dcae11, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 97bee384d7ba445bc81550f3d101544d, type: 3}
   Cost:
   - Name: Resource_3
     Value: 2
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 84
   Rang: 1
+  IsCollectible: 1

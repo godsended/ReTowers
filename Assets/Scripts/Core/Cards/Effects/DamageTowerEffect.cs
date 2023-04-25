@@ -24,6 +24,11 @@ namespace Core.Cards.Effects
 
             castle.Tower.Damage(damage);
         }
+        
+        public override string ToString()
+        {
+            return $"{damage} damage to " + (isEnemyDamage ? "enemy" : "your") + " tower";
+        }
 
         public override IEnumerator Animation(CardObject cardObject, bool isSender)
         {

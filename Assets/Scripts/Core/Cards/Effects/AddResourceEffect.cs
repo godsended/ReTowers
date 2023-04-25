@@ -3,11 +3,12 @@ using Core.Client;
 using Core.Server;
 using System.Collections;
 using Core.Match;
+using Core.Utils;
 using UnityEngine;
 
 namespace Core.Cards.Effects
 {
-    [CreateAssetMenu(fileName = "New Effect", menuName = "Effects/Create new Effect Add Resource", order = 51)]
+    [CreateAssetMenu(fileName = "New Effect", menuName = "Effects/Create new Effect Add BattleResource", order = 51)]
     public class AddResourceEffect : Effect
     {
         public string nameResource;
@@ -26,36 +27,13 @@ namespace Core.Cards.Effects
         public override IEnumerator Animation(CardObject cardObject, bool isSender)
         {
             yield break;
-            // if (isSelfAdd)
-            // {
-            //     if (isSender)
-            //     {
-            //         BattleUI.AddMyResourceValue(nameResource, value);
-            //
-            //         yield return new WaitForSeconds(0.2f);
-            //     }
-            //     else
-            //     {
-            //         BattleUI.AddEnemyResourceValue(nameResource, value);
-            //
-            //         yield return new WaitForSeconds(0.2f);
-            //     }
-            // }
-            // else
-            // {
-            //     if (isSender)
-            //     {
-            //         BattleUI.AddEnemyResourceValue(nameResource, value);
-            //
-            //         yield return new WaitForSeconds(0.2f);
-            //     }
-            //     else
-            //     {
-            //         BattleUI.AddMyResourceValue(nameResource, value);
-            //
-            //         yield return new WaitForSeconds(0.2f);
-            //     }
-            // }
         }
+        
+        public override string ToString()
+        {
+            return $"+{value} {GetPrettyResourceName()}" + (!isSelfAdd ? " to enemy" : "");
+        }
+
+        private string GetPrettyResourceName() => ResourcesNamePrettier.GetResourcePrettyName(nameResource);
     }
 }

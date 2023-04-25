@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: b106b076-c488-4a34-9145-b291064b5109
   Name: BrickShortage
-  CardImage: {fileID: 21300000, guid: 6c9ab28fde74f4d588121601285c8a13, type: 3}
+  Text: All players lose 41 bricks
+  CardImage: {fileID: 21300000, guid: c259b501b99fc4e55b3466edee3a71ce, type: 3}
   Cost:
   - Name: Resource_3
     Value: 0
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 73
   Rang: 4
+  IsCollectible: 1

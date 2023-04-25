@@ -1,3 +1,5 @@
+#if !UNITY_ANDROID
+
 using System.Timers;
 using Core.Match.Server;
 using Core.Server;
@@ -51,3 +53,5 @@ namespace Core.Match
         }
     }
 }
+
+#endif

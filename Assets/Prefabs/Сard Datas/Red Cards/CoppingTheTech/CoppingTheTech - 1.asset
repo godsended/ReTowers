@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 1ee6d211-2bc3-4cd9-ab46-053519ac888b
   Name: CoppingTheTech
-  CardImage: {fileID: 21300000, guid: 16ccf09e3b3c04b7cbed75bea4a1b924, type: 3}
+  Text: If quarry<enemey quarry, quarry-enemy quarry
+  CardImage: {fileID: 21300000, guid: 2c9434d4e090d448ebe2d5cf3528e59e, type: 3}
   Cost:
   - Name: Resource_3
     Value: 5
@@ -24,7 +25,8 @@ MonoBehaviour:
   SaveTurn: 0
   NonDiscard: 0
   Description: 
-  InDeck: 0
-  Count: 0
+  InDeck: 1
+  Count: 1
   Type: 75
   Rang: 0
+  IsCollectible: 1

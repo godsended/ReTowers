@@ -6,6 +6,7 @@ using System.Collections;
 using Core.Castle;
 using Core.Client.Bosses;
 using Core.Map;
+using Core.Utils;
 using UnityEngine.SceneManagement;
 using Effects;
 
@@ -323,7 +324,7 @@ namespace Core.Client
 
         public void ExitToMenu()
         {
-            SceneManager.LoadScene(menuScene);
+            GameScenesManager.LoadMenuSceneFromBattleScene();
             StopAllCoroutines();
         }
 
@@ -397,24 +398,24 @@ namespace Core.Client
 
         private IEnumerator AnimationRemoveMyResourceValue(string resourceName, int value)
         {
-            Resource resource = BattleClientManager.GetMyData().Castle.GetResource(resourceName);
+            BattleResource battleResource = BattleClientManager.GetMyData().Castle.GetResource(resourceName);
 
-            resource.RemoveResource(value);
+            battleResource.RemoveResource(value);
 
             switch (resourceName)
             {
                 case "Resource_1":
-                    myResourceValue_1.text = resource.Value.ToString();
+                    myResourceValue_1.text = battleResource.Value.ToString();
                     EffectSpawner.instance.myDownResource_1.Play();
                     Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(myResourceValue_1, value, false));
                     break;
                 case "Resource_2":
-                    myResourceValue_2.text = resource.Value.ToString();
+                    myResourceValue_2.text = battleResource.Value.ToString();
                     EffectSpawner.instance.myDownResource_2.Play();
                     Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(myResourceValue_2, value, false));
                     break;
                 case "Resource_3":
-                    myResourceValue_3.text = resource.Value.ToString();
+                    myResourceValue_3.text = battleResource.Value.ToString();
                     EffectSpawner.instance.myDownResource_3.Play();
                     Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(myResourceValue_3, value, false));
                     break;
@@ -425,24 +426,24 @@ namespace Core.Client
 
         private IEnumerator AnimationAddMyResourceValue(string resourceName, int value)
         {
-            Resource resource = BattleClientManager.GetMyData().Castle.GetResource(resourceName);
+            BattleResource battleResource = BattleClientManager.GetMyData().Castle.GetResource(resourceName);
 
-            resource.AddResource(value);
+            battleResource.AddResource(value);
 
             switch (resourceName)
             {
                 case "Resource_1":
-                    myResourceValue_1.text = resource.Value.ToString();
+                    myResourceValue_1.text = battleResource.Value.ToString();
                     EffectSpawner.instance.myUpResource_1.Play();
                     Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(myResourceValue_1, value));
                     break;
                 case "Resource_2":
-                    myResourceValue_2.text = resource.Value.ToString();
+                    myResourceValue_2.text = battleResource.Value.ToString();
                     EffectSpawner.instance.myUpResource_2.Play();
                     Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(myResourceValue_2, value));
                     break;
                 case "Resource_3":
-                    myResourceValue_3.text = resource.Value.ToString();
+                    myResourceValue_3.text = battleResource.Value.ToString();
                     EffectSpawner.instance.myUpResource_3.Play();
                     Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(myResourceValue_3, value));
                     break;
@@ -453,24 +454,24 @@ namespace Core.Client
 
         private IEnumerator AnimationRemoveEnemyResourceValue(string resourceName, int value)
         {
-            Resource resource = BattleClientManager.GetEnemyData().Castle.GetResource(resourceName);
+            BattleResource battleResource = BattleClientManager.GetEnemyData().Castle.GetResource(resourceName);
 
-            resource.RemoveResource(value);
+            battleResource.RemoveResource(value);
 
             switch (resourceName)
             {
                 case "Resource_1":
-                    enemyResourceValue_1.text = resource.Value.ToString();
+                    enemyResourceValue_1.text = battleResource.Value.ToString();
                     EffectSpawner.instance.enemyDownResource_1.Play();
                     Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(enemyResourceValue_1, value, false));
                     break;
                 case "Resource_2":
-                    enemyResourceValue_2.text = resource.Value.ToString();
+                    enemyResourceValue_2.text = battleResource.Value.ToString();
                     EffectSpawner.instance.enemyDownResource_2.Play();
                     Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(enemyResourceValue_2, value, false));
                     break;
                 case "Resource_3":
-                    enemyResourceValue_3.text = resource.Value.ToString();
+                    enemyResourceValue_3.text = battleResource.Value.ToString();
                     EffectSpawner.instance.enemyDownResource_3.Play();
                     Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(enemyResourceValue_3, value, false));
                     break;
@@ -481,24 +482,24 @@ namespace Core.Client
 
         private IEnumerator AnimationAddEnemyResourceValue(string resourceName, int value)
         {
-            Resource resource = BattleClientManager.GetEnemyData().Castle.GetResource(resourceName);
+            BattleResource battleResource = BattleClientManager.GetEnemyData().Castle.GetResource(resourceName);
 
-            resource.AddResource(value);
+            battleResource.AddResource(value);
 
             switch (resourceName)
             {
                 case "Resource_1":
-                    enemyResourceValue_1.text = resource.Value.ToString();
+                    enemyResourceValue_1.text = battleResource.Value.ToString();
                     EffectSpawner.instance.enemyUpResource_1.Play();
                     Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(enemyResourceValue_1, value));
                     break;
                 case "Resource_2":
-                    enemyResourceValue_2.text = resource.Value.ToString();
+                    enemyResourceValue_2.text = battleResource.Value.ToString();
                     EffectSpawner.instance.enemyUpResource_2.Play();
                     Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(enemyResourceValue_2, value));
                     break;
                 case "Resource_3":
-                    enemyResourceValue_3.text = resource.Value.ToString();
+                    enemyResourceValue_3.text = battleResource.Value.ToString();
                     EffectSpawner.instance.enemyUpResource_3.Play();
                     Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(enemyResourceValue_3, value));
                     break;
@@ -509,24 +510,24 @@ namespace Core.Client
 
         private IEnumerator AnimationRemoveMyResourceIncome(string resourceName, int value)
         {
-            Resource resource = BattleClientManager.GetMyData().Castle.GetResource(resourceName);
+            BattleResource battleResource = BattleClientManager.GetMyData().Castle.GetResource(resourceName);
 
-            resource.RemoveIncome(value);
+            battleResource.RemoveIncome(value);
 
             switch (resourceName)
             {
                 case "Resource_1":
-                    myResourceIncome_1.text = resource.Income.ToString();
+                    myResourceIncome_1.text = battleResource.Income.ToString();
                     EffectSpawner.instance.myDownIncome_1.Play();
                     Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(myResourceIncome_1, value, false));
                     break;
                 case "Resource_2":
-                    myResourceIncome_2.text = resource.Income.ToString();
+                    myResourceIncome_2.text = battleResource.Income.ToString();
                     EffectSpawner.instance.myDownIncome_2.Play();
                     Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(myResourceIncome_2, value, false));
                     break;
                 case "Resource_3":
-                    myResourceIncome_3.text = resource.Income.ToString();
+                    myResourceIncome_3.text = battleResource.Income.ToString();
                     EffectSpawner.instance.myDownIncome_3.Play();
                     Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(myResourceIncome_3, value, false));
                     break;
@@ -537,24 +538,24 @@ namespace Core.Client
 
         private IEnumerator AnimationAddMyResourceIncome(string resourceName, int value)
         {
-            Resource resource = BattleClientManager.GetMyData().Castle.GetResource(resourceName);
+            BattleResource battleResource = BattleClientManager.GetMyData().Castle.GetResource(resourceName);
 
-            resource.AddIncome(value);
+            battleResource.AddIncome(value);
 
             switch (resourceName)
             {
                 case "Resource_1":
-                    myResourceIncome_1.text = resource.Income.ToString();
+                    myResourceIncome_1.text = battleResource.Income.ToString();
                     EffectSpawner.instance.myUpIncome_1.Play();
                     Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(myResourceIncome_1, value));
                     break;
                 case "Resource_2":
-                    myResourceIncome_2.text = resource.Income.ToString();
+                    myResourceIncome_2.text = battleResource.Income.ToString();
                     EffectSpawner.instance.myUpIncome_2.Play();
                     Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(myResourceIncome_2, value));
                     break;
                 case "Resource_3":
-                    myResourceIncome_3.text = resource.Income.ToString();
+                    myResourceIncome_3.text = battleResource.Income.ToString();
                     EffectSpawner.instance.myUpIncome_3.Play();
                     Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(myResourceIncome_3, value));
                     break;
@@ -565,24 +566,24 @@ namespace Core.Client
 
         private IEnumerator AnimationRemoveEnemyResourceIncome(string resourceName, int value)
         {
-            Resource resource = BattleClientManager.GetEnemyData().Castle.GetResource(resourceName);
+            BattleResource battleResource = BattleClientManager.GetEnemyData().Castle.GetResource(resourceName);
 
-            resource.RemoveIncome(value);
+            battleResource.RemoveIncome(value);
 
             switch (resourceName)
             {
                 case "Resource_1":
-                    enemyResourceIncome_1.text = resource.Income.ToString();
+                    enemyResourceIncome_1.text = battleResource.Income.ToString();
                     EffectSpawner.instance.enemyDownIncome_1.Play();
                     Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(enemyResourceIncome_1, value, false));
                     break;
                 case "Resource_2":
-                    enemyResourceIncome_2.text = resource.Income.ToString();
+                    enemyResourceIncome_2.text = battleResource.Income.ToString();
                     EffectSpawner.instance.enemyDownIncome_2.Play();
                     Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(enemyResourceIncome_2, value, false));
                     break;
                 case "Resource_3":
-                    enemyResourceIncome_3.text = resource.Income.ToString();
+                    enemyResourceIncome_3.text = battleResource.Income.ToString();
                     EffectSpawner.instance.enemyDownIncome_3.Play();
                     Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(enemyResourceIncome_3, value, false));
                     break;
@@ -593,24 +594,24 @@ namespace Core.Client
 
         private IEnumerator AnimationAddEnemyResourceIncome(string resourceName, int value)
         {
-            Resource resource = BattleClientManager.GetEnemyData().Castle.GetResource(resourceName);
+            BattleResource battleResource = BattleClientManager.GetEnemyData().Castle.GetResource(resourceName);
 
-            resource.AddIncome(value);
+            battleResource.AddIncome(value);
 
             switch (resourceName)
             {
                 case "Resource_1":
-                    enemyResourceIncome_1.text = resource.Income.ToString();
+                    enemyResourceIncome_1.text = battleResource.Income.ToString();
                     EffectSpawner.instance.enemyUpIncome_1.Play();
                     Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(enemyResourceIncome_1, value));
                     break;
                 case "Resource_2":
-                    enemyResourceIncome_2.text = resource.Income.ToString();
+                    enemyResourceIncome_2.text = battleResource.Income.ToString();
                     EffectSpawner.instance.enemyUpIncome_2.Play();
                     Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(enemyResourceIncome_2, value));
                     break;
                 case "Resource_3":
-                    enemyResourceIncome_3.text = resource.Income.ToString();
+                    enemyResourceIncome_3.text = battleResource.Income.ToString();
                     EffectSpawner.instance.enemyUpIncome_3.Play();
                     Instance.StartCoroutine(Instance.AnimationChangePlayerCastleValue(enemyResourceIncome_3, value));
                     break;

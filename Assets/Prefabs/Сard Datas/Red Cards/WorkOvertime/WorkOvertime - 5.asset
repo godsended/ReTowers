@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 348d2da7-0aeb-4dc6-a8da-bbe631c1335d
   Name: WorkOvertime
-  CardImage: {fileID: 21300000, guid: 4201ec17f812b4b6fafc50d94f0008d3, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 558b453d854e14c63a9f534bc731e0f5, type: 3}
   Cost:
   - Name: Resource_3
     Value: 12
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 102
   Rang: 4
+  IsCollectible: 1

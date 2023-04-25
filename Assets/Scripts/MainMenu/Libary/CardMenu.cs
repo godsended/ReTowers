@@ -8,7 +8,7 @@ namespace MainMenu.Library {
     {
         [SerializeField] private Image bigCardImage;
         //[SerializeField] private Image doubleCardImage;
-        [SerializeField] private Image[] cardsLevelImage;
+        [SerializeField] private CardUI[] cardsLevel;
         [SerializeField] private TextMeshProUGUI[] cardsCountText;
 
         private CardData _cardData;
@@ -23,14 +23,14 @@ namespace MainMenu.Library {
             {
                 if(item.Type == _cardData.Type) 
                 {
-                    cardsLevelImage[item.Rang].sprite = item.CardImage;
+                    CardObjectsConfigurator.Configure(cardsLevel[item.Rang], item);
                     if (item.Count == 0)
                     {
-                        cardsLevelImage[item.Rang].color = Color.gray;
+                        cardsLevel[item.Rang].SetBackgroundImageColor(Color.gray);
                     }
                     else
                     {
-                        cardsLevelImage[item.Rang].color = Color.white;
+                        cardsLevel[item.Rang].SetBackgroundImageColor(Color.white);
                         countCards++;
                     }
                     cardsCountText[item.Rang].SetText(item.Count.ToString());

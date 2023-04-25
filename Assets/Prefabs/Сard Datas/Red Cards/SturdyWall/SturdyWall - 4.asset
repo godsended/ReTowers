@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 689000d5-e5f3-461f-b469-d00d29a337f5
   Name: SturdyWall
-  CardImage: {fileID: 21300000, guid: 731c2a79a764144d5bce287cc2740bd3, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 90a0f778cb177427cba7443159070fb8, type: 3}
   Cost:
   - Name: Resource_3
     Value: 12
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 100
   Rang: 3
+  IsCollectible: 1

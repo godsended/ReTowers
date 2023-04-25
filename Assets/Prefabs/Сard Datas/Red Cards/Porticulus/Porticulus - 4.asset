@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 9e44702b-56d1-414d-b244-59dc9522f786
   Name: Porticulus
-  CardImage: {fileID: 21300000, guid: 8e0b901e5b4074b5c8206c1961ef7fc2, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: bce6249717bd44e25acd8fbb193e066b, type: 3}
   Cost:
   - Name: Resource_3
     Value: 32
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 93
   Rang: 3
+  IsCollectible: 1

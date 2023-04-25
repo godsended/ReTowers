@@ -1,6 +1,9 @@
+#if !UNITY_ANDROID
+
 using System;
 using System.Linq;
 using Core.Castle;
+using Core.Economics;
 using Core.Map;
 using Core.Match.Server;
 using UnityEngine;
@@ -13,10 +16,12 @@ namespace Core.Match.Modifiers.Providers
         {
             if (level == null)
             {
-                Debug.Log("HardCodedPveModifiersProvider: Level info is null!");
+                var pvpRewardModificator = new PvpMatchRewardModificator(match);
                 return;
             }
 
+            string currencyName = "Pve";
+            double reward = 1;
             switch (level.Progress)
             {
                 case 0:
@@ -29,9 +34,9 @@ namespace Core.Match.Modifiers.Providers
                         WallAddition = 10,
                         ResourcesAddition = new[]
                         {
-                            new Resource("Resource_1", 0, 2),
-                            new Resource("Resource_2", 0, 2),
-                            new Resource("Resource_3", 0, 2),
+                            new BattleResource("Resource_1", 0, 2),
+                            new BattleResource("Resource_2", 0, 2),
+                            new BattleResource("Resource_3", 0, 2),
                         }
                     };
                     PveMatchCastlesModificator castlesMod0 = new(match, myAddition0,
@@ -48,9 +53,9 @@ namespace Core.Match.Modifiers.Providers
                         WallAddition = 7,
                         ResourcesAddition = new[]
                         {
-                            new Resource("Resource_1", 0, 1),
-                            new Resource("Resource_2", 0, 1),
-                            new Resource("Resource_3", 0, 1),
+                            new BattleResource("Resource_1", 0, 1),
+                            new BattleResource("Resource_2", 0, 1),
+                            new BattleResource("Resource_3", 0, 1),
                         }
                     };
                     PveMatchCastlesModificator castlesMod1 = new(match, myAddition1,
@@ -62,7 +67,7 @@ namespace Core.Match.Modifiers.Providers
                     {
                         TowerAddition = 7,
                         WallAddition = 7,
-                        ResourcesAddition = Array.Empty<Resource>()
+                        ResourcesAddition = Array.Empty<BattleResource>()
                     };
                     PveMatchCastlesModificator castlesMod2 = new(match, myAddition2,
                         MatchCastleAddition.Empty);
@@ -78,13 +83,14 @@ namespace Core.Match.Modifiers.Providers
                         WallAddition = 0,
                         ResourcesAddition = new[]
                         {
-                            new Resource("Resource_1", 0, 1),
-                            new Resource("Resource_2", 0, 1),
-                            new Resource("Resource_3", 0, 1),
+                            new BattleResource("Resource_1", 0, 1),
+                            new BattleResource("Resource_2", 0, 1),
+                            new BattleResource("Resource_3", 0, 1),
                         }
                     };
                     PveMatchCastlesModificator castlesMod4 = new(match, MatchCastleAddition.Empty,
                         botAddition4);
+                    reward = 2;
                     break;
 
                 case 5:
@@ -96,13 +102,14 @@ namespace Core.Match.Modifiers.Providers
                         WallAddition = 0,
                         ResourcesAddition = new[]
                         {
-                            new Resource("Resource_1", 0, 1),
-                            new Resource("Resource_2", 0, 1),
-                            new Resource("Resource_3", 0, 1),
+                            new BattleResource("Resource_1", 0, 1),
+                            new BattleResource("Resource_2", 0, 1),
+                            new BattleResource("Resource_3", 0, 1),
                         }
                     };
                     PveMatchCastlesModificator castlesMod5 = new(match, MatchCastleAddition.Empty,
                         botAddition5);
+                    reward = 2;
                     break;
 
                 case 6:
@@ -111,16 +118,24 @@ namespace Core.Match.Modifiers.Providers
                     {
                         case 0:
                             CardsDiscardBossModificator cardsDiscardBossModificator = new(match, player, 0.25);
+                            currencyName = "Pve0";
                             break;
                         case 1:
                             HealFreezeBossModificator freezeBossModificator = new(match, player, 0.25);
+                            currencyName = "Pve1";
                             break;
                         case 2:
                             IncomeBurnBossModificator incomeBurnBossModificator = new(match, player, 0.25);
+                            currencyName = "Pve2";
                             break;
                     }
                     break;
             }
+
+            var rewardModificator =
+                new PveMatchRewardModificator(match, new Currency(currencyName, reward));
         }
     }
 }
+
+#endif

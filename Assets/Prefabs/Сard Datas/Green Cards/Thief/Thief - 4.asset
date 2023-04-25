@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 695a4ccf-90fd-4c90-a7c6-3b173fa159c5
   Name: Thief
-  CardImage: {fileID: 21300000, guid: fcf678f6c1f2d46fda38e865603c8d2d, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 974479ef4d4304b9e96fd3ba8f115a56, type: 3}
   Cost:
   - Name: Resource_1
     Value: 41
@@ -31,3 +32,4 @@ MonoBehaviour:
   Count: 0
   Type: 62
   Rang: 3
+  IsCollectible: 1

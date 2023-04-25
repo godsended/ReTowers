@@ -18,6 +18,11 @@ namespace Core.Cards.Effects
             enemyPlayer.Castle.Wall.Health = usedWallHealth;
         }
 
+        public override string ToString()
+        {
+            return "Switch your Wall with enemy Wall";
+        }
+
         public override IEnumerator Animation(CardObject cardObject, bool isSender)
         {
             // int usedWallHealth = BattleClientManager.GetMyData().Castle.Wall.Health;

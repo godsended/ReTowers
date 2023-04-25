@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 70c2a9d4-42f9-4612-abaf-22d0606dab25
   Name: Crystallize
-  CardImage: {fileID: 21300000, guid: 867d5989d638a4de5af429b4c974d896, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 24e9660924e2b4df4a83a71f3631a5eb, type: 3}
   Cost:
   - Name: Resource_2
     Value: 27
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 6
   Rang: 3
+  IsCollectible: 1

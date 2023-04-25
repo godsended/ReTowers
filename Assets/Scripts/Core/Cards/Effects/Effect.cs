@@ -9,5 +9,7 @@ namespace Core.Cards.Effects
     {
         public abstract void Execute(MatchPlayer usedPlayer, MatchPlayer enemyPlayer);
         public abstract IEnumerator Animation(CardObject cardObject, bool isSender);
+
+        public abstract override string ToString();
     }
 }

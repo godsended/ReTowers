@@ -1,3 +1,5 @@
+#if !UNITY_ANDROID
+
 using System;
 using Core.Cards;
 using Core.Match.Server;
@@ -63,3 +65,5 @@ namespace Core.Match.Modifiers
         }
     }
 }
+
+#endif

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 2f9af6bc-8645-43e2-bb6a-196113b827d1
   Name: Minotaur
-  CardImage: {fileID: 21300000, guid: 91e70e71a4a2945f6b0f429dc95c5bd3, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: adcd4f0e17a964d2290e5781df8f5704, type: 3}
   Cost:
   - Name: Resource_1
     Value: 8
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 49
   Rang: 2
+  IsCollectible: 1

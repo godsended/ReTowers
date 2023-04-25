@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: f77b9e53-29e0-4036-904f-adbf7d4c6d28
   Name: Power Burn
-  CardImage: {fileID: 21300000, guid: e4e223c76a7044dac946515d298defef, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 8134d4946e9fd4bc6b895a36c6b24c0d, type: 3}
   Cost:
   - Name: Resource_2
     Value: 3
@@ -25,7 +26,8 @@ MonoBehaviour:
   SaveTurn: 0
   NonDiscard: 0
   Description: 
-  InDeck: 0
-  Count: 0
+  InDeck: 1
+  Count: 1
   Type: 23
   Rang: 0
+  IsCollectible: 1

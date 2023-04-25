@@ -1,6 +1,7 @@
 using Core;
 using Core.Client;
 using Core.Contracts;
+using Core.Utils;
 using Mirror;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -21,7 +22,7 @@ namespace MainMenu
 
         public void GoToMenu()
         {
-            SceneManager.LoadScene(sceneMenu);
+            GameScenesManager.LoadMenuSceneFromBattleScene();
             NetworkClient.Send(new RequestMatchDto 
             {
                  AccountId = MainClient.GetClientId(),

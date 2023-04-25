@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: c118cbd3-31fa-47be-814c-3ddcad5efdbd
   Name: FullMoon
-  CardImage: {fileID: 21300000, guid: b7753d3335ff44992bf3c20711b3a35b, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 78c93fc33a2654ca49672e5bd593499f, type: 3}
   Cost:
   - Name: Resource_1
     Value: 0
@@ -30,3 +31,4 @@ MonoBehaviour:
   Count: 0
   Type: 42
   Rang: 1
+  IsCollectible: 1

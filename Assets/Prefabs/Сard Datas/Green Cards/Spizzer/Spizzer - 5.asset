@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 945d58ad-20a5-498f-bd4f-ec4a64febdb4
   Name: Spizzer
-  CardImage: {fileID: 21300000, guid: c4e116848fdb047e4af1acfc95a69c56, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 403872efcc626440ebd8e3bf8843a49a, type: 3}
   Cost:
   - Name: Resource_1
     Value: 41
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 59
   Rang: 4
+  IsCollectible: 1

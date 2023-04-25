@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 932878d6-4c16-47c6-982a-d661e7f61429
   Name: GemSpear
-  CardImage: {fileID: 21300000, guid: d64143cb0fe1149e8a5be09070a96969, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 0e8d296866a284fc6858586884d3f2d4, type: 3}
   Cost:
   - Name: Resource_2
     Value: 14
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 14
   Rang: 3
+  IsCollectible: 1

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 05094066-715e-4df7-ac03-457dfcaa71bb
   Name: PegasusLancer
-  CardImage: {fileID: 21300000, guid: bc709b6faaf034949b9161efcc90b76f, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 5f5029dd7f99947a6a2b9a340a8a8299, type: 3}
   Cost:
   - Name: Resource_1
     Value: 27
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 53
   Rang: 1
+  IsCollectible: 1

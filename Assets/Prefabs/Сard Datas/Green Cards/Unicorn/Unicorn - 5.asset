@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 97cd450e-1f78-45ea-8f44-28c79c7b9d7b
   Name: Unicorn
-  CardImage: {fileID: 21300000, guid: 59592516b0282420c99251edb76d9301, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 05fb5ed0052d6452c9412c725a803667, type: 3}
   Cost:
   - Name: Resource_1
     Value: 48
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 65
   Rang: 4
+  IsCollectible: 1

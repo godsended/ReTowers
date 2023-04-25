@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 396a2233-22a6-41f8-bc28-877e965def60
   Name: MadCowDisease
-  CardImage: {fileID: 21300000, guid: 68c1b5bad24c340c9af3baa727162aba, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 8bd2c3e5b0b774b2aa45f585503ed594, type: 3}
   Cost:
   - Name: Resource_1
     Value: 0
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 48
   Rang: 3
+  IsCollectible: 1

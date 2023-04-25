@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: ebad4865-97b0-4699-aa2b-441f91bcdbbc
   Name: Amethyst
-  CardImage: {fileID: 21300000, guid: f27ed953ad1a7408d918aca38bc14a5b, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 9bc32f50fe854485fb1b6bf17be64d5f, type: 3}
   Cost:
   - Name: Resource_2
     Value: 5
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 1
   Rang: 2
+  IsCollectible: 1

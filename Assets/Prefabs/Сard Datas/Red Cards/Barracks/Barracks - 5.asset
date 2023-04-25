@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: d076ec2c-51ed-4a73-96b1-05d1f4bfbf95
   Name: Barracks
-  CardImage: {fileID: 21300000, guid: d7511c5aefb144719a33d72d0041816f, type: 3}
+  Text: +32 Recruits +32 Wall If dungeon<enemy's dungeon, +8 dungeon
+  CardImage: {fileID: 21300000, guid: 7e12cc813f287469690b8792d70c8754, type: 3}
   Cost:
   - Name: Resource_3
     Value: 53
@@ -30,3 +31,4 @@ MonoBehaviour:
   Count: 0
   Type: 765
   Rang: 4
+  IsCollectible: 1

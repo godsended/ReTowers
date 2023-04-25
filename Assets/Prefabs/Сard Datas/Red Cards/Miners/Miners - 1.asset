@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 5317e91f-daec-46c3-8ce0-95bca61ed9b6
   Name: Miners
-  CardImage: {fileID: 21300000, guid: f5e93ed1c27ca4122a0fb1bc8eb4ffbf, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 19cdcf2701eb24422abcaf66e5d0e3cc, type: 3}
   Cost:
   - Name: Resource_3
     Value: 3
@@ -24,7 +25,8 @@ MonoBehaviour:
   SaveTurn: 0
   NonDiscard: 0
   Description: 
-  InDeck: 0
-  Count: 0
+  InDeck: 1
+  Count: 1
   Type: 89
   Rang: 0
+  IsCollectible: 1

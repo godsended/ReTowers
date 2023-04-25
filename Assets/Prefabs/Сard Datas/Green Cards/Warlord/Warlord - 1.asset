@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 0c802400-42b3-4336-ae67-95c90eeac05d
   Name: Warlord
-  CardImage: {fileID: 21300000, guid: 0531857ffb3534f06a24bbab759e8b54, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 9dadde80ea06b4d4dae27662338a2098, type: 3}
   Cost:
   - Name: Resource_1
     Value: 13
@@ -25,7 +26,8 @@ MonoBehaviour:
   SaveTurn: 0
   NonDiscard: 0
   Description: 
-  InDeck: 0
-  Count: 0
+  InDeck: 1
+  Count: 1
   Type: 906
   Rang: 0
+  IsCollectible: 1

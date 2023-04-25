@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: e4703a5d-b226-466b-903b-3b8c47862a17
   Name: Shatterer
-  CardImage: {fileID: 21300000, guid: 49d2e586cbb614a898876639a14734e4, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 76768e17f7371466cb42eb3c1e630fea, type: 3}
   Cost:
   - Name: Resource_2
     Value: 8
@@ -25,7 +26,8 @@ MonoBehaviour:
   SaveTurn: 0
   NonDiscard: 0
   Description: 
-  InDeck: 0
-  Count: 0
+  InDeck: 1
+  Count: 1
   Type: 31
   Rang: 0
+  IsCollectible: 1

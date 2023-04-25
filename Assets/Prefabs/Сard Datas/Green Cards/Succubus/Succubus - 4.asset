@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 67a64f8b-c52b-4d27-96ef-9a3937af10d6
   Name: Succubus
-  CardImage: {fileID: 21300000, guid: d724888380f9647b3bca9c18aebd1aa9, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: d1c155da8bc684400ad94ad5492c5a6f, type: 3}
   Cost:
   - Name: Resource_1
     Value: 48
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 61
   Rang: 3
+  IsCollectible: 1

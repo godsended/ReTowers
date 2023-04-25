@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 956ece44-d940-46ae-9763-80e532c0caf7
   Name: Tremors
-  CardImage: {fileID: 21300000, guid: 5f29d4009e59f46f497ec8ffcefce518, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 2375b52f68b6d43b39c2f72d27b9d822, type: 3}
   Cost:
   - Name: Resource_3
     Value: 11
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 101
   Rang: 1
+  IsCollectible: 1

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 44bc9e5b-af92-4df5-910b-01c2e38added
   Name: GoblinArchers
-  CardImage: {fileID: 21300000, guid: db362e62bb7ed49e6adc2a0e275df4c7, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 2d1317ead3ccb4c6491efd342f6e838e, type: 3}
   Cost:
   - Name: Resource_1
     Value: 9
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 44
   Rang: 2
+  IsCollectible: 1

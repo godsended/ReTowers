@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 37fdc38b-8d14-4727-a044-8a3a35383ecf
   Name: StoneGiant
-  CardImage: {fileID: 21300000, guid: 082857005dbce42458a1bbae8de1d23b, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: fb8b8f27fda12459485fb7b3972e96cb, type: 3}
   Cost:
   - Name: Resource_1
     Value: 15
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 60
   Rang: 2
+  IsCollectible: 1

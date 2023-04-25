@@ -1,4 +1,6 @@
-﻿using Core.Logging;
+﻿#if !UNITY_ANDROID
+
+using Core.Logging;
 using Mirror;
 using System;
 using System.Collections.Generic;
@@ -14,12 +16,14 @@ namespace Core.Server
     [DisallowMultipleComponent]
     public class MainServer : MonoBehaviour
     {
-        private static MainServer instance;
+        public static MainServer instance;
 
         private List<PlayerData> _authPlayers;
         private List<NetworkConnectionToClient> _connectedPlayers;
 
         private IGameLogger _gameLogger;
+
+        public IReadOnlyList<PlayerData> AuthPlayers => _authPlayers;
 
 
         /// <summary>
@@ -134,3 +138,5 @@ namespace Core.Server
         }
     }
 }
+
+#endif

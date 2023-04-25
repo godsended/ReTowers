@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: aaa06e16-4d9c-4097-b0ec-6fe31f16c10b
   Name: Ogre
-  CardImage: {fileID: 21300000, guid: 5f63b70f4fdc444ffa41bb581d3d3347, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: fdb6aabf2e1544570bd8e8d33722954f, type: 3}
   Cost:
   - Name: Resource_1
     Value: 21
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 51
   Rang: 3
+  IsCollectible: 1

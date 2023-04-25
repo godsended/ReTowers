@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 40748047-df19-4200-9ad1-e157115e46b9
   Name: Crystal Matrix
-  CardImage: {fileID: 21300000, guid: 88d6b3a0638bd4fc48d50f76d83c33e4, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: dcd538b75677747bd88a75a029877ae0, type: 3}
   Cost:
   - Name: Resource_2
     Value: 14
@@ -30,3 +31,4 @@ MonoBehaviour:
   Count: 0
   Type: 5
   Rang: 2
+  IsCollectible: 1

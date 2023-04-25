@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: eebe21b2-3ff2-4bfe-a0dd-6f837c138a11
   Name: Sapphire
-  CardImage: {fileID: 21300000, guid: 670e2ffe134c042b0a54f1a4563c98e3, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: f10bfb555ea314519ad2a923733b1bf9, type: 3}
   Cost:
   - Name: Resource_2
     Value: 23
@@ -25,6 +26,7 @@ MonoBehaviour:
   NonDiscard: 0
   Description: 
   InDeck: 0
-  Count: 1
+  Count: 0
   Type: 30
   Rang: 2
+  IsCollectible: 1

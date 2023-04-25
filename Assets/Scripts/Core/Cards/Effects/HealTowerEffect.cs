@@ -22,6 +22,11 @@ namespace Core.Cards.Effects
 
             castle.Tower.Heal(heal);
         }
+        
+        public override string ToString()
+        {
+            return $"+{heal}{(!isSelfHeal ? " to enemy" : "")} tower";
+        }
 
         public override IEnumerator Animation(CardObject cardObject, bool isSender)
         {

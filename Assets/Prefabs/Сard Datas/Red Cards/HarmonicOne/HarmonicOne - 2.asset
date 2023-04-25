@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 8b230edc-fb4a-499e-a406-cac4d0a17670
   Name: HarmonicOne
-  CardImage: {fileID: 21300000, guid: d0c84493a79454b9a971efb2f8cd3587, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 5f0401e302b3443289f2883d1e5614a2, type: 3}
   Cost:
   - Name: Resource_3
     Value: 17
@@ -29,3 +30,4 @@ MonoBehaviour:
   Count: 0
   Type: 86
   Rang: 1
+  IsCollectible: 1

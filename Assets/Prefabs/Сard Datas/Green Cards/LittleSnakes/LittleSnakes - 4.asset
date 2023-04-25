@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: f1cd6b5e-9a21-4fca-9d1e-11251f94f938
   Name: LittleSnakes
-  CardImage: {fileID: 21300000, guid: 7c812411ab6124dd996465f53df1ea4d, type: 3}
+  Text: 
+  CardImage: {fileID: 21300000, guid: 97845dc46ca7f4c8aad77a2a20a1d8a1, type: 3}
   Cost:
   - Name: Resource_1
     Value: 21
@@ -28,3 +29,4 @@ MonoBehaviour:
   Count: 0
   Type: 47
   Rang: 3
+  IsCollectible: 1
