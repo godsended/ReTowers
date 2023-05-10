@@ -50,7 +50,8 @@ namespace Core.Cards
             }
 
             StringBuilder description = new StringBuilder();
-            data.Effects.ForEach(e => description.Append($"{e}\n"));
+            data.Effects.ForEach(e => description.Append($"{e}, "));
+            description.Remove(description.Length - 2, 2);
             card.SetDescription(description.ToString());
         }
     }

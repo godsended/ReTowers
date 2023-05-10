@@ -41,6 +41,9 @@ namespace Core.Cards
         [Space(10)] [Header("Move settings")] [SerializeField]
         private int smoothMove = 2;
 
+        private float passedClickTime = 1;
+        private float doubleClickTime = 0.3f;
+
         [SerializeField] private RectTransform targetTransformPosition;
 
         private Canvas _canvas;
@@ -83,7 +86,7 @@ namespace Core.Cards
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (eventData.button == PointerEventData.InputButton.Right
+            if ((eventData.button == PointerEventData.InputButton.Right || passedClickTime <= doubleClickTime)
                 && BattleClientManager.IsMyTurn()
                 && BattleClientManager.IsCanPlay()
                 && !card.NonDiscard)
@@ -99,6 +102,8 @@ namespace Core.Cards
                     BattleClientManager.SetCanPlay(false);
                 }
             }
+
+            passedClickTime = 0;
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -440,6 +445,9 @@ namespace Core.Cards
             SetCanPlayed(BattleClientManager.IsMyTurn()
                          && BattleClientManager.IsCanPlay()
                          && HasResources());
+
+            if (passedClickTime < doubleClickTime)
+                passedClickTime += Time.deltaTime;
         }
 
         #endregion

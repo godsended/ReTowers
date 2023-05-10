@@ -195,6 +195,7 @@ namespace Core.Client
             instance = this;
             MatchState.OnStateChanged -= OnMatchStateUpdated;
             MatchState.OnStateChanged += OnMatchStateUpdated;
+            Application.targetFrameRate = 60;
 
             NetworkClient.RegisterHandler<RequestBattleInfo>(requestBattleInfo =>
             {
@@ -313,6 +314,11 @@ namespace Core.Client
             Debug.Log("newMyCastle after rollback\n" + JsonConvert.SerializeObject(newMyCastle));
             Debug.Log("State after reply after rollback\n" + JsonConvert.SerializeObject(state));
             yield return new WaitForSeconds(0.3f);
+
+            while (BattleUI.Instance == null)
+            {
+                yield return null;
+            }
 
             BattleUI.Instance.myNickname.text = state.MyState.Name;
             BattleUI.Instance.enemyNickname.text = state.EnemyState.Name;
