@@ -23,7 +23,7 @@ namespace MainMenu
         public void GoToMenu()
         {
             GameScenesManager.LoadMenuSceneFromBattleScene();
-            NetworkClient.Send(new RequestMatchDto 
+            NetworkClientMiddleware.Send(new RequestMatchDto 
             {
                  AccountId = MainClient.GetClientId(),
                  RequestType = MatchRequestType.ExitMatch

@@ -40,6 +40,22 @@ namespace Core.Utils
             instance.PrepareAndLoadSceneAsync("Menu");
         }
 
+        public static void ReloadApp()
+        {
+            if (instance == null)
+            {
+                SceneManager.LoadScene("LoadingScene");
+                return;
+            }
+            
+            if(SceneManager.GetActiveScene().name == "Battle")
+                LoadMenuSceneFromBattleScene();
+            else if(SceneManager.GetActiveScene().name == "LoadingScene")
+                instance.StartCoroutine(instance.LoadSceneAsync("Menu"));
+            else
+                LoadMenuSceneFromBattleScene();
+        }
+        
         private void PrepareAndLoadSceneAsync(string scene, Action onLoad = null)
         {
             if (this.scene == scene)

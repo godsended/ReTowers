@@ -74,7 +74,7 @@ namespace Core.Economics.Client
         public void RequestWalletInfo()
         {
             Debug.Log("Wallet info request sended!");
-            NetworkClient.Send(new WalletDto()
+            NetworkClientMiddleware.Send(new WalletDto()
             {
                 PlayFabId = PlayfabManager.playerId
             });

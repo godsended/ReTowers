@@ -217,7 +217,7 @@ namespace MainMenu.Registration
             MainClient.SetUsername(result.Username);
             PlayerInfoUI.instance.UpdatePlayerInfo();
             
-            NetworkClient.Send(new AuthDto
+            NetworkClientMiddleware.Send(new AuthDto
             {
                 Login = result.PlayFabId,
                 Name = result.Username,
@@ -243,7 +243,7 @@ namespace MainMenu.Registration
             playerId = result.PlayFabId;
             MainClient.SetUsername(result.InfoResultPayload.PlayerProfile.DisplayName);
 
-            NetworkClient.Send(new AuthDto
+            NetworkClientMiddleware.Send(new AuthDto
             {
                 Login = result.InfoResultPayload.PlayerProfile.PlayerId,
                 Name = result.InfoResultPayload.PlayerProfile.DisplayName,

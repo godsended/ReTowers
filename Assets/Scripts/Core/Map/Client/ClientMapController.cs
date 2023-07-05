@@ -1,4 +1,5 @@
 using System;
+using Core.Client;
 using Core.Contracts;
 using MainMenu.Registration;
 using Mirror;
@@ -29,7 +30,7 @@ namespace Core.Map.Client
             }
             dto.PlayFabId = PlayfabManager.playerId;
             Debug.Log(dto.PlayFabId);
-            NetworkClient.Send(dto);
+            NetworkClientMiddleware.Send(dto);
         }
 
         private void OnMapRequestResponse(MapProgressDto dto)

@@ -14,7 +14,7 @@ namespace Core.Client
 
         public static void SendRequestCardAction(RequestCardDto requestCardDto)
         {
-            NetworkClient.Send(requestCardDto);
+            NetworkClientMiddleware.Send(requestCardDto);
         }
 
         private void Start()

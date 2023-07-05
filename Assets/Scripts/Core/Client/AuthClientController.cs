@@ -30,7 +30,7 @@ namespace Core.Client
 
         public void AuthRequestAsGuest()
         {
-            NetworkClient.Send(new AuthDto
+            NetworkClientMiddleware.Send(new AuthDto
             {
                 Login = "GuestLogin",
                 Password = "GuestPassword",

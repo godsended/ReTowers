@@ -88,7 +88,7 @@ namespace Core.Client
 
         public static void EndTurn()
         {
-            NetworkClient.Send(new RequestMatchDto
+            NetworkClientMiddleware.Send(new RequestMatchDto
             {
                 AccountId = MainClient.GetClientId(),
                 RequestType = MatchRequestType.EndTurn
@@ -139,7 +139,7 @@ namespace Core.Client
             if (instance._searchingLag != null)
                 instance.StopCoroutine(instance._searchingLag);
 
-            NetworkClient.Send(new RequestMatchDto
+            NetworkClientMiddleware.Send(new RequestMatchDto
             {
                 AccountId = MainClient.GetClientId(),
                 RequestType = MatchRequestType.CancelFindingMatch
@@ -151,7 +151,7 @@ namespace Core.Client
             yield return new WaitForSeconds(timeSearchingLag);
             ScensVar.BossType = -1;
             ScensVar.LevelId = -1;
-            NetworkClient.Send(new RequestMatchDto
+            NetworkClientMiddleware.Send(new RequestMatchDto
             {
                 AccountId = MainClient.GetClientId(),
                 RequestType = MatchRequestType.FindingMatch,
@@ -167,7 +167,7 @@ namespace Core.Client
         {
             ScensVar.BossType = levelId;
             ScensVar.LevelId = levelId;
-            NetworkClient.Send(new RequestMatchDto
+            NetworkClientMiddleware.Send(new RequestMatchDto
             {
                 AccountId = MainClient.GetClientId(),
                 RequestType = MatchRequestType.FindingBotMatch,

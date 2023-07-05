@@ -8,6 +8,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Core.Cards
@@ -31,6 +32,7 @@ namespace Core.Cards
 
         [SerializeField] private float defaultSize = 1.25f;
         [SerializeField] private float handleSize = 1.4f;
+        [SerializeField] private float phonesHandleSize = 2.5f;
 
         [Space(10)] [Header("Rotate handle settings")] [SerializeField]
         private float rotateModificator = 0.1f;
@@ -105,7 +107,7 @@ namespace Core.Cards
 
             passedClickTime = 0;
         }
-
+        
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (!IsCardGrab)
@@ -138,8 +140,11 @@ namespace Core.Cards
             {
                 if (_sizeCoroutine != null)
                     StopCoroutine(_sizeCoroutine);
-
+#if UNITY_ANDROID
+                _sizeCoroutine = StartCoroutine(SizeUp(phonesHandleSize));
+#else
                 _sizeCoroutine = StartCoroutine(SizeUp(handleSize));
+#endif
                 _rectTransform.position -= Vector3.forward;
                 _tableTopImage.raycastTarget = false;
                 _isDragging = true;
